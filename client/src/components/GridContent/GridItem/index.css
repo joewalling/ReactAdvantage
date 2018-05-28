@@ -1,0 +1,10 @@
+.grid-item {
+  padding: 1rem !important;
+  border-right: 1px solid rgba(30, 30, 30, 0.2); }
+  @media (max-width: 640px) {
+    .grid-item {
+      margin-bottom: 20px;
+      border-right: 0;
+      border-bottom: 1px solid rgba(30, 30, 30, 0.2); } }
+  .grid-item:last-child {
+    border-right: 0; }

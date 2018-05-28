@@ -1,0 +1,169 @@
+.profile {
+    position: relative;
+}
+
+.photo {
+    cursor: pointer;
+
+    img {
+        max-width: 41px;
+        border-radius: 50%;
+    }
+}
+
+.profile-menu-wrapper {
+    position: absolute;
+    top: 135%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 245px;
+    background: #fff;
+
+    @media (min-width: 1025px) {
+        width: 325px;
+    }
+
+    @media (max-width: 640px) {
+        width: 90vw;
+    }
+}
+
+.profile-menu {
+    box-shadow: 0 0 15px 1px rgba(81,77,92,.2);
+}
+
+.profile-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 20px !important;
+    background: #263D5C;
+
+    &::after {
+        bottom: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(38, 61, 92, 0);
+        border-bottom-color: #263D5C;
+        border-width: 10px;
+        margin-left: -10px;
+    }
+}
+
+.profile-preview-photo {
+    flex-basis: 70px;
+    flex-shrink: 0;
+
+    img {
+        max-width: 70px;
+        border-radius: 50%;
+    }
+}
+
+.profile-preview-info {
+    padding-left: 15px;
+    flex-grow: 1;
+}
+
+.profile-preview-info-name {
+    margin-bottom: 5px;
+    color: #B3B3AB;
+    font-size: 1.3rem;
+}
+
+.profile-preview-info-email {
+    font-size: 1rem;
+    color: #5A88C3;
+    cursor: pointer;
+}
+
+.profile-content {
+    padding: 20px !important;
+}
+
+.profile-links {
+    padding: 0;
+    margin: 0;
+
+    li {
+        padding: 9px 0;
+        list-style: none;
+
+        &:first-child a {
+            margin-top: 0;
+        }
+    }
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    position: relative;
+    // margin-top: 9px;
+    // margin-bottom: 8px;
+    text-decoration: none;
+    color: #B3B3AB;
+    font-size: 1rem;
+
+    &:hover {
+        color: #5A88C3;
+    }
+
+    .counter {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        min-height: 20px;
+        min-width: 20px;
+        padding: 0 3px;
+        background: #5a88c3;
+        border-radius: 50%;
+        font-size: .8rem;
+        line-height: 26px;
+        text-align: center;
+        color: #F5F5F3;
+    }
+}
+
+.profile-links-icon {
+    width: 35px;
+}
+
+.profile-links-text {
+
+}
+
+.profile-content-logout {
+    margin-top: 21px;
+}
+
+// @todo Rename
+
+.example-enter {
+  opacity: 0.01;
+  transform: translate(-50%, 20px);
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transform: translate(-50%, 20px);
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
+}

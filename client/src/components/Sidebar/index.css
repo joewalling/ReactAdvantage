@@ -1,0 +1,11 @@
+.sidebar-close-button {
+  position: absolute;
+  right: 0px;
+  top: 20px;
+  border: none;
+  background: none;
+  color: rgba(179, 179, 171, 0.8);
+  cursor: pointer; }
+
+.ui-sidebar-close {
+  display: none !important; }

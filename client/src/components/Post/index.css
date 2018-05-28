@@ -1,0 +1,17 @@
+.post {
+  display: inline-block; }
+  .post .ui-widget-content {
+    border: 0 !important; }
+  .post .ui-card-body {
+    padding: 0 !important; }
+
+.grid-item-title {
+  color: #1E1E1E;
+  font-size: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+  padding-bottom: 1rem;
+  margin: 0; }
+
+.content {
+  max-width: 300px;
+  font-family: 'Roboto', sans-serif; }

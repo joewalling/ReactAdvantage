@@ -1,0 +1,22 @@
+body {
+  font-size: 14px;
+  font-family: 'Robot', sans-serif; }
+
+body .ui-widget-header .ui-button,
+body .ui-widget-content .ui-button,
+body .ui-widget.ui-button,
+body .ui-button {
+  background: #5A88C3; }
+
+body .ui-widget-header .ui-button:enabled:hover,
+body .ui-widget-header .ui-button:focus,
+body .ui-widget-content .ui-button:enabled:hover,
+body .ui-widget-content .ui-button:focus,
+body .ui-widget.ui-button:enabled:hover,
+body .ui-widget.ui-button:focus,
+body .ui-button:enabled:hover,
+body .ui-button:focus {
+  background: rgba(90, 136, 195, 0.8); }
+
+#modal-root {
+  font-size: 1rem; }

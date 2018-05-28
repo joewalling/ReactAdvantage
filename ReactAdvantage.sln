@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{74D91951-5588-4AA1-9552-4CB1D71CBAEA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.API", "server\api\ReactAdvantage.API.csproj", "{77C63AE3-22C7-4020-9418-28A862AF0BC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.Domain", "server\domain\ReactAdvantage.Domain.csproj", "{A16002F3-FB08-41DD-BC95-1F942D777EBB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DCE57336-E0A4-4EDF-83ED-9840F46E6CD0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.Data.EntityFramework", "server\data\EntityFramework\ReactAdvantage.Data.EntityFramework.csproj", "{5FA8BE70-F978-4AAB-85EB-65EEB1AA0AE0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77C63AE3-22C7-4020-9418-28A862AF0BC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C63AE3-22C7-4020-9418-28A862AF0BC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C63AE3-22C7-4020-9418-28A862AF0BC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C63AE3-22C7-4020-9418-28A862AF0BC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A16002F3-FB08-41DD-BC95-1F942D777EBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A16002F3-FB08-41DD-BC95-1F942D777EBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16002F3-FB08-41DD-BC95-1F942D777EBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A16002F3-FB08-41DD-BC95-1F942D777EBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FA8BE70-F978-4AAB-85EB-65EEB1AA0AE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FA8BE70-F978-4AAB-85EB-65EEB1AA0AE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FA8BE70-F978-4AAB-85EB-65EEB1AA0AE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FA8BE70-F978-4AAB-85EB-65EEB1AA0AE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{77C63AE3-22C7-4020-9418-28A862AF0BC9} = {74D91951-5588-4AA1-9552-4CB1D71CBAEA}
+		{A16002F3-FB08-41DD-BC95-1F942D777EBB} = {74D91951-5588-4AA1-9552-4CB1D71CBAEA}
+		{5FA8BE70-F978-4AAB-85EB-65EEB1AA0AE0} = {74D91951-5588-4AA1-9552-4CB1D71CBAEA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {74FA9AB4-04D9-4836-A2B9-7150BDE82D7E}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://wallinginfosystems.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = server\\api\\ReactAdvantage.API.csproj
+		SccProjectTopLevelParentUniqueName1 = ReactAdvantage.sln
+		SccProjectName1 = server/api
+		SccLocalPath1 = server\\api
+		SccProjectUniqueName2 = server\\domain\\ReactAdvantage.Domain.csproj
+		SccProjectTopLevelParentUniqueName2 = ReactAdvantage.sln
+		SccProjectName2 = server/domain
+		SccLocalPath2 = server\\domain
+		SccProjectUniqueName3 = server\\data\\EntityFramework\\ReactAdvantage.Data.EntityFramework.csproj
+		SccProjectTopLevelParentUniqueName3 = ReactAdvantage.sln
+		SccProjectName3 = server/data/EntityFramework
+		SccLocalPath3 = server\\data\\EntityFramework
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+.ui-chkbox-box.ui-state-active, .ui-radiobutton-box.ui-state-active {
+  background: #263D5C !important; }
+
+.ui-state-highlight {
+  background: #5A88C3 !important; }
+
+.ui-datepicker-trigger {
+  background: #5A88C3 !important; }
