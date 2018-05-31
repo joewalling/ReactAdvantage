@@ -8,46 +8,62 @@ import GridContent from "components/GridContent";
 import './index.css';
 
 export default class Dashboard extends Component {
+    state = {
+        cities: []
+    };
 
     postText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed imperdiet, orci nec dictum convallis, " +
         "ligula mauris vestibulum turpis, nec varius tortor quam at diam. Nullam a viverra nibh. " +
         "In tincidunt tempor lectus quis vulputate. Pellentesque nec dui aliquam, lobortis est in, lobortis ante";
-    post = (<Post text={this.postText}/>);
 
-
-    cities = [
-        {name: 'New York', code: 'NY'},
-        {name: 'Rome', code: 'RM'},
-        {name: 'London', code: 'LDN'},
-        {name: 'Istanbul', code: 'IST'},
-        {name: 'Paris', code: 'PRS'}
-    ];
-    select = () => (
-        <MultiSelect
-            optionLabel="name"
-            value={this.state.cities}
-            options={this.cities}
-            onChange={e => this.setState({cities: e.value})}
-        />
-    );
-
-    calendar = (<Calendar/>);
-
-
-    state = {
-        cities: []
-    };
+    cities = [{
+        name: 'New York',
+        code: 'NY',
+    }, {
+        name: 'Rome',
+        code: 'RM',
+    }, {
+        name: 'London',
+        code: 'LDN',
+    }, {
+        name: 'Istanbul',
+        code: 'IST',
+    }, {
+        name: 'Paris',
+        code: 'PRS',
+    }];
 
     getItems = () => [{
         content: this.post,
         title: 'Plain text'
     }, {
-        content: this.select(),
+        content: this.renderSelect(),
         title: 'Select list'
     }, {
-        content: this.calendar,
+        content: this.renderCalendar(),
         title: 'Datetimepicker'
     }];
+
+    renderPost() {
+        return (
+            <Post text={this.postText}/>
+        );
+    }
+
+    renderCalendar() {
+        return <Calendar/>;
+    }
+
+    renderSelect() {
+        return (
+            <MultiSelect
+                optionLabel="name"
+                value={this.state.cities}
+                options={this.cities}
+                onChange={e => this.setState({cities: e.value})}
+            />
+        )
+    }
 
     render() {
         return (

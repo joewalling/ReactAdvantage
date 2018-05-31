@@ -1,9 +1,17 @@
-.sidebar-menu-wrapper {
+.articles-menu-wrapper {
     display: flex;
     align-items: center;
 }
 
-.button {
+.articles-sidebar {
+    padding-right: 0 !important;
+
+    @media(max-width: 640px) {
+        width: 100vw !important;
+    }
+}
+
+.artciles-menu-button {
     background: none;
     border: 0;
     cursor: pointer;
@@ -12,11 +20,14 @@
 }
 
 .articles-wrapper {
-    height: 100%;
+    height: calc(100% - 40px);
+    padding-right: 1em;
+    margin-top: 40px;
     overflow: auto;
 }
 
 .sidebar-title {
+    margin-top: 0;
     font-size: 2rem;
     font-weight: 400;
     color: #B3B3AB;

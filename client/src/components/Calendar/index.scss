@@ -1,11 +1,42 @@
-.ui-chkbox-box.ui-state-active, .ui-radiobutton-box.ui-state-active {
-    background: #263D5C !important;
-}
+.calendar {
+    .ui-chkbox-box.ui-state-active,
+    .ui-radiobutton-box.ui-state-active {
+        background: #263D5C;
+    }
 
-.ui-state-highlight {
-    background: #5A88C3 !important;
-}
+    .ui-state-highlight {
+        background: #5A88C3;
+    }
 
-.ui-datepicker-trigger {
-    background: #5A88C3 !important;
+    .ui-datepicker-header {
+        background: rgba(#F5F5F3, 0.6);
+    }
+
+    .ui-datepicker .ui-datepicker-prev {
+        color: #1E1E1E;
+    }
+
+    .ui-datepicker .ui-datepicker-next {
+        color: #1E1E1E;
+    }
+
+    .ui-inputtext {
+      background: #FFF;
+      color: #1E1E1E;
+    }
+
+    .ui-widget-content {
+        background: #F5F5F3;
+        color: #1E1E1E;
+    }
+
+    .ui-datepicker.ui-widget .ui-datepicker-calendar td a {
+        background: #FFF;
+        color: #1E1E1E;
+    }
+
+    .ui-datepicker.ui-widget .ui-datepicker-calendar thead th {
+        background: rgba(#5A88C3, 0.2);
+        color: #1E1E1E;
+    }
 }

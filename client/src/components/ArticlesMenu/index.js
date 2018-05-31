@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faStream from '@fortawesome/fontawesome-free-solid/faStream';
 import Sidebar from 'components/Sidebar';
 import Article from 'components/Article';
 import './index.css';
@@ -17,6 +15,14 @@ export default class SidebarMenu extends Component {
         modalRoot.removeChild(this.el);
     }
 
+    onSidebarHide = () => {
+        this.toggleSidebar(false);
+    }
+
+    onSidebarButtonClick = () => {
+        this.toggleSidebar();
+    }
+
     state = {
         visible: false
     }
@@ -25,30 +31,45 @@ export default class SidebarMenu extends Component {
 
     el = document.createElement('div');
 
-    toggleSidebar = () => {
+    toggleSidebar = (state = null) => {
         this.setState({
-            visible: !this.state.visisble
+            visible: state === null
+                ? !this.state.visible
+                : state
         });
     }
 
-    render() {
-        const items = this.articles
-            .map((article, index) => (<Article key={index} index={index} article={article}/>));
+    renderArticles() {
+        return this.articles
+            .map((article, index) => (
+                <Article
+                    key={index}
+                    index={index}
+                    article={article}
+                />
+            )
+        );
+    }
 
+    render() {
         return (
-            <div className="sidebar-menu-wrapper">
-                <button onClick={this.toggleSidebar} className="button">
-                    <FontAwesomeIcon className="far" icon={faStream} />
+            <div className="artciles-menu-wrapper">
+                <button
+                    onClick={this.onSidebarButtonClick}
+                    className="artciles-menu-button"
+                >
+                    <i className="fa far fa-list-alt" />
                 </button>
                 {ReactDOM.createPortal(
                   <Sidebar
+                        className="articles-sidebar"
                         position="right"
                         visible={this.state.visible}
-                        onHide={() => this.setState({ visible: false })}
+                        onHide={this.onSidebarHide}
                     >
                         <div className="articles-wrapper">
                             <h2 className="sidebar-title">What's new?</h2>
-                            {items}
+                            {this.renderArticles()}
                         </div>
                     </Sidebar>,
                   this.el,

@@ -14,17 +14,22 @@
 
 .header-bar-button {
   display: none;
-  margin-right: 4px;
+  padding: 0;
+  margin-right: 15px;
   border: 0;
   background: none;
   font-size: 1.5rem;
   cursor: pointer;
-  padding: 0;
-  margin-right: 15px;
   color: rgba(179, 179, 171, 0.8); }
   @media (max-width: 1025px) {
     .header-bar-button {
       display: block; } }
+
+.header-top-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  background: #FFF; }
 
 .header-top {
   display: flex;
@@ -34,7 +39,6 @@
   z-index: 4;
   max-width: 1340px;
   height: 90px;
-  padding: 0 30px;
   margin: 0 auto;
   background: #FFF; }
   @media (max-width: 1025px) {
@@ -42,40 +46,45 @@
       flex-wrap: wrap;
       height: 70px; } }
 
-@media (max-width: 1025px) {
-  .header-left {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 70px;
-    background: #FFF; } }
+.header-left {
+  width: 100%;
+  max-width: 1340px;
+  margin: 0 auto;
+  padding: 0 30px; }
+  @media (max-width: 1025px) {
+    .header-left {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 70px;
+      background: #FFF; } }
 
-@media (max-width: 1025px) {
-  .header-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    order: 3;
-    flex: 100% 3;
-    flex-shrink: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding: 0 40px;
-    box-sizing: border-box;
-    margin-left: -30px;
-    transition: top .2s ease;
-    background-color: #FFF; }
-    .header-right.show-controls {
-      top: 100%;
-      box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1); } }
-
-@media (max-width: 640px) {
-  .header-right {
-    justify-content: center; } }
+.header-right {
+  padding: 0 30px; }
+  @media (max-width: 1025px) {
+    .header-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      order: 3;
+      flex: 100% 3;
+      flex-shrink: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      padding: 0 40px 5px;
+      box-sizing: border-box;
+      transition: top .2s ease;
+      background-color: #FFF; }
+      .header-right.show-controls {
+        top: 100%;
+        box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1); } }
+  @media (max-width: 640px) {
+    .header-right {
+      justify-content: center; } }
 
 .logo img {
   max-width: 135px; }
@@ -84,7 +93,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-right: 100px; }
+  margin-right: 55px; }
   @media (max-width: 1025px) {
     .options {
       margin-right: 0; } }
@@ -105,7 +114,7 @@
   height: 70px;
   padding: 0 30px;
   transform: translate(0, 0);
-  background: #5a88c3;
+  background: #5A88C3;
   box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1);
   transition: transform .2s ease; }
   .header-bottom.hide {
@@ -124,8 +133,7 @@
   @media (max-width: 1025px) {
     .menu {
       flex-wrap: wrap;
-      padding-top: 35px;
-      box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1); } }
+      padding-top: 35px; } }
   .menu li {
     position: relative;
     display: flex;
@@ -149,7 +157,7 @@
         .menu li a.active {
           background: rgba(90, 136, 195, 0.1); } }
       .menu li a.active::after {
-        content: " ";
+        content: "";
         position: absolute;
         top: 100%;
         left: 50%;
@@ -179,6 +187,9 @@
   @media (max-width: 1025px) {
     .mobile-menu-wrapper {
       display: block; } }
+  @media (max-width: 640px) {
+    .mobile-menu-wrapper {
+      width: 100vw !important; } }
 
 .controls-button {
   display: none;
@@ -196,14 +207,16 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1; }
+  z-index: 1;
+  transition: transform 200ms ease-in-out, top 200ms ease-in-out; }
 
 .headroom--unfixed {
-  position: relative;
+  position: fixed;
+  top: 90px;
   transform: translateY(0); }
 
 .headroom--scrolled {
-  transition: transform 200ms ease-in-out; }
+  transition: transform 200ms ease-in-out, top 200ms ease-in-out; }
 
 .headroom--unpinned {
   position: fixed;
@@ -212,10 +225,3 @@
 .headroom--pinned {
   position: fixed;
   transform: translateY(calc(0% + 90px)); }
-
-.placeholder {
-  position: absolute;
-  width: 100%;
-  background: #FFF;
-  height: 90px;
-  z-index: 3; }

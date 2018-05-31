@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'; // ES6
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faBell from '@fortawesome/fontawesome-free-solid/faBell';
-import faUserCircle from '@fortawesome/fontawesome-free-solid/faUserCircle';
-import faSyncAlt from '@fortawesome/fontawesome-free-solid/faSyncAlt';
-import faCogs from '@fortawesome/fontawesome-free-solid/faCogs';
-import faQuestionCircle from '@fortawesome/fontawesome-free-solid/faQuestionCircle';
-import faLifeRing from '@fortawesome/fontawesome-free-solid/faLifeRing';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import Button from 'components/Button';
 import image from './assets/user.jpg';
 import './index.css';
@@ -19,6 +12,10 @@ export default class ProfileMenu extends Component {
 
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
+    }
+
+    onProfileClick = () => {
+        this.toggleMenu();
     }
 
     setMenuRef = ref => {
@@ -34,24 +31,24 @@ export default class ProfileMenu extends Component {
     }
 
     links = [{
-        icon: <FontAwesomeIcon className="far" icon={faUserCircle} />,
+        icon: <i className="fa fa-user-circle" />,
         link: '',
         text: 'My profile',
         counter: true
     }, {
-        icon: <FontAwesomeIcon className="far" icon={faSyncAlt} />,
+        icon: <i className="fa fa-superpowers" />,
         link: '',
         text: 'Activity',
     }, {
-        icon: <FontAwesomeIcon className="far" icon={faCogs} />,
+        icon: <i className="fa fa-cogs" />,
         link: '',
         text: 'My settings',
     }, {
-        icon: <FontAwesomeIcon className="far" icon={faQuestionCircle} />,
+        icon: <i className="fa fa-question-circle" />,
         link: '',
         text: 'Faq',
     }, {
-        icon: <FontAwesomeIcon className="far" icon={faLifeRing} />,
+        icon: <i className="fa fa-life-ring" />,
         link: '',
         text: 'Support',
     }];
@@ -61,7 +58,7 @@ export default class ProfileMenu extends Component {
             showMenu: state === null
                 ? !this.state.showMenu
                 : state
-        })
+        });
     }
 
     handleClickOutside = ({ target }) => {
@@ -89,36 +86,47 @@ export default class ProfileMenu extends Component {
 
     renderProfileMenu() {
         return (
-            <div
-                key="profile-menu"
-                className="profile-menu-wrapper"
-                ref={this.setMenuRef}
+            <CSSTransition
+                classNames="fade"
+                timeout={{ enter: 500, exit: 300 }}
             >
-                <div className="profile-menu">
-                    <div className="profile-preview">
-                        <div className="profile-preview-photo">
-                            <img src={image}/>
-                        </div>
-                        <div className="profile-preview-info">
-                            <div className="profile-preview-info-name">
-                                Mark Andre
+                <div
+                    key="profile-menu"
+                    className="profile-menu-wrapper"
+                    ref={this.setMenuRef}
+                >
+                    <div className="profile-menu">
+                        <div className="profile-preview">
+                            <div className="profile-preview-photo">
+                                <img src={image} alt="avatar" />
                             </div>
-                            <a className="profile-preview-info-email">
-                                forcu2mblog@gmail.com
-                            </a>
+                            <div className="profile-preview-info">
+                                <div
+                                    className="profile-preview-info-name"
+                                    title="Mark Andre"
+                                >
+                                    Mark Andre
+                                </div>
+                                <a
+                                    className="profile-preview-info-email"
+                                    title="forcu2mblog@gmail.com"
+                                >
+                                    forcu2mblog@gmail.com
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                    <div className="profile-content">
-                        <ul className="profile-links">
-                            {this.renderLinks()}
-                        </ul>
-                        <Button
-                            className="profile-content-logout"
-                            label="Logout"
-                        />
+                        <div className="profile-content">
+                            <ul className="profile-links">
+                                {this.renderLinks()}
+                            </ul>
+                            <Button
+                                className="profile-content-logout"
+                                label="Logout"
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </CSSTransition>
         );
     }
 
@@ -127,20 +135,17 @@ export default class ProfileMenu extends Component {
 
         return (
             <div className="profile">
-                <div
-                    onClick={() => this.toggleMenu()}
-                    className="photo"
+                <button
+                    onClick={this.onProfileClick}
+                    className="photo-button"
                     ref={this.setTogglerRef}
                 >
-                    <img src={image} />
-                </div>
-                <ReactCSSTransitionGroup
-                    transitionName="example"
-                    transitionEnterTimeout={500}
-                    transitionLeaveTimeout={300}
+                    <img src={image} alt="avatar" />
+                </button>
+                <TransitionGroup
                 >
                     {showMenu && this.renderProfileMenu()}
-                </ReactCSSTransitionGroup>
+                </TransitionGroup>
             </div>
         );
     }
