@@ -103,15 +103,15 @@ export default class ProfileMenu extends Component {
                             <div className="profile-preview-info">
                                 <div
                                     className="profile-preview-info-name"
-                                    title="Mark Andre"
+                                    title="John Doe"
                                 >
-                                    Mark Andre
+                                    John Doe
                                 </div>
                                 <a
                                     className="profile-preview-info-email"
-                                    title="forcu2mblog@gmail.com"
+                                    title="johndoe@somewebsite.com"
                                 >
-                                    forcu2mblog@gmail.com
+                                    johndoe@somewebsite.com
                                 </a>
                             </div>
                         </div>
