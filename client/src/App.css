@@ -1,22 +1,35 @@
 body {
   font-size: 14px;
-  font-family: 'Robot', sans-serif; }
+  font-family: 'Roboto', sans-serif; }
+  body .ui-widget-content {
+    color: #1E1E1E; }
+  body .ui-widget-header .ui-button,
+  body .ui-widget-content .ui-button,
+  body .ui-widget.ui-button,
+  body .ui-button {
+    background: #5A88C3; }
+  body .ui-widget-header .ui-button:enabled:hover,
+  body .ui-widget-header .ui-button:focus,
+  body .ui-widget-content .ui-button:enabled:hover,
+  body .ui-widget-content .ui-button:focus,
+  body .ui-widget.ui-button:enabled:hover,
+  body .ui-widget.ui-button:focus,
+  body .ui-button:enabled:hover,
+  body .ui-button:focus {
+    background: rgba(90, 136, 195, 0.8); }
+  body .ui-widget-header {
+    background: linear-gradient(to bottom, #FFF 0%, #F5F5F3 100%); }
 
-body .ui-widget-header .ui-button,
-body .ui-widget-content .ui-button,
-body .ui-widget.ui-button,
-body .ui-button {
-  background: #5A88C3; }
+.modal-root {
+  font-size: 1.5rem; }
 
-body .ui-widget-header .ui-button:enabled:hover,
-body .ui-widget-header .ui-button:focus,
-body .ui-widget-content .ui-button:enabled:hover,
-body .ui-widget-content .ui-button:focus,
-body .ui-widget.ui-button:enabled:hover,
-body .ui-widget.ui-button:focus,
-body .ui-button:enabled:hover,
-body .ui-button:focus {
-  background: rgba(90, 136, 195, 0.8); }
+.app .ui-widget-content a,
+.modal-root .ui-widget-content a {
+  color: #5A88C3; }
 
-#modal-root {
-  font-size: 1rem; }
+.app .ui-sidebar .ui-sidebar-close,
+.modal-root .ui-sidebar .ui-sidebar-close {
+  color: #B3B3AB; }
+  .app .ui-sidebar .ui-sidebar-close:hover,
+  .modal-root .ui-sidebar .ui-sidebar-close:hover {
+    color: #1E1E1E; }

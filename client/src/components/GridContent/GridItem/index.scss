@@ -6,9 +6,18 @@
         margin-bottom: 20px;
         border-right: 0;
         border-bottom: 1px solid rgba(#1E1E1E, 0.2);
+        box-shadow: 0 1px 15px 1px rgba(81,77,92,.08);
     }
 
     &:last-child {
         border-right: 0;
     }
+}
+
+.grid-item-title {
+    color: #1E1E1E;
+    font-size: 1.5rem;
+    font-family: 'Roboto', sans-serif;
+    padding-bottom: 1rem;
+    margin: 0;
 }

@@ -6,9 +6,6 @@
   justify-content: space-between;
   align-items: center; }
 
-.article-tag {
-  color: #B3B3AB; }
-
 .article-bottom {
   padding-left: 15px;
   padding-top: 15px;
@@ -20,32 +17,19 @@
   font-size: 1rem;
   color: rgba(30, 30, 30, 0.6); }
 
+.article-date {
+  font-size: 1rem;
+  color: #B3B3AB; }
+
 .article-text {
   font-size: 1rem;
-  font-family: 'Roboto', sans-serif; }
+  color: #1E1E1E; }
 
 .article-link {
   display: inline-block;
   font-size: 1rem;
-  color: #5A88C3 !important;
+  color: #5A88C3;
   border-bottom: 1px dotted #5A88C3;
   text-decoration: none; }
   .article-link:hover {
     border-bottom-color: transparent; }
-
-.tag {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-  background: #5A88C3;
-  border-radius: 5px;
-  color: #FFF; }
-  .tag.enhancement {
-    background: #edc02f; }
-
-.tag-icon {
-  margin-right: 5px; }
-
-.tag-text {
-  font-size: 1rem; }

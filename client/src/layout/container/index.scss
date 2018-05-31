@@ -1,7 +1,8 @@
 .root-content-wrapper {
     width: 100%;
     max-width: 1340px;
-    padding-top: 160px;
+    padding: 160px 1rem 0;
+    box-sizing: border-box;
     margin: 0 auto;
 
     @media(max-width: 1025px) {

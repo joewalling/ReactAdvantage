@@ -1,0 +1,18 @@
+.tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-radius: 5px;
+  color: #FFF; }
+  .tag.announcement {
+    background: #5A88C3; }
+  .tag.enhancement {
+    background: #EDC02F; }
+
+.tag-icon {
+  margin-right: 8px;
+  font-size: 1rem; }
+
+.tag-text {
+  font-size: 1rem; }

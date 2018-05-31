@@ -2,12 +2,18 @@
     position: relative;
 }
 
-.photo {
+.photo-button {
     cursor: pointer;
+    background: none;
+    border: 0;
 
     img {
         max-width: 41px;
         border-radius: 50%;
+
+        @media (max-width: 1025px) {
+            width: 31px;
+        }
     }
 }
 
@@ -37,17 +43,17 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
-    padding: 20px !important;
+    padding: 20px;
     background: #263D5C;
 
     &::after {
+        content: "";
+        position: absolute;
         bottom: 100%;
         left: 50%;
-        border: solid transparent;
-        content: " ";
         height: 0;
         width: 0;
-        position: absolute;
+        border: solid transparent;
         pointer-events: none;
         border-color: rgba(38, 61, 92, 0);
         border-bottom-color: #263D5C;
@@ -69,22 +75,37 @@
 .profile-preview-info {
     padding-left: 15px;
     flex-grow: 1;
+
+    @media (max-width: 1025px) {
+        max-width: 135px;
+    }
+
+    @media (max-width: 640px) {
+        max-width: 100%;
+    }
 }
 
 .profile-preview-info-name {
+    width: 100%;
     margin-bottom: 5px;
     color: #B3B3AB;
     font-size: 1.3rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-preview-info-email {
+    display: block;
+    width: 100%;
     font-size: 1rem;
     color: #5A88C3;
     cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .profile-content {
-    padding: 20px !important;
+    padding: 20px;
 }
 
 .profile-links {
@@ -105,8 +126,6 @@
     display: flex;
     align-items: center;
     position: relative;
-    // margin-top: 9px;
-    // margin-bottom: 8px;
     text-decoration: none;
     color: #B3B3AB;
     font-size: 1rem;
@@ -123,7 +142,7 @@
         min-height: 20px;
         min-width: 20px;
         padding: 0 3px;
-        background: #5a88c3;
+        background: #5A88C3;
         border-radius: 50%;
         font-size: .8rem;
         line-height: 26px;
@@ -144,26 +163,24 @@
     margin-top: 21px;
 }
 
-// @todo Rename
-
-.example-enter {
-  opacity: 0.01;
-  transform: translate(-50%, 20px);
+.fade-enter {
+    opacity: 0.01;
+    transform: translate(-50%, 20px);
 }
 
-.example-enter.example-enter-active {
-  opacity: 1;
-  transform: translate(-50%, 0);
-  transition: opacity 200ms ease-in, transform 200ms ease-in;
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition: opacity 200ms ease-in, transform 200ms ease-in;
 }
 
-.example-leave {
-  opacity: 1;
-  transform: translate(-50%, 0);
+.fade-exit {
+    opacity: 1;
+    transform: translate(-50%, 0);
 }
 
-.example-leave.example-leave-active {
-  opacity: 0.01;
-  transform: translate(-50%, 20px);
-  transition: opacity 200ms ease-in, transform 200ms ease-in;
+.fade-exit.fade-exit-active {
+    opacity: 0.01;
+    transform: translate(-50%, 20px);
+    transition: opacity 200ms ease-in, transform 200ms ease-in;
 }

@@ -1,3 +1,7 @@
 .grid-row {
     box-shadow: 0 1px 15px 1px rgba(81,77,92,.08);
+
+    @media(max-width: 640px) {
+        box-shadow: none;
+    }
 }

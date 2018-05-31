@@ -6,7 +6,7 @@ import './index.css';
 export default class Calendar extends Component {
     render() {
         return (
-            <div >
+            <div className="calendar">
                 <PrimeCalendar className="ui-datepicker-trigger" showIcon {...this.props} />
             </div>
         );

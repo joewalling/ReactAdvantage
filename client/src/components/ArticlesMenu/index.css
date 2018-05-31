@@ -1,0 +1,28 @@
+.articles-menu-wrapper {
+  display: flex;
+  align-items: center; }
+
+.articles-sidebar {
+  padding-right: 0 !important; }
+  @media (max-width: 640px) {
+    .articles-sidebar {
+      width: 100vw !important; } }
+
+.artciles-menu-button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #5A88C3; }
+
+.articles-wrapper {
+  height: calc(100% - 40px);
+  padding-right: 1em;
+  margin-top: 40px;
+  overflow: auto; }
+
+.sidebar-title {
+  margin-top: 0;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #B3B3AB; }
