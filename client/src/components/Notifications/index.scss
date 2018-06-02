@@ -5,3 +5,73 @@
     font-size: 1rem;
     color: #5A88C3;
 }
+
+.notifications {
+    position: relative;
+
+    @media (max-width: 640px) {
+        position: static;
+    }
+}
+
+.notifications-animation-wrapper {
+    position: absolute;
+    top: 45px;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    @media (max-width: 640px) {
+        left: 5vw;
+        transform: none;
+    }
+}
+
+.notifications-popup {
+    width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    min-height: 400px;
+    background: #FFF;
+    border-radius: 3px;
+    box-shadow: 0 0 15px 1px rgba(81,77,92,.2);
+
+    @media (max-width: 640px) {
+        width: 90vw;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        height: 0;
+        width: 0;
+        border: solid transparent;
+        pointer-events: none;
+        border-color: rgba(#FFF, 0);
+        border-bottom-color: #FFF;
+        border-width: 10px;
+        margin-left: -10px;
+
+        @media (max-width: 640px) {
+            display: none;
+        }
+    }
+}
+
+.notifications-popup-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(#B3B3AB, 0.5);
+    text-align: center;
+}
+
+.notifications-popup-header-title {
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+    color: #1E1E1E;
+}
+
+.notifications-popup-header-subtitle {
+    font-size: 1rem;
+    color: #B3B3AB;
+}

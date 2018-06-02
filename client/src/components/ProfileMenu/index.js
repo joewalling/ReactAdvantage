@@ -1,29 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { TransitionGroup } from 'react-transition-group';
 import Button from 'components/Button';
+import FadeInContainer from 'components/FadeInContainer';
+import HideOnClickOutsideContainer from 'components/HideOnClickOutsideContainer';
 import image from './assets/user.jpg';
 import './index.css';
 
 export default class ProfileMenu extends Component {
-    componentDidMount() {
-        document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-    componentWillUnmount() {
-        document.removeEventListener('mousedown', this.handleClickOutside);
-    }
-
     onProfileClick = () => {
         this.toggleMenu();
-    }
-
-    setMenuRef = ref => {
-        this.menuRef = ref;
-    }
-
-    setTogglerRef = ref => {
-        this.togglerRef = ref;
     }
 
     state = {
@@ -61,13 +47,6 @@ export default class ProfileMenu extends Component {
         });
     }
 
-    handleClickOutside = ({ target }) => {
-        this.menuRef
-            && !this.menuRef.contains(target)
-            && !this.togglerRef.contains(target)
-            && this.toggleMenu(false)
-    }
-
     renderLinks() {
         return this.links.map(({ icon, link, text, counter }, index) => (
             <li key={index}>
@@ -86,14 +65,10 @@ export default class ProfileMenu extends Component {
 
     renderProfileMenu() {
         return (
-            <CSSTransition
-                classNames="fade"
-                timeout={{ enter: 500, exit: 300 }}
-            >
+            <FadeInContainer>
                 <div
                     key="profile-menu"
                     className="profile-menu-wrapper"
-                    ref={this.setMenuRef}
                 >
                     <div className="profile-menu">
                         <div className="profile-preview">
@@ -126,7 +101,7 @@ export default class ProfileMenu extends Component {
                         </div>
                     </div>
                 </div>
-            </CSSTransition>
+            </FadeInContainer>
         );
     }
 
@@ -134,19 +109,23 @@ export default class ProfileMenu extends Component {
         const { showMenu } = this.state;
 
         return (
-            <div className="profile">
-                <button
-                    onClick={this.onProfileClick}
-                    className="photo-button"
-                    ref={this.setTogglerRef}
-                >
-                    <img src={image} alt="avatar" />
-                </button>
-                <TransitionGroup
-                >
-                    {showMenu && this.renderProfileMenu()}
-                </TransitionGroup>
-            </div>
+            <HideOnClickOutsideContainer
+                onHide={() => this.toggleMenu(false)}
+            >
+                <div className="profile">
+                    <button
+                        onClick={this.onProfileClick}
+                        className="photo-button"
+                    >
+                        <img src={image} alt="avatar" />
+                    </button>
+                    <div className="profile-menu-animation">
+                        <TransitionGroup>
+                            {showMenu && this.renderProfileMenu()}
+                        </TransitionGroup>
+                    </div>
+                </div>
+            </HideOnClickOutsideContainer>
         );
     }
 }
