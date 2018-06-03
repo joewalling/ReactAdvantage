@@ -17,11 +17,14 @@
     }
 }
 
-.profile-menu-wrapper {
+.profile-menu-animation {
     position: absolute;
     top: 135%;
     left: 50%;
     transform: translate(-50%, 0);
+}
+
+.profile-menu-wrapper {
     width: 245px;
     background: #fff;
 
@@ -161,26 +164,4 @@
 
 .profile-content-logout {
     margin-top: 21px;
-}
-
-.fade-enter {
-    opacity: 0.01;
-    transform: translate(-50%, 20px);
-}
-
-.fade-enter.fade-enter-active {
-    opacity: 1;
-    transform: translate(-50%, 0);
-    transition: opacity 200ms ease-in, transform 200ms ease-in;
-}
-
-.fade-exit {
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-
-.fade-exit.fade-exit-active {
-    opacity: 0.01;
-    transform: translate(-50%, 20px);
-    transition: opacity 200ms ease-in, transform 200ms ease-in;
 }

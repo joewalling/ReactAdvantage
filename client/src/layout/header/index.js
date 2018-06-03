@@ -153,13 +153,13 @@ export default class Header extends Component {
                         </div>
                         <div className={`header-right${controlsVisible ? ' show-controls' : ''}`}>
                             <div className="options">
-                                <div className="notifications">
+                                <div className="header-notifications">
                                     <Notifications />
                                 </div>
-                                <div className="profile">
+                                <div className="header-profile">
                                     <ProfileMenu />
                                 </div>
-                                <div className="news">
+                                <div className="header-news">
                                     <ArticlesMenu />
                                 </div>
                             </div>
