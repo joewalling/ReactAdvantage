@@ -8,6 +8,7 @@ import Container from 'layout/container';
 import Header from 'layout/header';
 import Dashboard from 'pages/Dashboard';
 import MenuItem1 from 'pages/MenuItem1';
+import Login from 'pages/Login';
 import './App.css';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
@@ -23,6 +24,7 @@ class App extends Component {
             <Container>
               <Switch>
                 <Route exact path="/" component={Dashboard} />
+                <Route exact path="/login" component={Login} />
                 <Route exact path="/menuitem1" component={MenuItem1} />
               </Switch>
             </Container>

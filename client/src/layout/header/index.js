@@ -6,7 +6,7 @@ import Notifications from 'components/Notifications';
 import ProfileMenu from 'components/ProfileMenu';
 import ArticlesMenu from 'components/ArticlesMenu';
 import Sidebar from 'components/Sidebar';
-import image from './assets/logo.png';
+import logo from 'assets/logo.png';
 
 import './index.css';
 
@@ -87,6 +87,15 @@ export default class Header extends Component {
                         MenuItem1
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink
+                        to="/login"
+                        activeClassName="active"
+                        exact
+                    >
+                        Login
+                    </NavLink>
+                </li>
             </ul>
         );
     }
@@ -146,7 +155,7 @@ export default class Header extends Component {
                         <div className="header-left">
                             <div className="logo">
                                 <Link to="/">
-                                    <img src={image} alt="Walling Info Systems" />
+                                    <img src={logo} alt="" />
                                 </Link>
                             </div>
                             {this.renderMobileButtons()}
