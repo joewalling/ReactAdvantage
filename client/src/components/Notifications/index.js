@@ -15,7 +15,7 @@ export default class Notifications extends Component {
     }
 
     state = {
-        showPopup: true,
+        showPopup: false,
     }
 
     togglePopup = (state = null) => {
