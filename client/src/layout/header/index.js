@@ -80,11 +80,11 @@ export default class Header extends Component {
                 </li>
                 <li>
                     <NavLink
-                        to="/menuitem1"
+                        to="/users"
                         activeClassName="active"
                         exact
                     >
-                        MenuItem1
+                        Users
                     </NavLink>
                 </li>
             </ul>

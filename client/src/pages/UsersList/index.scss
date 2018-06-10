@@ -1,0 +1,45 @@
+.users-list {
+    padding: 20px 5px 5px;
+    box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1);
+    border-radius: 3px;
+}
+
+.table {
+    background: #FFF;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.users-list-cell-value {
+    span {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.users-actions-cell {
+    width: 90px;
+    .ui-column-title {
+        @media(max-width: 641px) {
+            display: none !important;
+        }
+    }
+}
+
+.users-tag-cell {
+    .ui-column-title {
+        @media(max-width: 641px) {
+            min-width: 100px !important;
+        }
+    }
+}
+
+.table-header {
+    margin-bottom: 40px;
+}
+
+.table-select {
+    margin-bottom: 10px;
+}

@@ -1,0 +1,15 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; }
+  @media (max-width: 641px) {
+    .page-header {
+      flex-direction: column;
+      margin-bottom: 20px; } }
+  .page-header h2 {
+    color: #B3B3AB;
+    font-size: 1rem;
+    font-weight: 500; }
+    .page-header h2 span {
+      font-size: 1.2rem;
+      color: rgba(30, 30, 30, 0.7); }
