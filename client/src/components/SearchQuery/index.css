@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: fex-start;
   border-bottom: 1px solid #B3B3AB; }
-  @media (max-width: 641px) {
+  @media (max-width: 640px) {
     .filters-wrapper {
       position: relative; } }
 
@@ -59,7 +59,7 @@
 .filters {
   flex-basis: 80%; }
 
-@media (max-width: 641px) {
+@media (max-width: 640px) {
   .filters-search-button-wrapper {
     position: absolute;
     top: 0;

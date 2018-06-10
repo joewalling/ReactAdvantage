@@ -16,11 +16,11 @@
 
 .users-actions-cell {
   width: 90px; }
-  @media (max-width: 641px) {
+  @media (max-width: 640px) {
     .users-actions-cell .ui-column-title {
       display: none !important; } }
 
-@media (max-width: 641px) {
+@media (max-width: 640px) {
   .users-tag-cell .ui-column-title {
     min-width: 100px !important; } }
 

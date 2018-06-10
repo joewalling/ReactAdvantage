@@ -4,7 +4,7 @@
     align-items: fex-start;
     border-bottom: 1px solid #B3B3AB;
 
-    @media(max-width: 641px) {
+    @media(max-width: 640px) {
         position: relative;
     }
 }
@@ -86,7 +86,7 @@
 }
 
 .filters-search-button-wrapper {
-    @media(max-width: 641px) {
+    @media(max-width: 640px) {
         position: absolute;
         top: 0;
         right: 0;

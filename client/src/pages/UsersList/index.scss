@@ -22,7 +22,7 @@
 .users-actions-cell {
     width: 90px;
     .ui-column-title {
-        @media(max-width: 641px) {
+        @media(max-width: 640px) {
             display: none !important;
         }
     }
@@ -30,7 +30,7 @@
 
 .users-tag-cell {
     .ui-column-title {
-        @media(max-width: 641px) {
+        @media(max-width: 640px) {
             min-width: 100px !important;
         }
     }
