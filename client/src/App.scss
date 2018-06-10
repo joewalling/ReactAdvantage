@@ -24,8 +24,64 @@ body {
         background: rgba(#5A88C3, 0.8);
     }
 
+    .ui-widget-header .ui-button:enabled:hover,
+    .ui-widget-header .ui-button:focus,
+    .ui-widget-content .ui-button:enabled:hover,
+    .ui-widget-content .ui-button:focus,
+    .ui-widget.ui-button:enabled:hover,
+    .ui-widget.ui-button:focus,
+    .ui-button:enabled:hover,
+    .ui-button:focus {
+        border: 1px solid #5A88C3;
+    }
+
+    .ui-widget-content .ui-button,
+    .ui-widget.ui-button,
+    .ui-button {
+        border: 1px solid #5A88C3;
+    }
+
+    .ui-menu,
+    .ui-menu .ui-menu-child {
+        background: linear-gradient(to bottom, #FFF 0%, #F5F5F3 100%);
+    }
+
+    .ui-menu .ui-menuitem .ui-menuitem-link:hover {
+        background-color: #B3B3AB;
+    }
+
+    .ui-menu .ui-menuitem .ui-menuitem-link {
+        color: #1E1E1E;
+    }
+
     .ui-widget-header {
         background: linear-gradient(to bottom, #FFF 0%, #F5F5F3 100%);
+    }
+
+    .ui-datatable th.ui-state-default {
+        background-color: rgba(#F5F5F3, 0.4);
+        color: #1E1E1E;
+    }
+
+    .ui-datatable th.ui-sortable-column:not(.ui-state-active):hover {
+        background-color: #F5F5F3;
+    }
+
+    .ui-datatable th.ui-state-active {
+        background-color: rgba(#5A88C3, 0.9);
+        color: #FFF;
+    }
+
+    .ui-datatable tbody > tr.ui-widget-content.ui-datatable-odd {
+        background-color: rgba(#F5F5F3, 0.7);
+    }
+
+    .ui-paginator a {
+        color: #1E1E1E;
+    }
+
+    .ui-paginator .ui-paginator-page.ui-state-active {
+        background-color: #263D5C;
     }
 
     .ui-state-default {
