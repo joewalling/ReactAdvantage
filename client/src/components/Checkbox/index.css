@@ -1,0 +1,9 @@
+.checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer; }
+
+.checkbox-label {
+  font-size: 1em;
+  color: #B3B3AB;
+  cursor: pointer; }
