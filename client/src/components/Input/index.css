@@ -1,0 +1,11 @@
+.input {
+  width: 100%; }
+
+.input-wrapper {
+  position: relative; }
+
+.input-error {
+  position: absolute;
+  top: calc(100% + 2px);
+  color: #f44336;
+  font-size: 0.8rem; }

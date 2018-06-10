@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-
 import MultiSelect from "components/Select";
 import Calendar from "components/Calendar";
 import Post from "components/Post";
-import GridContent from "components/GridContent";
+import { GridWrapper, GridItem } from "components/Grid";
 
 import './index.css';
 
@@ -69,7 +68,17 @@ export default class Dashboard extends Component {
         return (
             <div className="dashboard">
                 <h2 className="dashboard-title">Dashboard</h2>
-                <GridContent items={this.getItems()}/>
+                <GridWrapper>
+                    <GridItem title="Post">
+                        {this.renderPost()}
+                    </GridItem>
+                    <GridItem title="Calendar">
+                        {this.renderCalendar()}
+                    </GridItem>
+                    <GridItem title="Select">
+                        {this.renderSelect()}
+                    </GridItem>
+                </GridWrapper>
                 Text for scrolling test:
                 <br/><br/><br/>
 

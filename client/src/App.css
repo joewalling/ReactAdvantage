@@ -53,6 +53,13 @@ body {
     color: #1E1E1E; }
   body .ui-paginator .ui-paginator-page.ui-state-active {
     background-color: #263D5C; }
+  body .ui-state-default {
+    border: 1px solid #B3B3AB; }
+  body .ui-state-error {
+    border-color: #F44336; }
+  body .ui-state-highlight {
+    background: #5A88C3;
+    border: 0; }
 
 .modal-root {
   font-size: 1.5rem; }
