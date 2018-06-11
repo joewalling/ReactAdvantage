@@ -1,0 +1,292 @@
+import React, { Component } from 'react';
+
+import Table, { Column } from 'components/Table';
+import ButtonMenu from 'components/ButtonMenu';
+import Dropdown from 'components/Dropdown';
+import Button from 'components/Button';
+import SearchQuery from 'components/SearchQuery';
+import PageHeader from 'components/PageHeader';
+import ConfirmTag from 'components/ConfirmTag';
+
+import './index.css';
+import users from './users';
+
+export default class UsersList extends Component {
+    constructor(props) {
+        super(props);
+
+        this.columns = [{
+            header: 'First Name',
+            field: 'firstName',
+            sortable: true,
+            body: this.renderCellTemplate,
+        }, {
+            header: 'Name',
+            field: 'name',
+            sortable: true,
+            body: this.renderCellTemplate,
+        }, {
+            header: 'Last Name',
+            field: 'lastName',
+            sortable: true,
+            body: this.renderCellTemplate,
+        }, {
+            header: 'Roles',
+            field: 'roles',
+            body: this.renderCellTemplate,
+        }, {
+            header: 'Email',
+            field: 'email',
+            sortable: true,
+            body: this.renderCellTemplate,
+        }, {
+            header: 'Email Confirm',
+            field: 'emailConfirm',
+            sortable: true,
+            body: this.renderTag,
+            className: 'users-tag-cell'
+        }, {
+            header: 'Active',
+            field: 'active',
+            sortable: true,
+            body: this.renderTag,
+            className: 'users-tag-cell'
+        }, {
+            header: '',
+            field: 'actions',
+            body: this.renderActionsTemplate,
+            className: 'users-actions-cell',
+        }];
+    }
+
+    onDropdownChange = ({ value }) => {
+        this.setState({
+            entries: value,
+        });
+    }
+
+    onFilterChange = data => {
+        this.setState({
+            query: data.query,
+        });
+    }
+
+    onSearch = () => {
+        console.log(`Search, query is: ${this.state.query}`);
+    }
+
+    setTableRef = ref => {
+        this.tableRef = ref && ref.tableRef;
+    }
+
+    state = {
+        entries: 10,
+        filter: [],
+        query: '',
+    };
+
+    entries = [{
+        label: 'Show 2 entries',
+        value: 2,
+    }, {
+        label: 'Show 10 entries',
+        value: 10,
+    }, {
+        label: 'Show 50 entries',
+        value: 50,
+    }, {
+        label: 'Show 100 entries',
+        value: 100,
+    }];
+
+    fields = [{
+        name: 'firstName',
+        operators: 'all',
+        label: 'First Name',
+        input: {
+            type: 'text'
+        }
+    }, {
+        name: 'name',
+        operators: 'all',
+        label: 'Name',
+        input: {
+            type: 'text'
+        }
+    }, {
+        name: 'lastName',
+        operators: 'all',
+        label: 'Last Name',
+        input: {
+            type: 'text'
+        }
+     }, {
+        name: 'roles',
+        operators: ['='],
+        label: 'Roles',
+        input: {
+            type: 'text'
+        },
+    }, {
+        name: 'email',
+        operators: 'all',
+        label: 'Email',
+        input: {
+            type: 'text'
+        },
+    }];
+
+    normalizeUsers(users) {
+        const normalizedUsers = users.map(user => ({
+            ...user,
+            active: user.active ? 'Yes' : 'No',
+            emailConfirm: user.emailConfirm ? 'Yes' : 'No',
+            actions: this.renderButtonMenu(user.id),
+        }));
+
+        return normalizedUsers;
+    }
+
+    renderButtonMenu(id) {
+        const actionItems = [{
+            label: 'Permissions',
+            icon: '',
+            command: e => console.log(`Permissions has been clicked, id is: ${id}`),
+        }, {
+            label: 'Unlock',
+            icon: '',
+            command: e => console.log(`Unlock has been clicked, id is: ${id}`),
+        }, {
+            label: 'Delete',
+            icon: '',
+            command: e => console.log(`Delete has been clicked, id is: ${id}`),
+        }];
+
+        return (
+            <ButtonMenu
+                label="Edit"
+                items={actionItems}
+                onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+            />
+        );
+    }
+
+    renderCellTemplate = (rowData, field) => {
+        const content = field === 'actions'
+            ? rowData[field]
+            : (
+                <div
+                    title={typeof rowData[field] === 'string' ? rowData[field] : '' }
+                    className="users-list-cell-value"
+                >
+                    <span>{rowData[field]}</span>
+                </div>
+            );
+
+        return content;
+    }
+
+    renderActionsTemplate = (rowData, field) => {
+        return (
+            <div className="actions-cell">
+                {rowData[field]}
+            </div>
+        );
+    }
+
+    renderTag = (rowData, field) => {
+        return (
+            <ConfirmTag active={rowData[field] === 'Yes'}>
+                {rowData[field]}
+            </ConfirmTag>
+        );
+    }
+
+    renderDropdown() {
+        return (
+            <div className="table-select">
+                <Dropdown
+                    options={this.entries}
+                    value={this.state.entries}
+                    onChange={this.onDropdownChange}
+                />
+            </div>
+        );
+    }
+
+    renderColumn = ({
+        header,
+        field,
+        sortable,
+        body,
+        className,
+    },
+        index
+    ) => {
+        return (
+            <Column
+                key={index}
+                sortable={sortable}
+                header={header}
+                field={field}
+                body={rowData => body(rowData, field)}
+                className={className}
+            />
+        );
+    }
+
+    renderTableHeader() {
+        return (
+            <SearchQuery
+                fields={this.fields}
+                onChange={this.onFilterChange}
+                onSearch={this.onSearch}
+            />
+        );
+    }
+
+    renderHeaderActions() {
+        return [
+            <Button
+                key="export"
+                onClick={() => this.tableRef.exportCSV()}
+            >
+                Export
+            </Button>,
+            <Button key="create-user">Create new user</Button>
+        ];
+    }
+
+    renderHeader() {
+        return (
+            <PageHeader
+                title="Users"
+                subtitle="Manage users and permission."
+                actions={this.renderHeaderActions()}
+            />
+        );
+    }
+
+    render() {
+        return (
+            <section className="users-list">
+                {this.renderHeader()}
+                <div className="table">
+                    <div className="table-header">
+                        {this.renderTableHeader()}
+                    </div>
+                    {this.renderDropdown()}
+                    <Table
+                        value={this.normalizeUsers(users)}
+                        rows={this.state.entries}
+                        ref={this.setTableRef}
+                        responsive
+                        paginator
+                    >
+                        {this.columns.map(this.renderColumn)}
+                    </Table>
+                </div>
+            </section>
+        );
+    }
+}
