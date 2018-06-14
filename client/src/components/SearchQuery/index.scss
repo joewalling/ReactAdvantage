@@ -33,6 +33,7 @@
     .rule {
         box-shadow: none;
         flex-wrap: wrap;
+        align-items: stretch;
 
         @media (max-width: 640px) {
             flex-direction: column;
@@ -90,5 +91,14 @@
         position: absolute;
         top: 0;
         right: 0;
+    }
+}
+
+.filters-dropdown {
+    margin-right: 0.25em;
+
+    .ui-dropdown-panel,
+    .ui-dropdown-items-wrapper {
+        margin-left: 0;
     }
 }

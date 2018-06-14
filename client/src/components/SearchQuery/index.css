@@ -24,7 +24,8 @@
         justify-content: center; } }
   .search-query-wrapper .rule {
     box-shadow: none;
-    flex-wrap: wrap; }
+    flex-wrap: wrap;
+    align-items: stretch; }
     @media (max-width: 640px) {
       .search-query-wrapper .rule {
         flex-direction: column;
@@ -64,3 +65,9 @@
     position: absolute;
     top: 0;
     right: 0; } }
+
+.filters-dropdown {
+  margin-right: 0.25em; }
+  .filters-dropdown .ui-dropdown-panel,
+  .filters-dropdown .ui-dropdown-items-wrapper {
+    margin-left: 0; }

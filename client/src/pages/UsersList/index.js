@@ -147,6 +147,12 @@ export default class UsersList extends Component {
         return normalizedUsers;
     }
 
+    normalizeHiddenTableValue(value) {
+        return value.map(({ actions, ...restValue }) => ({
+            ...restValue
+        }));
+    }
+
     renderButtonMenu(id) {
         const actionItems = [{
             label: 'Permissions',
@@ -267,7 +273,44 @@ export default class UsersList extends Component {
         );
     }
 
+    renderTable(value, columns) {
+        return (
+            <Table
+                value={value}
+                rows={this.state.entries}
+                responsive
+                paginator
+            >
+                {columns}
+            </Table>
+        );
+    }
+
+    renderHiddenTable(value, columns) {
+        /**
+         * Since there is no way to hide "actions" cell
+         * in exported csv we have to render hidden table
+         * without this cell and use "export" method on it.
+         * see docs https://www.primefaces.org/primereact/#/datatable/export
+         */
+        return (
+            <Table
+                value={this.normalizeHiddenTableValue(value)}
+                rows={this.state.entries}
+                ref={this.setTableRef}
+                responsive
+                paginator
+                className="hidden-table"
+            >
+                {columns.slice(0, -1)}
+            </Table>
+        );
+    }
+
     render() {
+        const tableValue = this.normalizeUsers(users);
+        const columns = this.columns.map(this.renderColumn);
+
         return (
             <section className="users-list">
                 {this.renderHeader()}
@@ -276,15 +319,8 @@ export default class UsersList extends Component {
                         {this.renderTableHeader()}
                     </div>
                     {this.renderDropdown()}
-                    <Table
-                        value={this.normalizeUsers(users)}
-                        rows={this.state.entries}
-                        ref={this.setTableRef}
-                        responsive
-                        paginator
-                    >
-                        {this.columns.map(this.renderColumn)}
-                    </Table>
+                    {this.renderTable(tableValue, columns)}
+                    {this.renderHiddenTable(tableValue, columns)}
                 </div>
             </section>
         );
