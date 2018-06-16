@@ -3,20 +3,10 @@ import { GridWrapper, GridItem } from "components/Grid";
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Checkbox from 'components/Checkbox';
-import validators from 'utils/validators';
-import {
-    REQUIRED,
-    EMAIL,
-    PASSWORDS_MATCH,
-} from 'constants/validationMessages';
+import validateForm from 'utils/validateForm';
+import { PASSWORDS_MATCH } from 'constants/validationMessages';
 import logo from 'assets/logo.png';
 import './index.css';
-
-const validationMessages = {
-    isFilled: REQUIRED,
-    isEmail: EMAIL,
-    passwordsMatch: PASSWORDS_MATCH,
-}
 
 export default class Login extends Component {
     onChange = (name, value) => {
@@ -169,38 +159,17 @@ export default class Login extends Component {
     }
 
     validateForm() {
-        const { form } = this.state;
-        let formValid = true;
-
-        Object.keys(form).forEach(key => {
-            if (!form[key].validators) {
-                return;
-            }
-
-            const errorMessage = form[key].validators
-                .reduce((errorMessage, validatorKey) => {
-                    const isFieldValid = validators[validatorKey](form[key].value);
-
-                    if (isFieldValid) {
-                        return errorMessage;
-                    }
-
-                    formValid = false;
-
-                    return validationMessages[validatorKey];
-                }, '');
-
-            form[key].error = errorMessage;
-        });
+        const { form: defaultForm } = this.state;
+        let { isFormValid, form } = validateForm(defaultForm);
 
         if (
             this.state.formType === 'resetPassword' &&
             form.password.value !== form.repeatPassword.value
         ) {
-            form.repeatPassword.error = validationMessages.passwordsMatch;
+            form.repeatPassword.error = PASSWORDS_MATCH;
             // highlight field without error text
             form.password.error = '\r';
-            formValid = false;
+            isFormValid = false;
         }
 
         this.setState({
@@ -208,7 +177,7 @@ export default class Login extends Component {
             ...this.state,
         });
 
-        return formValid;
+        return isFormValid;
     }
 
     renderResetPasswordForm() {
