@@ -35,6 +35,14 @@ body {
         border: 1px solid #5A88C3;
     }
 
+    .ui-button.ui-button-danger:enabled:hover,
+    .ui-button.ui-button-danger:focus,
+    .ui-splitbutton.ui-button-danger .ui-button:enabled:hover,
+    .ui-splitbutton.ui-button-danger .ui-button:focus {
+        background-color: #d43f3a;
+        border-color: #d9534f;
+    }
+
     .ui-widget-content .ui-button,
     .ui-widget.ui-button,
     .ui-button {

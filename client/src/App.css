@@ -26,6 +26,12 @@ body {
   body .ui-button:enabled:hover,
   body .ui-button:focus {
     border: 1px solid #5A88C3; }
+  body .ui-button.ui-button-danger:enabled:hover,
+  body .ui-button.ui-button-danger:focus,
+  body .ui-splitbutton.ui-button-danger .ui-button:enabled:hover,
+  body .ui-splitbutton.ui-button-danger .ui-button:focus {
+    background-color: #d43f3a;
+    border-color: #d9534f; }
   body .ui-widget-content .ui-button,
   body .ui-widget.ui-button,
   body .ui-button {
