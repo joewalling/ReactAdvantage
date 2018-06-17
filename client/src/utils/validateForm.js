@@ -2,7 +2,6 @@ import validators from 'utils/validators';
 import {
     REQUIRED,
     EMAIL,
-    PASSWORDS_MATCH,
 } from 'constants/validationMessages';
 
 const validationMessages = {

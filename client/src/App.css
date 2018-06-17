@@ -71,6 +71,8 @@ body {
   body .ui-widget.ui-button,
   body .ui-button {
     border: 1px solid #5A88C3; }
+  body .hidden {
+    display: none; }
 
 .modal-root {
   font-size: 1.5rem; }

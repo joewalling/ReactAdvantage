@@ -4,7 +4,7 @@
     border-radius: 3px;
 }
 
-.table {
+.user-table {
     background: #FFF;
     padding: 20px;
     box-sizing: border-box;
@@ -36,14 +36,10 @@
     }
 }
 
-.table-header {
+.users-table-header {
     margin-bottom: 40px;
 }
 
-.table-select {
+.users-table-select {
     margin-bottom: 10px;
-}
-
-.hidden-table {
-    display: none;
 }
