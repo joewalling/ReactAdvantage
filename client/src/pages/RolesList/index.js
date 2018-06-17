@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import Table, { Column } from 'components/Table';
 import ButtonMenu from 'components/ButtonMenu';
@@ -9,53 +10,27 @@ import PageHeader from 'components/PageHeader';
 import ConfirmTag from 'components/ConfirmTag';
 
 import './index.css';
-import users from './users';
+import roles from './roles';
 
-export default class UsersList extends Component {
+export default class RolesList extends Component {
     constructor(props) {
         super(props);
 
         this.columns = [{
-            header: 'First Name',
-            field: 'firstName',
+            header: 'Role Name',
+            field: 'roleName',
             sortable: true,
             body: this.renderCellTemplate,
         }, {
-            header: 'Name',
-            field: 'name',
+            header: 'Creation time',
+            field: 'creationTime',
             sortable: true,
             body: this.renderCellTemplate,
-        }, {
-            header: 'Last Name',
-            field: 'lastName',
-            sortable: true,
-            body: this.renderCellTemplate,
-        }, {
-            header: 'Roles',
-            field: 'roles',
-            body: this.renderCellTemplate,
-        }, {
-            header: 'Email',
-            field: 'email',
-            sortable: true,
-            body: this.renderCellTemplate,
-        }, {
-            header: 'Email Confirm',
-            field: 'emailConfirm',
-            sortable: true,
-            body: this.renderTag,
-            className: 'users-tag-cell'
-        }, {
-            header: 'Active',
-            field: 'active',
-            sortable: true,
-            body: this.renderTag,
-            className: 'users-tag-cell'
         }, {
             header: '',
             field: 'actions',
             body: this.renderActionsTemplate,
-            className: 'users-actions-cell',
+            className: 'roles-actions-cell',
         }];
     }
 
@@ -83,7 +58,7 @@ export default class UsersList extends Component {
         entries: 10,
         filter: [],
         query: '',
-    };
+    }
 
     entries = [{
         label: 'Show 10 entries',
@@ -100,51 +75,22 @@ export default class UsersList extends Component {
     }];
 
     fields = [{
-        name: 'firstName',
+        name: 'roleName',
         operators: 'all',
-        label: 'First Name',
+        label: 'Role Name',
         input: {
             type: 'text'
         }
-    }, {
-        name: 'name',
-        operators: 'all',
-        label: 'Name',
-        input: {
-            type: 'text'
-        }
-    }, {
-        name: 'lastName',
-        operators: 'all',
-        label: 'Last Name',
-        input: {
-            type: 'text'
-        }
-     }, {
-        name: 'roles',
-        operators: ['='],
-        label: 'Roles',
-        input: {
-            type: 'text'
-        },
-    }, {
-        name: 'email',
-        operators: 'all',
-        label: 'Email',
-        input: {
-            type: 'text'
-        },
     }];
 
-    normalizeUsers(users) {
-        const normalizedUsers = users.map(user => ({
-            ...user,
-            active: user.active ? 'Yes' : 'No',
-            emailConfirm: user.emailConfirm ? 'Yes' : 'No',
-            actions: this.renderButtonMenu(user.id),
+    normalizeRoles(roles) {
+        const normalizedRoles = roles.map(role => ({
+            ...role,
+            creationTime: moment.unix(role.creationTime).format('MM/DD/YYYY'),
+            actions: this.renderButtonMenu(role.id),
         }));
 
-        return normalizedUsers;
+        return normalizedRoles;
     }
 
     normalizeHiddenTableValue(value) {
@@ -158,10 +104,6 @@ export default class UsersList extends Component {
             label: 'Permissions',
             icon: '',
             command: e => console.log(`Permissions has been clicked, id is: ${id}`),
-        }, {
-            label: 'Unlock',
-            icon: '',
-            command: e => console.log(`Unlock has been clicked, id is: ${id}`),
         }, {
             label: 'Delete',
             icon: '',
@@ -181,10 +123,7 @@ export default class UsersList extends Component {
         const content = field === 'actions'
             ? rowData[field]
             : (
-                <div
-                    title={typeof rowData[field] === 'string' ? rowData[field] : '' }
-                    className="users-list-cell-value"
-                >
+                <div className="roles-list-cell-value">
                     <span>{rowData[field]}</span>
                 </div>
             );
@@ -194,7 +133,7 @@ export default class UsersList extends Component {
 
     renderActionsTemplate = (rowData, field) => {
         return (
-            <div className="actions-cell">
+            <div className="roles-actions-cell">
                 {rowData[field]}
             </div>
         );
@@ -210,7 +149,7 @@ export default class UsersList extends Component {
 
     renderDropdown() {
         return (
-            <div className="users-table-select">
+            <div className="roles-table-select">
                 <Dropdown
                     options={this.entries}
                     value={this.state.entries}
@@ -226,8 +165,7 @@ export default class UsersList extends Component {
         sortable,
         body,
         className,
-    },
-        index
+    }, index
     ) => {
         return (
             <Column
@@ -259,15 +197,15 @@ export default class UsersList extends Component {
             >
                 Export
             </Button>,
-            <Button key="create-user">Create new user</Button>
+            <Button key="create-role">Create new role</Button>
         ];
     }
 
     renderHeader() {
         return (
             <PageHeader
-                title="Users"
-                subtitle="Manage users and permission."
+                title="Roles"
+                subtitle="Use roules to group permissions"
                 actions={this.renderHeaderActions()}
             />
         );
@@ -278,6 +216,7 @@ export default class UsersList extends Component {
             <Table
                 value={value}
                 rows={this.state.entries}
+                ref={this.setTableRef}
                 responsive
                 paginator
             >
@@ -308,14 +247,14 @@ export default class UsersList extends Component {
     }
 
     render() {
-        const tableValue = this.normalizeUsers(users);
+        const tableValue = this.normalizeRoles(roles);
         const columns = this.columns.map(this.renderColumn);
 
         return (
-            <section className="users-list">
+            <section className="roles-list">
                 {this.renderHeader()}
-                <div className="user-table">
-                    <div className="users-table-header">
+                <div className="roles-table">
+                    <div className="roles-table-header">
                         {this.renderTableHeader()}
                     </div>
                     {this.renderDropdown()}
