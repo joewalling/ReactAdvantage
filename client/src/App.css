@@ -60,6 +60,11 @@ body {
   body .ui-state-highlight {
     background: #5A88C3;
     border: 0; }
+  body .ui-widget-header .ui-button,
+  body .ui-widget-content .ui-button,
+  body .ui-widget.ui-button,
+  body .ui-button {
+    border: 1px solid #5A88C3; }
 
 .modal-root {
   font-size: 1.5rem; }
@@ -67,6 +72,10 @@ body {
 .app .ui-widget-content a,
 .modal-root .ui-widget-content a {
   color: #5A88C3; }
+
+.app .ui-dialog .ui-dialog-titlebar-icon,
+.modal-root .ui-dialog .ui-dialog-titlebar-icon {
+  color: #1E1E1E; }
 
 .app .ui-sidebar .ui-sidebar-close,
 .modal-root .ui-sidebar .ui-sidebar-close {

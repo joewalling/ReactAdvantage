@@ -4,6 +4,7 @@ import { TransitionGroup } from 'react-transition-group';
 import Button from 'components/Button';
 import FadeInContainer from 'components/FadeInContainer';
 import HideOnClickOutsideContainer from 'components/HideOnClickOutsideContainer';
+import UserSettings from 'components/UserSettings';
 import image from './assets/user.jpg';
 import './index.css';
 
@@ -12,8 +13,30 @@ export default class ProfileMenu extends Component {
         this.toggleMenu();
     }
 
+    onSettingsClick = event => {
+        event.preventDefault();
+
+        this.setState({
+            showSettings: true,
+            showMenu: false,
+        });
+    }
+
+    onSettingsHide = () => {
+        this.setState({
+            showSettings: false,
+        });
+    }
+
+    onSettingsSave = formValues => {
+        console.log('Success! Form values will be bellow');
+        console.log(formValues);
+        this.onSettingsHide();
+    }
+
     state = {
-        showMenu: false
+        showMenu: false,
+        showSettings: false,
     }
 
     links = [{
@@ -29,6 +52,7 @@ export default class ProfileMenu extends Component {
         icon: <i className="fa fa-cogs" />,
         link: '',
         text: 'My settings',
+        onClick: this.onSettingsClick,
     }, {
         icon: <i className="fa fa-question-circle" />,
         link: '',
@@ -48,9 +72,19 @@ export default class ProfileMenu extends Component {
     }
 
     renderLinks() {
-        return this.links.map(({ icon, link, text, counter }, index) => (
+        return this.links.map(({
+            icon,
+            link,
+            text,
+            counter,
+            onClick
+        }, index) => (
             <li key={index}>
-                <Link className="profile-link" to={link}>
+                <Link
+                    className="profile-link"
+                    to={link}
+                    onClick={onClick}
+                >
                     <div className="profile-links-icon">
                         {icon}
                     </div>
@@ -125,6 +159,11 @@ export default class ProfileMenu extends Component {
                         </TransitionGroup>
                     </div>
                 </div>
+                <UserSettings
+                    visible={this.state.showSettings}
+                    onSave={this.onSettingsSave}
+                    onHide={this.onSettingsHide}
+                />
             </HideOnClickOutsideContainer>
         );
     }
