@@ -105,8 +105,11 @@ body {
         border: 0;
     }
 
-    select option {
-        text-indent: 5px;
+    .ui-widget-header .ui-button,
+    .ui-widget-content .ui-button,
+    .ui-widget.ui-button,
+    .ui-button {
+        border: 1px solid #5A88C3;
     }
 }
 
@@ -118,6 +121,10 @@ body {
 .modal-root {
     .ui-widget-content a {
         color: #5A88C3;
+    }
+
+    .ui-dialog .ui-dialog-titlebar-icon {
+        color: #1E1E1E;
     }
 
     .ui-sidebar .ui-sidebar-close {
