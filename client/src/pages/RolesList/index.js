@@ -205,7 +205,7 @@ export default class RolesList extends Component {
         return (
             <PageHeader
                 title="Roles"
-                subtitle="Use roules to group permissions"
+                subtitle="Use roles to group permissions"
                 actions={this.renderHeaderActions()}
             />
         );
