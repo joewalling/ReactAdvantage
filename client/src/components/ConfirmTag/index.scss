@@ -1,9 +1,11 @@
 .confirm-tag {
     display: inline-block;
-    padding: 0.25em;
-    background: #5A88C3;
+    width: 30px;
+    padding: 0.25em 0;
+    background: #5CB85C;
     color: #FFF;
     border-radius: 3px;
+    text-align: center;
 
     &.inactive {
         background: #D9534F;
