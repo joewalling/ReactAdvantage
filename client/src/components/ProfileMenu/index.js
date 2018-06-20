@@ -43,7 +43,8 @@ export default class ProfileMenu extends Component {
         icon: <i className="fa fa-user-circle" />,
         link: '',
         text: 'My profile',
-        counter: true
+        counter: true,
+        onClick: this.onSettingsClick,
     }, {
         icon: <i className="fa fa-superpowers" />,
         link: '',
@@ -52,7 +53,6 @@ export default class ProfileMenu extends Component {
         icon: <i className="fa fa-cogs" />,
         link: '',
         text: 'My settings',
-        onClick: this.onSettingsClick,
     }, {
         icon: <i className="fa fa-question-circle" />,
         link: '',
