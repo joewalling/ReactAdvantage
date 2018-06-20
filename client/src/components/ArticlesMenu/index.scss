@@ -1,3 +1,5 @@
+@import "global-styles/common.scss";
+
 .articles-menu-wrapper {
     display: flex;
     align-items: center;
@@ -16,7 +18,7 @@
     border: 0;
     cursor: pointer;
     font-size: 1rem;
-    color: #5A88C3;
+    color: $primary;
 }
 
 .articles-wrapper {
@@ -30,5 +32,5 @@
     margin-top: 0;
     font-size: 2rem;
     font-weight: 400;
-    color: #B3B3AB;
+    color: $grayShade;
 }

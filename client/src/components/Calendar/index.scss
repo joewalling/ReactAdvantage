@@ -1,42 +1,44 @@
+@import "global-styles/common.scss";
+
 .calendar {
     .ui-chkbox-box.ui-state-active,
     .ui-radiobutton-box.ui-state-active {
-        background: #263D5C;
+        background: $primaryDarker;
     }
 
     .ui-state-highlight {
-        background: #5A88C3;
+        background: $primary;
     }
 
     .ui-datepicker-header {
-        background: rgba(#F5F5F3, 0.6);
+        background: rgba($whiteShade, 0.6);
     }
 
     .ui-datepicker .ui-datepicker-prev {
-        color: #1E1E1E;
+        color: $blackShade;
     }
 
     .ui-datepicker .ui-datepicker-next {
-        color: #1E1E1E;
+        color: $blackShade;
     }
 
     .ui-inputtext {
-      background: #FFF;
-      color: #1E1E1E;
+      background: $white;
+      color: $blackShade;
     }
 
     .ui-widget-content {
-        background: #F5F5F3;
-        color: #1E1E1E;
+        background: $whiteShade;
+        color: $blackShade;
     }
 
     .ui-datepicker.ui-widget .ui-datepicker-calendar td a {
-        background: #FFF;
-        color: #1E1E1E;
+        background: $white;
+        color: $blackShade;
     }
 
     .ui-datepicker.ui-widget .ui-datepicker-calendar thead th {
-        background: rgba(#5A88C3, 0.2);
-        color: #1E1E1E;
+        background: rgba($primary, 0.2);
+        color: $blackShade;
     }
 }

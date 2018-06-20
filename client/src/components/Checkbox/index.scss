@@ -1,3 +1,5 @@
+@import "global-styles/common.scss";
+
 .checkbox-wrapper {
     display: inline-flex;
     align-items: center;
@@ -6,6 +8,6 @@
 
 .checkbox-label {
     font-size: 1em;
-    color: #B3B3AB;
+    color: $grayShade;
     cursor: pointer;
 }

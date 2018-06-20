@@ -1,16 +1,18 @@
+@import "global-styles/common.scss";
+
 body {
     font-size: 14px;
-    font-family: 'Roboto', sans-serif;
+    font-family: $fonts;
 
     .ui-widget-content {
-        color: #1E1E1E;
+        color: $blackShade;
     }
 
     .ui-widget-header .ui-button,
     .ui-widget-content .ui-button,
     .ui-widget.ui-button,
     .ui-button {
-        background: #5A88C3;
+        background: $primary;
     }
 
     .ui-widget-header .ui-button:enabled:hover,
@@ -21,7 +23,7 @@ body {
     .ui-widget.ui-button:focus,
     .ui-button:enabled:hover,
     .ui-button:focus {
-        background: rgba(#5A88C3, 0.8);
+        background: rgba($primary, 0.8);
     }
 
     .ui-widget-header .ui-button:enabled:hover,
@@ -32,76 +34,76 @@ body {
     .ui-widget.ui-button:focus,
     .ui-button:enabled:hover,
     .ui-button:focus {
-        border: 1px solid #5A88C3;
+        border: 1px solid $primary;
     }
 
     .ui-button.ui-button-danger:enabled:hover,
     .ui-button.ui-button-danger:focus,
     .ui-splitbutton.ui-button-danger .ui-button:enabled:hover,
     .ui-splitbutton.ui-button-danger .ui-button:focus {
-        background-color: #d43f3a;
-        border-color: #d9534f;
+        background-color: $error;
+        border-color: $error;
     }
 
     .ui-widget-content .ui-button,
     .ui-widget.ui-button,
     .ui-button {
-        border: 1px solid #5A88C3;
+        border: 1px solid $primary;
     }
 
     .ui-menu,
     .ui-menu .ui-menu-child {
-        background: linear-gradient(to bottom, #FFF 0%, #F5F5F3 100%);
+        background: linear-gradient(to bottom, $white 0%, $whiteShade 100%);
     }
 
     .ui-menu .ui-menuitem .ui-menuitem-link:hover {
-        background-color: #B3B3AB;
+        background-color: $grayShade;
     }
 
     .ui-menu .ui-menuitem .ui-menuitem-link {
-        color: #1E1E1E;
+        color: $blackShade;
     }
 
     .ui-widget-header {
-        background: linear-gradient(to bottom, #FFF 0%, #F5F5F3 100%);
+        background: linear-gradient(to bottom, $white 0%, $whiteShade 100%);
     }
 
     .ui-datatable th.ui-state-default {
-        background-color: rgba(#F5F5F3, 0.4);
-        color: #1E1E1E;
+        background-color: rgba($whiteShade, 0.4);
+        color: $blackShade;
     }
 
     .ui-datatable th.ui-sortable-column:not(.ui-state-active):hover {
-        background-color: #F5F5F3;
+        background-color: $whiteShade;
     }
 
     .ui-datatable th.ui-state-active {
-        background-color: rgba(#5A88C3, 0.9);
-        color: #FFF;
+        background-color: rgba($primary, 0.9);
+        color: $white;
     }
 
     .ui-datatable tbody > tr.ui-widget-content.ui-datatable-odd {
-        background-color: rgba(#F5F5F3, 0.7);
+        background-color: rgba($whiteShade, 0.7);
     }
 
     .ui-paginator a {
-        color: #1E1E1E;
+        color: $blackShade;
     }
 
     .ui-paginator .ui-paginator-page.ui-state-active {
-        background-color: #263D5C;
+        background-color: $primaryDarker;
     }
 
     .ui-state-default {
-        border: 1px solid #B3B3AB;
+        border: 1px solid $grayShade;
     }
 
     .ui-state-error {
-        border-color: #F44336;
+        border-color: $error;
     }
 
     .ui-state-highlight {
-        background: #5A88C3;
+        background: $primary;
         border: 0;
     }
 
@@ -109,7 +111,7 @@ body {
     .ui-widget-content .ui-button,
     .ui-widget.ui-button,
     .ui-button {
-        border: 1px solid #5A88C3;
+        border: 1px solid $primary;
     }
 
     .hidden {
@@ -124,18 +126,18 @@ body {
 .app,
 .modal-root {
     .ui-widget-content a {
-        color: #5A88C3;
+        color: $primary;
     }
 
     .ui-dialog .ui-dialog-titlebar-icon {
-        color: #1E1E1E;
+        color: $blackShade;
     }
 
     .ui-sidebar .ui-sidebar-close {
-        color: #B3B3AB;
+        color: $grayShade;
 
         &:hover {
-            color: #1E1E1E;
+            color: $blackShade;
         }
     }
 }

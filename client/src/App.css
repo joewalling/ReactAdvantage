@@ -1,6 +1,6 @@
 body {
   font-size: 14px;
-  font-family: 'Roboto', sans-serif; }
+  font-family: "Roboto", sans-serif; }
   body .ui-widget-content {
     color: #1E1E1E; }
   body .ui-widget-header .ui-button,
@@ -30,8 +30,8 @@ body {
   body .ui-button.ui-button-danger:focus,
   body .ui-splitbutton.ui-button-danger .ui-button:enabled:hover,
   body .ui-splitbutton.ui-button-danger .ui-button:focus {
-    background-color: #d43f3a;
-    border-color: #d9534f; }
+    background-color: #D9534F;
+    border-color: #D9534F; }
   body .ui-widget-content .ui-button,
   body .ui-widget.ui-button,
   body .ui-button {
@@ -62,7 +62,7 @@ body {
   body .ui-state-default {
     border: 1px solid #B3B3AB; }
   body .ui-state-error {
-    border-color: #F44336; }
+    border-color: #D9534F; }
   body .ui-state-highlight {
     background: #5A88C3;
     border: 0; }

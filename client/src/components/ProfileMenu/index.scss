@@ -1,3 +1,5 @@
+@import "global-styles/common.scss";
+
 .profile {
     position: relative;
 }
@@ -26,7 +28,7 @@
 
 .profile-menu-wrapper {
     width: 245px;
-    background: #fff;
+    background: $white;
 
     @media (min-width: 1025px) {
         width: 325px;
@@ -47,7 +49,7 @@
     align-items: center;
     position: relative;
     padding: 20px;
-    background: #263D5C;
+    background: $primaryDarker;
 
     &::after {
         content: "";
@@ -58,8 +60,8 @@
         width: 0;
         border: solid transparent;
         pointer-events: none;
-        border-color: rgba(38, 61, 92, 0);
-        border-bottom-color: #263D5C;
+        border-color: rgba($primaryDarker, 0);
+        border-bottom-color: $primaryDarker;
         border-width: 10px;
         margin-left: -10px;
     }
@@ -91,7 +93,7 @@
 .profile-preview-info-name {
     width: 100%;
     margin-bottom: 5px;
-    color: #B3B3AB;
+    color: $grayShade;
     font-size: 1.3rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -101,7 +103,7 @@
     display: block;
     width: 100%;
     font-size: 1rem;
-    color: #5A88C3;
+    color: $primary;
     cursor: pointer;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -130,11 +132,11 @@
     align-items: center;
     position: relative;
     text-decoration: none;
-    color: #B3B3AB;
+    color: $grayShade;
     font-size: 1rem;
 
     &:hover {
-        color: #5A88C3;
+        color: $primary;
     }
 
     .counter {
@@ -145,12 +147,12 @@
         min-height: 20px;
         min-width: 20px;
         padding: 0 3px;
-        background: #5A88C3;
+        background: $primary;
         border-radius: 50%;
         font-size: .8rem;
         line-height: 26px;
         text-align: center;
-        color: #F5F5F3;
+        color: $whiteShade;
     }
 }
 

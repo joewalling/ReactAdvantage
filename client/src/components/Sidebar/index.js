@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Sidebar as PrimeSidebar } from 'primereact/components/sidebar/Sidebar';
-import './index.css';
 
 export default class Sidebar extends Component {
     render() {
