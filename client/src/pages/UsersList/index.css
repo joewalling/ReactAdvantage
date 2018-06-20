@@ -20,9 +20,11 @@
     .users-actions-cell .ui-column-title {
       display: none !important; } }
 
-@media (max-width: 640px) {
-  .users-tag-cell .ui-column-title {
-    min-width: 100px !important; } }
+.users-tag-cell {
+  text-align: center; }
+  @media (max-width: 640px) {
+    .users-tag-cell .ui-column-title {
+      min-width: 101px !important; } }
 
 .users-table-header {
   margin-bottom: 40px; }

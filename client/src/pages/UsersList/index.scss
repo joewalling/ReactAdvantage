@@ -23,6 +23,7 @@
 
 .users-actions-cell {
     width: 90px;
+
     .ui-column-title {
         @media(max-width: 640px) {
             display: none !important;
@@ -31,9 +32,11 @@
 }
 
 .users-tag-cell {
+    text-align: center;
+
     .ui-column-title {
         @media(max-width: 640px) {
-            min-width: 100px !important;
+            min-width: 101px !important;
         }
     }
 }
