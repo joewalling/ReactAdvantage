@@ -44,7 +44,8 @@ body {
   body .ui-menu .ui-menuitem .ui-menuitem-link {
     color: #1E1E1E; }
   body .ui-widget-header {
-    background: linear-gradient(to bottom, #FFF 0%, #F5F5F3 100%); }
+    background: linear-gradient(to bottom, #FFF 0%, #F5F5F3 100%);
+    border: 1px solid #B3B3AB; }
   body .ui-datatable th.ui-state-default {
     background-color: rgba(245, 245, 243, 0.4);
     color: #1E1E1E; }
@@ -71,6 +72,10 @@ body {
   body .ui-widget.ui-button,
   body .ui-button {
     border: 1px solid #5A88C3; }
+  body .ui-helper-reset {
+    margin: 0;
+    padding: 0;
+    border: 0; }
   body .hidden {
     display: none; }
 

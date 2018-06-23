@@ -1,6 +1,6 @@
 @import "global-styles/common.scss";
 
-.profile-form {
+.edit-user {
     width: 400px;
     margin: 0 auto;
 
@@ -9,7 +9,7 @@
     }
 }
 
-.profile-form-upload {
+.edit-user-upload {
     position: relative;
     float: left;
     width: 80px;
@@ -53,7 +53,29 @@
     }
 }
 
-.profile-form-upload-hint {
+.users-edit-form-tab-header-counter {
+    padding-right: 0.9em !important;
+}
+
+.users-edit-form-tab-header {
+    position: relative;
+}
+
+.users-edit-form-counter {
+    position: absolute;
+    right: 7px;
+    width: 2em;
+    height: 2em;
+    box-sizing: initial;
+    border-radius: 50%;
+    font-size: 0.71rem;
+    line-height: 2em;
+    text-align: center;
+    color: $white;
+    background: $primary;
+}
+
+.edit-user-upload-hint {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -67,11 +89,15 @@
     cursor: pointer;
 }
 
-.profile-form-input-wrapper {
+.edit-user-input-wrapper {
     margin-bottom: 20px;
+
+    label {
+        color: $blackShade;
+    }
 }
 
-.profile-form-input-wrapper-right {
+.edit-user-input-wrapper-right {
     float: right;
     width: 75%;
 
@@ -81,11 +107,11 @@
     }
 }
 
-.profile-form-input-wrapper-clear {
+.edit-user-input-wrapper-clear {
     clear: both;
 }
 
-.profile-form-label {
+.edit-user-label {
     display: inline-block;
     margin-bottom: 10px;
 
@@ -94,7 +120,7 @@
     }
 }
 
-.profile-form-tip {
+.edit-user-tip {
     margin-top: 5px;
     color: $grayShade;
     font-size: 0.8rem;

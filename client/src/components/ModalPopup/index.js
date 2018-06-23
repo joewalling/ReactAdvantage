@@ -18,10 +18,22 @@ export default class ModalPopup extends Component {
     el = document.createElement('div');
 
     render() {
+        const { inPortal, ...props } = this.props;
+
+        if (!inPortal) {
+            return (
+                <div className="dialog-wrapper">
+                    <Dialog {...props}>
+                        {this.props.children}
+                    </Dialog>
+                </div>
+            );
+        }
+
         return (
             ReactDOM.createPortal(
                 <div className="dialog-wrapper">
-                    <Dialog {...this.props}>
+                    <Dialog {...props}>
                         {this.props.children}
                     </Dialog>
                 </div>,

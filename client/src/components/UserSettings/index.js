@@ -7,7 +7,7 @@ import Button from 'components/Button';
 import validateForm from 'utils/validateForm';
 import { PASSWORDS_MATCH } from 'constants/validationMessages';
 
-import avatarSrc from './assets/profile-default-image.svg'
+import avatarSrc from 'assets/profile-default-image.svg';
 import './index.css';
 
 export default class UserSettings extends Component {
@@ -267,6 +267,7 @@ export default class UserSettings extends Component {
                     className="popup"
                     footer={this.renderActions()}
                     modal
+                    inPortal
                 >
                     {this.renderForm()}
                 </ModalPopup>

@@ -8,6 +8,7 @@ import SearchQuery from 'components/SearchQuery';
 import PageHeader from 'components/PageHeader';
 import ConfirmTag from 'components/ConfirmTag';
 
+import Form from './components/Form';
 import './index.css';
 import users from './users';
 
@@ -75,6 +76,30 @@ export default class UsersList extends Component {
         console.log(`Search, query is: ${this.state.query}`);
     }
 
+    onFormHide = () => {
+        this.setState({ popupVisible: false });
+    }
+
+    onEdit = selectedId => {
+        this.setState({
+            popupVisible: true,
+            selectedUser: users.find(({ id }) => id === selectedId),
+        });
+    }
+
+    onCreateUser = () => {
+        this.onEdit(null);
+    }
+
+    onEditSubmit = data => {
+        console.log('Success! Form data bellow:');
+        console.log(data);
+        this.setState({
+            popupVisible: false,
+            selectedUser: null,
+        });
+    }
+
     setTableRef = ref => {
         this.tableRef = ref && ref.tableRef;
     }
@@ -83,6 +108,8 @@ export default class UsersList extends Component {
         entries: 10,
         filter: [],
         query: '',
+        popupVisible: false,
+        selectedUserId: null,
     };
 
     entries = [{
@@ -104,36 +131,47 @@ export default class UsersList extends Component {
         operators: 'all',
         label: 'First Name',
         input: {
-            type: 'text'
+            type: 'text',
         }
     }, {
         name: 'name',
         operators: 'all',
         label: 'Name',
         input: {
-            type: 'text'
+            type: 'text',
         }
     }, {
         name: 'lastName',
         operators: 'all',
         label: 'Last Name',
         input: {
-            type: 'text'
+            type: 'text',
         }
      }, {
         name: 'roles',
         operators: ['='],
         label: 'Roles',
         input: {
-            type: 'text'
+            type: 'text',
         },
     }, {
         name: 'email',
         operators: 'all',
         label: 'Email',
         input: {
-            type: 'text'
+            type: 'text',
         },
+    }];
+
+    roles = [{
+        id: 1,
+        name: 'admin',
+    }, {
+        id: 2,
+        name: 'moderator',
+    }, {
+        id: 3,
+        name: 'user',
     }];
 
     normalizeUsers(users) {
@@ -141,6 +179,9 @@ export default class UsersList extends Component {
             ...user,
             active: user.active ? 'Yes' : 'No',
             emailConfirm: user.emailConfirm ? 'Yes' : 'No',
+            roles: user.roles
+                .map(id =>
+                    this.roles.find(({ id: roleId }) => id === roleId).name).join(', '),
             actions: this.renderButtonMenu(user.id),
         }));
 
@@ -172,7 +213,7 @@ export default class UsersList extends Component {
             <ButtonMenu
                 label="Edit"
                 items={actionItems}
-                onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                onClick={() => this.onEdit(id)}
             />
         );
     }
@@ -259,7 +300,12 @@ export default class UsersList extends Component {
             >
                 Export
             </Button>,
-            <Button key="create-user">Create new user</Button>
+            <Button
+                key="create-user"
+                onClick={this.onCreateUser}
+            >
+                Create new user
+            </Button>
         ];
     }
 
@@ -307,6 +353,17 @@ export default class UsersList extends Component {
         );
     }
 
+    renderEditForm() {
+        return (
+            <Form
+                onHide={this.onFormHide}
+                onSubmit={this.onEditSubmit}
+                visible={this.state.popupVisible}
+                user={this.state.selectedUser || {}}
+            />
+        );
+    }
+
     render() {
         const tableValue = this.normalizeUsers(users);
         const columns = this.columns.map(this.renderColumn);
@@ -322,6 +379,7 @@ export default class UsersList extends Component {
                     {this.renderTable(tableValue, columns)}
                     {this.renderHiddenTable(tableValue, columns)}
                 </div>
+                {this.state.popupVisible && this.renderEditForm()}
             </section>
         );
     }

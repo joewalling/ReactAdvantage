@@ -1,6 +1,4 @@
 .checkbox-wrapper {
-  display: inline-flex;
-  align-items: center;
   cursor: pointer; }
 
 .checkbox-label {

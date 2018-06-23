@@ -66,6 +66,7 @@ body {
 
     .ui-widget-header {
         background: linear-gradient(to bottom, $white 0%, $whiteShade 100%);
+        border: 1px solid $grayShade;
     }
 
     .ui-datatable th.ui-state-default {
@@ -112,6 +113,12 @@ body {
     .ui-widget.ui-button,
     .ui-button {
         border: 1px solid $primary;
+    }
+
+    .ui-helper-reset {
+        margin: 0;
+        padding: 0;
+        border: 0;
     }
 
     .hidden {
