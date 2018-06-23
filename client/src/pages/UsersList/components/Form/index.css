@@ -1,11 +1,11 @@
-.profile-form {
+.edit-user {
   width: 400px;
   margin: 0 auto; }
   @media (max-width: 640px) {
-    .profile-form {
+    .edit-user {
       width: 100%; } }
 
-.profile-form-upload {
+.edit-user-upload {
   position: relative;
   float: left;
   width: 80px;
@@ -15,19 +15,19 @@
   margin-top: 6px;
   cursor: pointer; }
   @media (max-width: 640px) {
-    .profile-form-upload {
+    .edit-user-upload {
       float: none;
       margin: 0 auto 20px; } }
-  .profile-form-upload::after {
+  .edit-user-upload::after {
     content: '';
     clear: both;
     display: table-cell; }
-  .profile-form-upload label {
+  .edit-user-upload label {
     position: absolute;
     width: 100%;
     height: 100%;
     cursor: pointer; }
-  .profile-form-upload img {
+  .edit-user-upload img {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -36,10 +36,29 @@
     max-width: 95%;
     border-radius: 50%;
     pointer-events: none; }
-  .profile-form-upload .ui-button {
+  .edit-user-upload .ui-button {
     display: none; }
 
-.profile-form-upload-hint {
+.users-edit-form-tab-header-counter {
+  padding-right: 0.9em !important; }
+
+.users-edit-form-tab-header {
+  position: relative; }
+
+.users-edit-form-counter {
+  position: absolute;
+  right: 7px;
+  width: 2em;
+  height: 2em;
+  box-sizing: initial;
+  border-radius: 50%;
+  font-size: 0.71rem;
+  line-height: 2em;
+  text-align: center;
+  color: #FFF;
+  background: #5A88C3; }
+
+.edit-user-upload-hint {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -52,27 +71,29 @@
   pointer-events: none;
   cursor: pointer; }
 
-.profile-form-input-wrapper {
+.edit-user-input-wrapper {
   margin-bottom: 20px; }
+  .edit-user-input-wrapper label {
+    color: #1E1E1E; }
 
-.profile-form-input-wrapper-right {
+.edit-user-input-wrapper-right {
   float: right;
   width: 75%; }
   @media (max-width: 640px) {
-    .profile-form-input-wrapper-right {
+    .edit-user-input-wrapper-right {
       float: none;
       width: 100%; } }
 
-.profile-form-input-wrapper-clear {
+.edit-user-input-wrapper-clear {
   clear: both; }
 
-.profile-form-label {
+.edit-user-label {
   display: inline-block;
   margin-bottom: 10px; }
-  .profile-form-label sup {
+  .edit-user-label sup {
     color: #D9534F; }
 
-.profile-form-tip {
+.edit-user-tip {
   margin-top: 5px;
   color: #B3B3AB;
   font-size: 0.8rem; }
