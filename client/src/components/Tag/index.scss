@@ -1,17 +1,19 @@
+@import "global-styles/common.scss";
+
 .tag {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px;
     border-radius: 5px;
-    color: #FFF;
+    color: $white;
 
     &.announcement {
-        background: #5A88C3;
+        background: $primary;
     }
 
     &.enhancement {
-        background: #EDC02F;
+        background: $complementary;
     }
 }
 

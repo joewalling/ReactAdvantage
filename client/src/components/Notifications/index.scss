@@ -1,9 +1,11 @@
+@import "global-styles/common.scss";
+
 .notification-button {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 1rem;
-    color: #5A88C3;
+    color: $primary;
 }
 
 .notifications {
@@ -31,7 +33,7 @@
     padding: 20px;
     box-sizing: border-box;
     min-height: 400px;
-    background: #FFF;
+    background: $white;
     border-radius: 3px;
     box-shadow: 0 0 15px 1px rgba(81,77,92,.2);
 
@@ -48,8 +50,8 @@
         width: 0;
         border: solid transparent;
         pointer-events: none;
-        border-color: rgba(#FFF, 0);
-        border-bottom-color: #FFF;
+        border-color: rgba($white, 0);
+        border-bottom-color: $white;
         border-width: 10px;
         margin-left: -10px;
 
@@ -61,17 +63,17 @@
 
 .notifications-popup-header {
     padding-bottom: 15px;
-    border-bottom: 1px solid rgba(#B3B3AB, 0.5);
+    border-bottom: 1px solid rgba($grayShade, 0.5);
     text-align: center;
 }
 
 .notifications-popup-header-title {
     margin-bottom: 10px;
     font-size: 1.3rem;
-    color: #1E1E1E;
+    color: $blackShade;
 }
 
 .notifications-popup-header-subtitle {
     font-size: 1rem;
-    color: #B3B3AB;
+    color: $grayShade;
 }

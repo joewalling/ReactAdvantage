@@ -1,5 +1,7 @@
+@import "global-styles/common.scss";
+
 .dashboard-title {
-    color: #1E1E1E;
+    color: $blackShade;
     font-size: 1.5rem;
     margin-bottom: 30px;
 }

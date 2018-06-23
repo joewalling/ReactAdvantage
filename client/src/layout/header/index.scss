@@ -1,3 +1,5 @@
+@import "global-styles/common.scss";
+
 .header {
     position: fixed;
     left: 50%;
@@ -24,7 +26,7 @@
     background: none;
     font-size: 1.5rem;
     cursor: pointer;
-    color: rgba(#B3B3AB, 0.8);
+    color: rgba($grayShade, 0.8);
 
     @media (max-width: 1025px) {
         display: block;
@@ -35,7 +37,7 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    background: #FFF;
+    background: $white;
 }
 
 .header-top {
@@ -47,7 +49,7 @@
     max-width: 1340px;
     height: 90px;
     margin: 0 auto;
-    background: #FFF;
+    background: $white;
 
     @media (max-width: 1025px) {
         flex-wrap: wrap;
@@ -69,7 +71,7 @@
         z-index: 2;
         width: 100%;
         height: 70px;
-        background: #FFF;
+        background: $white;
     }
 }
 
@@ -89,7 +91,7 @@
         padding: 0 40px 5px;
         box-sizing: border-box;
         transition: top .2s ease;
-        background-color: #FFF;
+        background-color: $white;
 
         &.show-controls {
             top: 100%;
@@ -137,7 +139,7 @@
     height: 70px;
     padding: 0 30px;
     transform: translate(0, 0);
-    background: #5A88C3;
+    background: $primary;
     box-shadow: 0 1px 15px 1px rgba(81,77,92,.1);
     transition: transform .2s ease;
 
@@ -177,18 +179,18 @@
 
         a {
             text-decoration: none;
-            color: #FFF;
+            color: $white;
             font-size: 1rem;
 
             @media (max-width: 1025px) {
                 width: 100%;
                 padding: 9px 30px;
-                color: #5A88C3;
+                color: $primary;
             }
 
             &.active {
                 @media (max-width: 1025px) {
-                    background: rgba(#5A88C3, 0.1);
+                    background: rgba($primary, 0.1);
                 }
 
                 &::after {
@@ -200,8 +202,8 @@
                     width: 0;
                     border: solid transparent;
                     pointer-events: none;
-                    border-color: rgba(90, 136, 195, 0);
-                    border-top-color: #5a88c3;
+                    border-color: rgba($primary, 0);
+                    border-top-color: $primary;
                     border-width: 15px;
                     margin-left: -15px;
 
@@ -244,7 +246,7 @@
     border: none;
     font-size: 1.2rem;
     cursor: pointer;
-    color: rgba(#B3B3AB, 0.8);
+    color: rgba($grayShade, 0.8);
 
     @media (max-width: 1025px) {
         display: block;

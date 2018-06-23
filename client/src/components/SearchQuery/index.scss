@@ -1,8 +1,10 @@
+@import "global-styles/common.scss";
+
 .filters-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: fex-start;
-    border-bottom: 1px solid #B3B3AB;
+    border-bottom: 1px solid $grayShade;
 
     @media(max-width: 640px) {
         position: relative;
@@ -45,16 +47,16 @@
     .querySelect {
         margin-right: 10px;
         height: 26px;
-        border-bottom: 1px solid #F5F5F3;
-        color: #1E1E1E;
+        border-bottom: 1px solid $whiteShade;
+        color: $blackShade;
 
         @media (max-width: 640px) {
             margin-bottom: 10px;
-            border-bottom-color: #B3B3AB;
+            border-bottom-color: $grayShade;
         }
 
         &:focus {
-            background-color: #F5F5F3;
+            background-color: $whiteShade;
         }
     }
 
@@ -79,7 +81,7 @@
 
 .search-query-title {
     font-size: 1rem;
-    color: #1E1E1E;
+    color: $blackShade;
 }
 
 .filters {

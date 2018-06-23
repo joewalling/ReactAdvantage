@@ -1,3 +1,5 @@
+@import "global-styles/common.scss";
+
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -10,13 +12,13 @@
     }
 
     h2 {
-        color: #B3B3AB;
+        color: $grayShade;
         font-size: 1rem;
         font-weight: 500;
 
         span {
             font-size: 1.2rem;
-            color: rgba(#1E1E1E, 0.7);
+            color: rgba($blackShade, 0.7);
         }
     }
 }

@@ -1,3 +1,5 @@
+@import "global-styles/common.scss";
+
 .login-content-wrapper {
     display: flex;
     justify-content: center;
@@ -12,7 +14,7 @@
     h2 {
         margin-bottom: 30px;
         font-size: 1.5rem;
-        color: #1E1E1E;
+        color: $blackShade;
         font-weight: 400;
     }
 
@@ -21,7 +23,7 @@
         margin-bottom: 20px;
         font-size: 1rem;
         font-weight: 300;
-        color: rgba(#1E1E1E, 0.7);
+        color: rgba($blackShade, 0.7);
     }
 }
 
@@ -36,7 +38,7 @@
 .login-form {
     width: 100%;
     padding-bottom: 15px;
-    border-bottom: 1px solid #F5F5F3;
+    border-bottom: 1px solid $whiteShade;
 }
 
 .login-input-wrapper {
@@ -52,11 +54,11 @@
 .login-forgot-password {
     padding: 0;
     font-size: 1em;
-    font-family: 'Roboto', sans-serif;
+    font-family: $fonts;
     line-height: 1;
     border: 0;
     background: none;
-    color: #B3B3AB;
+    color: $grayShade;
     cursor: pointer;
 }
 

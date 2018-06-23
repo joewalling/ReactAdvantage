@@ -1,3 +1,5 @@
+@import "global-styles/common.scss";
+
 .profile-form {
     width: 400px;
     margin: 0 auto;
@@ -12,7 +14,7 @@
     float: left;
     width: 80px;
     height: 80px;
-    border: 1px solid #B3B3AB;
+    border: 1px solid $grayShade;
     margin-bottom: 20px;
     cursor: pointer;
 
@@ -59,7 +61,7 @@
     transform: translate(-50%, -50%);
     font-size: 0.8rem;
     text-align: center;
-    color: #1E1E1E;
+    color: $blackShade;
     pointer-events: none;
     cursor: pointer;
 }
@@ -87,12 +89,12 @@
     margin-bottom: 10px;
 
     sup {
-        color: #F44336;
+        color: $error;
     }
 }
 
 .profile-form-tip {
     margin-top: 5px;
-    color: #B3B3AB;
+    color: $grayShade;
     font-size: 0.8rem;
 }

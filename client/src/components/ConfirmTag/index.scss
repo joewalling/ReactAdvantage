@@ -1,13 +1,15 @@
+@import "global-styles/common.scss";
+
 .confirm-tag {
     display: inline-block;
     width: 30px;
     padding: 0.25em 0;
-    background: #5CB85C;
-    color: #FFF;
+    background: $success;
+    color: $white;
     border-radius: 3px;
     text-align: center;
 
     &.inactive {
-        background: #D9534F;
+        background: $error;
     }
 }

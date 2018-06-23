@@ -1,6 +1,7 @@
+@import "global-styles/common.scss";
+
 .article {
     margin-bottom: 15px;
-
 }
 
 .article-top {
@@ -13,30 +14,30 @@
     padding-left: 15px;
     padding-top: 15px;
     padding-bottom: 15px;
-    border-left: 1px solid rgba(#B3B3AB, 0.7);
+    border-left: 1px solid rgba($grayShade, 0.7);
 }
 
 .article-title {
     margin: 0;
     font-size: 1rem;
-    color: rgba(#1E1E1E, 0.6);
+    color: rgba($blackShade, 0.6);
 }
 
 .article-date {
     font-size: 1rem;
-    color: #B3B3AB;
+    color: $grayShade;
 }
 
 .article-text {
     font-size: 1rem;
-    color: #1E1E1E;
+    color: $blackShade;
 }
 
 .article-link {
     display: inline-block;
     font-size: 1rem;
-    color: #5A88C3;
-    border-bottom: 1px dotted #5A88C3;
+    color: $primary;
+    border-bottom: 1px dotted $primary;
     text-decoration: none;
 
     &:hover {
