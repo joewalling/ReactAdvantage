@@ -11,9 +11,10 @@ using System;
 namespace ReactAdvantage.Data.EntityFramework.Migrations
 {
     [DbContext(typeof(ReactAdvantageContext))]
-    partial class ReactAdvantageContextModelSnapshot : ModelSnapshot
+    [Migration("20180627210441_Initial migration")]
+    partial class Initialmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

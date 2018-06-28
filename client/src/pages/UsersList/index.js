@@ -7,15 +7,35 @@ import Button from 'components/Button';
 import SearchQuery from 'components/SearchQuery';
 import PageHeader from 'components/PageHeader';
 import ConfirmTag from 'components/ConfirmTag';
-
-import Form from './components/Form';
+import { ApolloClient } from 'apollo-client';
+import gql from 'graphql-tag';
 import './index.css';
 import users from './users';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+
+import {
+    makeExecutableSchema,
+    addMockFunctionsToSchema
+} from 'graphql-tools';
+import { mockNetworkInterfaceWithSchema } from 'apollo-test-utils';
+import { typeDefs } from './schema';
+import {
+    
+    graphql,
+    ApolloProvider,
+} from 'react-apollo';
+const schema = makeExecutableSchema({ typeDefs });
+addMockFunctionsToSchema({ schema });
+const mockNetworkInterface = mockNetworkInterfaceWithSchema({ schema });
 
 export default class UsersList extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            UsersList: [],
+            rows:0
+          }
         this.columns = [{
             header: 'First Name',
             field: 'firstName',
@@ -59,6 +79,40 @@ export default class UsersList extends Component {
             className: 'users-actions-cell',
         }];
     }
+    componentWillMount() {
+        const link = new HttpLink({
+            uri: 'http://localhost:28955/api/GetUsers',
+            headers:
+                {
+                    'content-type': 'application/json'
+                }
+
+        });
+        const client = new ApolloClient({
+            link: link,
+            networkInterface: mockNetworkInterface,
+            cache: new InMemoryCache(),
+        });
+        console.log(client)
+        // Requesting data
+
+        //client.query({ query: gql`query Query {hero {name  fistNrame}}`, headers: { 'content-type': 'application/json' } }).then(console.log);
+        client.query({
+            query: gql`
+              query FeedQuery {
+                users {
+                    name  firstName lastName  email emailConfirm  active roles
+                }
+              }
+            `
+          }).then(response => {
+              console.log(response.data.users)
+             var userlist=response.data.users;
+      
+               this.setState({UsersList: userlist,entries:response.data.users.length})
+        })
+
+    }
 
     onDropdownChange = ({ value }) => {
         this.setState({
@@ -76,30 +130,6 @@ export default class UsersList extends Component {
         console.log(`Search, query is: ${this.state.query}`);
     }
 
-    onFormHide = () => {
-        this.setState({ popupVisible: false });
-    }
-
-    onEdit = selectedId => {
-        this.setState({
-            popupVisible: true,
-            selectedUser: users.find(({ id }) => id === selectedId),
-        });
-    }
-
-    onCreateUser = () => {
-        this.onEdit(null);
-    }
-
-    onEditSubmit = data => {
-        console.log('Success! Form data bellow:');
-        console.log(data);
-        this.setState({
-            popupVisible: false,
-            selectedUser: null,
-        });
-    }
-
     setTableRef = ref => {
         this.tableRef = ref && ref.tableRef;
     }
@@ -108,8 +138,6 @@ export default class UsersList extends Component {
         entries: 10,
         filter: [],
         query: '',
-        popupVisible: false,
-        selectedUserId: null,
     };
 
     entries = [{
@@ -131,57 +159,43 @@ export default class UsersList extends Component {
         operators: 'all',
         label: 'First Name',
         input: {
-            type: 'text',
+            type: 'text'
         }
     }, {
         name: 'name',
         operators: 'all',
         label: 'Name',
         input: {
-            type: 'text',
+            type: 'text'
         }
     }, {
         name: 'lastName',
         operators: 'all',
         label: 'Last Name',
         input: {
-            type: 'text',
+            type: 'text'
         }
      }, {
-        name: 'roles',
+        name: 'role',
         operators: ['='],
         label: 'Roles',
         input: {
-            type: 'text',
+            type: 'text'
         },
     }, {
         name: 'email',
         operators: 'all',
         label: 'Email',
         input: {
-            type: 'text',
+            type: 'text'
         },
     }];
 
-    roles = [{
-        id: 1,
-        name: 'admin',
-    }, {
-        id: 2,
-        name: 'moderator',
-    }, {
-        id: 3,
-        name: 'user',
-    }];
-
-    normalizeUsers(users) {
-        const normalizedUsers = users.map(user => ({
+    normalizeUsers() {
+        const normalizedUsers = this.state.UsersList.map(user => ({
             ...user,
             active: user.active ? 'Yes' : 'No',
             emailConfirm: user.emailConfirm ? 'Yes' : 'No',
-            roles: user.roles
-                .map(id =>
-                    this.roles.find(({ id: roleId }) => id === roleId).name).join(', '),
             actions: this.renderButtonMenu(user.id),
         }));
 
@@ -213,7 +227,7 @@ export default class UsersList extends Component {
             <ButtonMenu
                 label="Edit"
                 items={actionItems}
-                onClick={() => this.onEdit(id)}
+                onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
             />
         );
     }
@@ -300,12 +314,7 @@ export default class UsersList extends Component {
             >
                 Export
             </Button>,
-            <Button
-                key="create-user"
-                onClick={this.onCreateUser}
-            >
-                Create new user
-            </Button>
+            <Button key="create-user">Create new user</Button>
         ];
     }
 
@@ -353,19 +362,8 @@ export default class UsersList extends Component {
         );
     }
 
-    renderEditForm() {
-        return (
-            <Form
-                onHide={this.onFormHide}
-                onSubmit={this.onEditSubmit}
-                visible={this.state.popupVisible}
-                user={this.state.selectedUser || {}}
-            />
-        );
-    }
-
     render() {
-        const tableValue = this.normalizeUsers(users);
+        const tableValue = this.normalizeUsers();
         const columns = this.columns.map(this.renderColumn);
 
         return (
@@ -379,7 +377,6 @@ export default class UsersList extends Component {
                     {this.renderTable(tableValue, columns)}
                     {this.renderHiddenTable(tableValue, columns)}
                 </div>
-                {this.state.popupVisible && this.renderEditForm()}
             </section>
         );
     }
