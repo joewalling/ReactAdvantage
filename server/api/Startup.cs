@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.API.Configurations;
 using ReactAdvantage.Data.EntityFramework;
+using ReactAdvantage.Data.EntityFramework.GraphQlQuery;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace ReactAdvantage.API
@@ -43,16 +45,18 @@ namespace ReactAdvantage.API
                     .AddCorsConfiguration()
                     .AddConnectionProvider(Configuration)
                     .AddAppSettings(Configuration)
-                    .AddDbContext<ReactAdvantageContext>();
+                    .AddDbContext<ReactAdvantageContext>(options => options.UseSqlServer(Configuration.GetConnectionString("default")));
 
-                services.AddSwaggerGen(s =>
+            services.AddSwaggerGen(s =>
                 {
                     s.SwaggerDoc("v1", new Info {Title = "ReactAdvantage API", Description = "ReactAdvantage API"});
                 });
+            services.AddTransient<GraphQlQuery>();
+            //services.AddTransient<IUsersRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, ReactAdvantageContext db)
         {
             if (env.IsDevelopment())
             {
@@ -70,7 +74,12 @@ namespace ReactAdvantage.API
                 routes.MapRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
-            });
+            }); 
+                
+                app.UseMvc();
+
+                db.EnsureSeedData();
+            
 
             app.UseSwagger();
             app.UseSwaggerUI(s =>

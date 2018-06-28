@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using ReactAdvantage.API.Services;
 
+
 namespace ReactAdvantage.API.Configurations
 {
     public static class ServicesConfiguration
@@ -9,9 +10,8 @@ namespace ReactAdvantage.API.Configurations
         public static IServiceCollection ConfigureRepositories(this IServiceCollection services)
         {
             services.AddScoped<IProjectService, ProjectService>();
-            services.AddScoped<ITaskService, TaskService>();
-
-            return services;
+          services.AddScoped<ITaskService, TaskService>();
+       return services;
         }
 
         public static IServiceCollection ConfigureSupervisor(this IServiceCollection services)

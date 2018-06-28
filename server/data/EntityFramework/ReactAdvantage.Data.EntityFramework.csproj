@@ -14,11 +14,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EFRepository\**" />
+    <Compile Remove="GraphQLObjectModel\**" />
+    <Compile Remove="GraphQueries\**" />
+    <Compile Remove="Model_database_ViewModel\**" />
+    <EmbeddedResource Remove="EFRepository\**" />
+    <EmbeddedResource Remove="GraphQLObjectModel\**" />
+    <EmbeddedResource Remove="GraphQueries\**" />
+    <EmbeddedResource Remove="Model_database_ViewModel\**" />
+    <None Remove="EFRepository\**" />
+    <None Remove="GraphQLObjectModel\**" />
+    <None Remove="GraphQueries\**" />
+    <None Remove="Model_database_ViewModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="TypeModels\RoleTypeModel.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\domain\ReactAdvantage.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-927" />
   </ItemGroup>
 
 </Project>

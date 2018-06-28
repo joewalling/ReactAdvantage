@@ -17,8 +17,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Mapping\PlaylistViewModelConverter.cs" />
+    <Compile Remove="Services\IRoleService.cs" />
+    <Compile Remove="Services\IUserAccessService.cs" />
+    <Compile Remove="Services\RoleService.cs" />
+    <Compile Remove="Services\UserAccessService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="GraphQL" Version="2.0.0-alpha-927" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />

@@ -1,14 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReactAdvantage.Domain.Entities;
 
+
 namespace ReactAdvantage.Data.EntityFramework
 {
     public class ReactAdvantageContext : DbContext
     {
         public ReactAdvantageContext(DbContextOptions<ReactAdvantageContext> options) : base(options)
         {
-
+            Database.EnsureCreated();
         }
+
+
+       
+            
+        
         public ReactAdvantageContext(string dbName)
         {
             _dbName = dbName;
@@ -18,7 +24,8 @@ namespace ReactAdvantage.Data.EntityFramework
 
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
-
+        public DbSet<User> Users { get; set; }
+   
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
