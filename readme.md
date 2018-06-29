@@ -23,7 +23,7 @@ update-database
 
 Next, run the application. If all works properly, a browser should open and it will display a Swagger page showing the available services.
 
-Note the port that the service is running on uyour localhost development environment. You will need to be sure to configure it properly on the client. It should default to port 28955.
+Note the port that the service is running on your localhost development environment. You will need to be sure to configure it properly on the client. It should default to port 28955.
 
 <img src="images/swaggerRunning.png" >
 
