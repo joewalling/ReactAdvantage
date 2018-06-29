@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import SearchQuery from 'components/SearchQuery';
 import PageHeader from 'components/PageHeader';
 import ConfirmTag from 'components/ConfirmTag';
+import Form from './components/Form';
 import { ApolloClient } from 'apollo-client';
 import gql from 'graphql-tag';
 import './index.css';
@@ -21,7 +22,6 @@ import {
 import { mockNetworkInterfaceWithSchema } from 'apollo-test-utils';
 import { typeDefs } from './schema';
 import {
-    
     graphql,
     ApolloProvider,
 } from 'react-apollo';
@@ -32,10 +32,6 @@ const mockNetworkInterface = mockNetworkInterfaceWithSchema({ schema });
 export default class UsersList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            UsersList: [],
-            rows:0
-          }
         this.columns = [{
             header: 'First Name',
             field: 'firstName',
@@ -108,7 +104,7 @@ export default class UsersList extends Component {
           }).then(response => {
               console.log(response.data.users)
              var userlist=response.data.users;
-      
+
                this.setState({UsersList: userlist,entries:response.data.users.length})
         })
 
@@ -130,6 +126,30 @@ export default class UsersList extends Component {
         console.log(`Search, query is: ${this.state.query}`);
     }
 
+    onFormHide = () => {
+        this.setState({ popupVisible: false });
+    }
+
+    onEdit = selectedId => {
+        this.setState({
+            popupVisible: true,
+            selectedUser: users.find(({ id }) => id === selectedId),
+        });
+    }
+
+    onCreateUser = () => {
+        this.onEdit(null);
+    }
+
+    onEditSubmit = data => {
+        console.log('Success! Form data bellow:');
+        console.log(data);
+        this.setState({
+            popupVisible: false,
+            selectedUser: null,
+        });
+    }
+
     setTableRef = ref => {
         this.tableRef = ref && ref.tableRef;
     }
@@ -138,7 +158,22 @@ export default class UsersList extends Component {
         entries: 10,
         filter: [],
         query: '',
+        popupVisible: false,
+        selectedUserId: null,
+        UsersList: [],
+        rows: 0,
     };
+
+    roles = [{
+        id: 1,
+        name: 'admin',
+    }, {
+        id: 2,
+        name: 'moderator',
+    }, {
+        id: 3,
+        name: 'user',
+    }];
 
     entries = [{
         label: 'Show 10 entries',
@@ -197,6 +232,9 @@ export default class UsersList extends Component {
             active: user.active ? 'Yes' : 'No',
             emailConfirm: user.emailConfirm ? 'Yes' : 'No',
             actions: this.renderButtonMenu(user.id),
+            roles: user.roles
+                .map(id =>
+                    this.roles.find(({ id: roleId }) => id === roleId).name).join(', '),
         }));
 
         return normalizedUsers;
@@ -227,7 +265,7 @@ export default class UsersList extends Component {
             <ButtonMenu
                 label="Edit"
                 items={actionItems}
-                onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                onClick={() => this.onEdit(id)}
             />
         );
     }
@@ -314,8 +352,24 @@ export default class UsersList extends Component {
             >
                 Export
             </Button>,
-            <Button key="create-user">Create new user</Button>
+            <Button
+                key="create-user"
+                onClick={this.onCreateUser}
+            >
+                Create new user
+            </Button>
         ];
+    }
+
+    renderEditForm() {
+        return (
+            <Form
+                onHide={this.onFormHide}
+                onSubmit={this.onEditSubmit}
+                visible={this.state.popupVisible}
+                user={this.state.selectedUser || {}}
+            />
+        );
     }
 
     renderHeader() {
@@ -377,6 +431,7 @@ export default class UsersList extends Component {
                     {this.renderTable(tableValue, columns)}
                     {this.renderHiddenTable(tableValue, columns)}
                 </div>
+                {this.state.popupVisible && this.renderEditForm()}
             </section>
         );
     }
