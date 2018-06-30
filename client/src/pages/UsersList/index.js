@@ -164,17 +164,6 @@ export default class UsersList extends Component {
         rows: 0,
     };
 
-    roles = [{
-        id: 1,
-        name: 'admin',
-    }, {
-        id: 2,
-        name: 'moderator',
-    }, {
-        id: 3,
-        name: 'user',
-    }];
-
     entries = [{
         label: 'Show 10 entries',
         value: 10,
@@ -232,9 +221,6 @@ export default class UsersList extends Component {
             active: user.active ? 'Yes' : 'No',
             emailConfirm: user.emailConfirm ? 'Yes' : 'No',
             actions: this.renderButtonMenu(user.id),
-            roles: user.roles
-                .map(id =>
-                    this.roles.find(({ id: roleId }) => id === roleId).name).join(', '),
         }));
 
         return normalizedUsers;
