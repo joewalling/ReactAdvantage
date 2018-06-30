@@ -1,5 +1,7 @@
 const tenants = [{
-    tenantName: 'admin',
+    tenantName: 'Default',
+    name:'Default',
+    edition:'Premium',
     id: '1',
     creationTime: '1529242113',
 }, {

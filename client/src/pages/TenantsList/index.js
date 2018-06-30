@@ -17,8 +17,18 @@ export default class TenantsList extends Component{
         super(props);
 
         this.columns = [{
-            header: 'Tenant Name',
+            header: 'Tenancy code Name',
             field: 'tenantName',
+            sortable: true,
+            body: this.renderCellTemplate,
+        }, {
+            header: 'Name',
+            field: 'name',
+            sortable: true,
+            body: this.renderCellTemplate,
+        }, {
+            header: 'Edition',
+            field: 'edition',
             sortable: true,
             body: this.renderCellTemplate,
         }, {
@@ -87,7 +97,7 @@ export default class TenantsList extends Component{
         const normalizedTenants = tenants.map(tenant => ({
             ...tenant,
             creationTime: moment.unix(tenant.creationTime).format('MM/DD/YYYY'),
-            actions: this.renderButtonMenu(tenant.id),
+            actions: this.renderButtonOptions(tenant.id),
         }));
 
         return normalizedTenants;
@@ -99,23 +109,38 @@ export default class TenantsList extends Component{
         }));
     }
 
-    renderButtonMenu(id) {
-        const actionItems = [{
-            label: 'Permissions',
-            icon: '',
-            command: e => console.log(`Permissions has been clicked, id is: ${id}`),
-        }, {
-            label: 'Delete',
-            icon: '',
-            command: e => console.log(`Delete has been clicked, id is: ${id}`),
-        }];
+    //Needs Refactoring
+
+    renderButtonOptions(id) {
+        // const actionItems = [{
+        //     label: 'Permissions',
+        //     icon: '',
+        //     command: e => console.log(`Permissions has been clicked, id is: ${id}`),
+        // }, {
+        //     label: 'Delete',
+        //     icon: '',
+        //     command: e => console.log(`Delete has been clicked, id is: ${id}`),
+        // }];
 
         return (
-            <ButtonMenu
-                label="Edit"
-                items={actionItems}
-                onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
-            />
+            <div>
+                <Button
+                    label="Login"               
+                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                />
+                <Button
+                    label="Edit"
+                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                />
+                <Button
+                    label="Features"
+                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                />
+                <Button
+                    label="Delete"
+                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                />
+            </div>
         );
     }
 
