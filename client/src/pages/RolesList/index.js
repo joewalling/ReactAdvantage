@@ -179,15 +179,15 @@ export default class RolesList extends Component {
         );
     }
 
-    renderTableHeader() {
-        return (
-            <SearchQuery
-                fields={this.fields}
-                onChange={this.onFilterChange}
-                onSearch={this.onSearch}
-            />
-        );
-    }
+    // renderTableHeader() {
+    //     return (
+    //         <SearchQuery
+    //             fields={this.fields}
+    //             onChange={this.onFilterChange}
+    //             onSearch={this.onSearch}
+    //         />
+    //     );
+    // }
 
     renderHeaderActions() {
         return [
@@ -255,7 +255,7 @@ export default class RolesList extends Component {
                 {this.renderHeader()}
                 <div className="roles-table">
                     <div className="roles-table-header">
-                        {this.renderTableHeader()}
+                        {/* {this.renderTableHeader()} */}
                     </div>
                     {this.renderDropdown()}
                     {this.renderTable(tableValue, columns)}
