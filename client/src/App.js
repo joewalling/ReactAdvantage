@@ -9,6 +9,7 @@ import Header from 'layout/header';
 import Dashboard from 'pages/Dashboard';
 import UsersList from 'pages/UsersList';
 import RolesList from 'pages/RolesList';
+import TenantsList from 'pages/TenantsList';
 import Login from 'pages/Login';
 import './App.css';
 import 'primereact/resources/primereact.min.css';
@@ -28,6 +29,7 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/users" component={UsersList} />
                 <Route exact path="/roles" component={RolesList} />
+                <Route exact path="/tenants" component={TenantsList} />
               </Switch>
             </Container>
           </div>
