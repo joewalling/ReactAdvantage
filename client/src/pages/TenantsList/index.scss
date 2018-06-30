@@ -1,26 +1,26 @@
 @import "global-styles/common.scss";
 
-.roles-list {
+.tenant-list {
     padding: 20px 5px 5px;
     box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1);
     border-radius: 3px;
 }
 
-.roles-table {
+.tenant-table {
     background: $white;
     padding: 20px;
     box-sizing: border-box;
 }
 
-.roles-table-header {
+.tenant-table-header {
     margin-bottom: 40px;
 }
 
-.roles-table-select {
+.tenant-table-select {
     margin-bottom: 10px;
 }
 
-.roles-actions-cell {
+.tenant-actions-cell {
     width: 90px;
 
     .ui-column-title {
