@@ -9,6 +9,7 @@ import SearchQuery from 'components/SearchQuery';
 import PageHeader from 'components/PageHeader';
 import ConfirmTag from 'components/ConfirmTag';
 
+import Form from './components/Form';
 import './index.css';
 import tenants from './tenants';
 
@@ -60,6 +61,30 @@ export default class TenantsList extends Component{
         console.log(`Search, query is: ${this.state.query}`);
     }
 
+    onFormHide = () => {
+        this.setState({ popupVisible: false });
+    }
+
+    onEdit = selectedId => {
+        this.setState({
+            popupVisible: true,
+            selectedTenant: tenants.find(({ id }) => id === selectedId),
+        });
+    }
+
+    onEditSubmit = data => {
+        console.log('Success! Form data bellow:');
+        console.log(data);
+        this.setState({
+            popupVisible: false,
+            selectedUser: null,
+        });
+    }
+
+    onCreateTenant = () => {
+        this.onEdit(null);
+    }
+
     setTableRef = ref => {
         this.tableRef = ref && ref.tableRef;
     }
@@ -68,6 +93,8 @@ export default class TenantsList extends Component{
         entries: 10,
         filter: [],
         query: '',
+        popupVisible: false,
+        selectedTenantId: null,
     }
 
     entries = [{
@@ -120,7 +147,7 @@ export default class TenantsList extends Component{
                 />
                 <Button
                     label="Edit"
-                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                    onClick={() => this.onEdit(id)}
                 />
                 <Button
                     label="Features"
@@ -212,8 +239,24 @@ export default class TenantsList extends Component{
             >
                 Export
             </Button>,
-            <Button key="create-tenant">Create new tenant</Button>
+            <Button
+                key="create-tenant"
+                onClick={this.onCreateTenant}
+            >
+                Create new tenant
+            </Button>
         ];
+    }
+
+    renderEditForm() {
+        return (
+            <Form
+                onHide={this.onFormHide}
+                onSubmit={this.onEditSubmit}
+                visible={this.state.popupVisible}
+                tenant={this.state.selectedTenant || {}}
+            />
+        );
     }
 
     renderHeader() {
@@ -276,6 +319,7 @@ export default class TenantsList extends Component{
                     {this.renderTable(tableValue, columns)}
                     {this.renderHiddenTable(tableValue, columns)}
                 </div>
+                {this.state.popupVisible && this.renderEditForm()}
             </section>
         );
     }
