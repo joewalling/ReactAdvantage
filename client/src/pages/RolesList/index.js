@@ -297,9 +297,10 @@ export default class RolesList extends Component {
             <section className="roles-list">
                 {this.renderHeader()}
                 <div className="roles-table">
-                    <div className="roles-table-header">
-                        {/* {this.renderTableHeader()} */}
+                    {/* <div className="roles-table-header">
+                        {this.renderTableHeader()}
                     </div>
+                     */}
                     {this.renderDropdown()}
                     {this.renderTable(tableValue, columns)}
                     {this.renderHiddenTable(tableValue, columns)}
