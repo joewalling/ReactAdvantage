@@ -93,11 +93,6 @@ export default class Form extends Component {
         this.onChange(name, value);
     }
 
-    onHide = () => {
-        const { onHide } = this.props;
-        onHide && onHide();
-    }
-
     onTabChange = ({ index }) => {
         this.setState({
             activeTabIndex: index,
@@ -444,7 +439,7 @@ export default class Form extends Component {
         return (
             <ModalPopup
                 visible={this.props.visible}
-                onHide={this.onHide}
+                onHide={this.props.onHide}
                 footer={this.renderActions()}
                 className="Modal-Popup"
                 inPortal={false}

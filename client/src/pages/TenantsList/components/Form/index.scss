@@ -1,0 +1,27 @@
+@import "global-styles/common.scss";
+
+.edit-tenant {
+    width: 400px;
+    margin: 0 auto;
+
+    @media (max-width: 640px) {
+        width: 100%;
+    }
+}
+
+.edit-tenant-input-wrapper {
+    margin-bottom: 20px;
+
+    label {
+        color: $blackShade;
+    }
+}
+
+.edit-tenant-label {
+    display: block;
+    margin-bottom: 10px;
+
+    sup {
+        color: $error;
+    }
+}
