@@ -1,6 +1,8 @@
 @import "global-styles/common.scss";
 
 .checkbox-wrapper {
+    display: flex;
+    align-items: center;
     cursor: pointer;
 }
 
@@ -8,4 +10,12 @@
     font-size: 1em;
     color: $grayShade;
     cursor: pointer;
+}
+
+body {
+    .ui-chkbox-box.ui-state-active,
+    .ui-radiobutton-box.ui-state-active {
+        background: $primary;
+        border-color: $primary;
+    }
 }

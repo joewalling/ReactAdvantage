@@ -1,0 +1,36 @@
+@import "global-styles/common.scss";
+
+.edit-role {
+    width: 400px;
+    margin: 0 auto;
+
+    @media(max-width: 640px) {
+        width: 100%;
+    }
+}
+
+.edit-role-form-hint {
+    margin-top: 5px;
+    color: $grayShade;
+    font-size: 0.8rem;
+}
+
+.edit-role-input-wrapper {
+    margin-bottom: 20px;
+}
+
+.edit-role-label {
+    display: block;
+    margin-bottom: 10px;
+    color: $blackShade;
+
+    sup {
+        color: $error;
+    }
+}
+
+.edit-role-input-wrapper {
+    label {
+        color: $blackShade;
+    }
+}

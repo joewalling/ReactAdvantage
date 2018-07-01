@@ -1,7 +1,14 @@
 .checkbox-wrapper {
+  display: flex;
+  align-items: center;
   cursor: pointer; }
 
 .checkbox-label {
   font-size: 1em;
   color: #B3B3AB;
   cursor: pointer; }
+
+body .ui-chkbox-box.ui-state-active,
+body .ui-radiobutton-box.ui-state-active {
+  background: #5A88C3;
+  border-color: #5A88C3; }

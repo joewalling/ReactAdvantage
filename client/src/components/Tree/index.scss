@@ -1,0 +1,43 @@
+@import "global-styles/common.scss";
+
+html {
+    body {
+        .tree-component {
+            font-family: $fonts;
+
+            .rc-tree-title {
+                color: $blackShade;
+            }
+
+            .rc-tree-checkbox {
+                position: relative;
+                width: 1.125em;
+                height: 1.125em;
+                border: 1px solid $grayShade;
+                background: none;
+
+                &::before {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    font-family: "FontAwesome";
+                    color: $primaryDarker;
+                }
+
+                &.rc-tree-checkbox-checked {
+                    &::before {
+                        content: "\F00C";
+                    }
+                }
+
+                &.rc-tree-checkbox-indeterminate {
+                    &::before {
+                        content: "\F068";
+                        padding-top: 2px;
+                    }
+                }
+            }
+        }
+    }
+}

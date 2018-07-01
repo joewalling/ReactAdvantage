@@ -446,7 +446,6 @@ export default class Form extends Component {
                 visible={this.props.visible}
                 onHide={this.onHide}
                 footer={this.renderActions()}
-                className="Modal-Popup"
                 inPortal={false}
                 modal
             >
