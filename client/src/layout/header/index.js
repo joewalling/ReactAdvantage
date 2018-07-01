@@ -105,6 +105,15 @@ export default class Header extends Component {
                         Roles
                     </NavLink>
                 </li>
+                <li>
+                    <NavLink
+                        to="/tenants"
+                        activeClassName="active"
+                        exact
+                    >
+                        Tenants
+                    </NavLink>
+                </li>
             </ul>
         );
     }
