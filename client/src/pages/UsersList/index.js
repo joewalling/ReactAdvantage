@@ -77,7 +77,7 @@ export default class UsersList extends Component {
     }
     componentWillMount() {
         const link = new HttpLink({
-            uri: 'http://localhost:28955/api/GetUsers',
+            uri: `${process.env.REACT_APP_API_URI}/api/GetUsers`,
             headers:
                 {
                     'content-type': 'application/json'
