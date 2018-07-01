@@ -9,6 +9,7 @@ import SearchQuery from 'components/SearchQuery';
 import PageHeader from 'components/PageHeader';
 import ConfirmTag from 'components/ConfirmTag';
 
+import Form from './components/Form';
 import './index.css';
 import roles from './roles';
 
@@ -50,6 +51,30 @@ export default class RolesList extends Component {
         console.log(`Search, query is: ${this.state.query}`);
     }
 
+    onFormHide = () => {
+        this.setState({ popupVisible: false });
+    }
+
+    onEdit = selectedRoleId => {
+        this.setState({
+            popupVisible: true,
+            selectedRole: roles.find(({ id }) => id === selectedRoleId),
+        });
+    }
+
+    onCreateRole = () => {
+        this.onEdit(null);
+    }
+
+    onEditSubmit = data => {
+        console.log('Success! Form data bellow:');
+        console.log(data);
+        this.setState({
+            popupVisible: false,
+            selectedRole: null,
+        });
+    }
+
     setTableRef = ref => {
         this.tableRef = ref && ref.tableRef;
     }
@@ -58,6 +83,8 @@ export default class RolesList extends Component {
         entries: 10,
         filter: [],
         query: '',
+        popupVisible: false,
+        selectedRole: null,
     }
 
     entries = [{
@@ -114,7 +141,7 @@ export default class RolesList extends Component {
             <ButtonMenu
                 label="Edit"
                 items={actionItems}
-                onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
+                onClick={() => this.onEdit(id)}
             />
         );
     }
@@ -197,7 +224,12 @@ export default class RolesList extends Component {
             >
                 Export
             </Button>,
-            <Button key="create-role">Create new role</Button>
+            <Button
+                key="create-role"
+                onClick={this.onCreateRole}
+            >
+                Create new role
+            </Button>
         ];
     }
 
@@ -246,6 +278,17 @@ export default class RolesList extends Component {
         );
     }
 
+    renderEditForm() {
+        return (
+            <Form
+                onHide={this.onFormHide}
+                onSubmit={this.onEditSubmit}
+                visible={this.state.popupVisible}
+                role={this.state.selectedRole || {}}
+            />
+        );
+    }
+
     render() {
         const tableValue = this.normalizeRoles(roles);
         const columns = this.columns.map(this.renderColumn);
@@ -261,6 +304,7 @@ export default class RolesList extends Component {
                     {this.renderTable(tableValue, columns)}
                     {this.renderHiddenTable(tableValue, columns)}
                 </div>
+                {this.state.popupVisible && this.renderEditForm()}
             </section>
         );
     }
