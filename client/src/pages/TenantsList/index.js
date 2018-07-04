@@ -138,9 +138,17 @@ export default class TenantsList extends Component{
 
     renderButtonOptions(id) {
         const actionItems = [{
-            label: 'Permissions',
+            label: 'Login as this Tenant',
             icon: '',
-            command: e => console.log(`Permissions has been clicked, id is: ${id}`),
+            command: e => console.log(`Login as this Tenant has been clicked, id is: ${id}`),
+        }, {
+            label: 'Edit',
+            icon: '',
+            command: e => console.log(`Edit has been clicked, id is: ${id}`),
+        }, {
+            label: 'Features',
+            icon: '',
+            command: e => console.log(`Features has been clicked, id is: ${id}`),
         }, {
             label: 'Delete',
             icon: '',
@@ -149,9 +157,9 @@ export default class TenantsList extends Component{
 
         return (
             <ButtonMenu
-                label="Edit"
+                label="Action"
                 items={actionItems}
-                onClick={() => this.onEdit(id)}
+                onClick={() => console.log("Action Click")}
             />
         );
     }
