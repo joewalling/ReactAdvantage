@@ -136,28 +136,23 @@ export default class TenantsList extends Component{
         }));
     }
 
-    //Needs Refactoring
-
     renderButtonOptions(id) {
+        const actionItems = [{
+            label: 'Permissions',
+            icon: '',
+            command: e => console.log(`Permissions has been clicked, id is: ${id}`),
+        }, {
+            label: 'Delete',
+            icon: '',
+            command: e => console.log(`Delete has been clicked, id is: ${id}`),
+        }];
+
         return (
-            <div>
-                <Button
-                    label="Login"            
-                    onClick={() => console.log(`Login has been clicked, id is: ${id}`)}
-                />
-                <Button
-                    label="Edit"
-                    onClick={() => this.onEdit(id)}
-                />
-                <Button
-                    label="Features"
-                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
-                />
-                <Button
-                    label="Delete"
-                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
-                />
-            </div>
+            <ButtonMenu
+                label="Edit"
+                items={actionItems}
+                onClick={() => this.onEdit(id)}
+            />
         );
     }
 
