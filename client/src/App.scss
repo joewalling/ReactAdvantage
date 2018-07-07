@@ -8,6 +8,14 @@ body {
         color: $blackShade;
     }
 
+    .ui-widget-header {
+        color: $blackShade;
+    }
+
+    .ui-inputtext {
+        color: $blackShade;
+    }
+
     .ui-widget-header .ui-button,
     .ui-widget-content .ui-button,
     .ui-widget.ui-button,
@@ -83,6 +91,10 @@ body {
         color: $white;
     }
 
+    .ui-datatable tbody > tr.ui-widget-content {
+        border-color: $grayShade;
+    }
+
     .ui-datatable tbody > tr.ui-widget-content.ui-datatable-odd {
         background-color: rgba($whiteShade, 0.7);
     }
@@ -93,10 +105,12 @@ body {
 
     .ui-paginator .ui-paginator-page.ui-state-active {
         background-color: $primaryDarker;
+        border-color: $primaryDarker;
     }
 
     .ui-state-default {
         border: 1px solid $grayShade;
+        color: $blackShade;
     }
 
     .ui-state-error {

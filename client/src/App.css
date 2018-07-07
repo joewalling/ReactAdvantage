@@ -3,6 +3,10 @@ body {
   font-family: "Roboto", sans-serif; }
   body .ui-widget-content {
     color: #1E1E1E; }
+  body .ui-widget-header {
+    color: #1E1E1E; }
+  body .ui-inputtext {
+    color: #1E1E1E; }
   body .ui-widget-header .ui-button,
   body .ui-widget-content .ui-button,
   body .ui-widget.ui-button,
@@ -54,14 +58,18 @@ body {
   body .ui-datatable th.ui-state-active {
     background-color: rgba(90, 136, 195, 0.9);
     color: #FFF; }
+  body .ui-datatable tbody > tr.ui-widget-content {
+    border-color: #B3B3AB; }
   body .ui-datatable tbody > tr.ui-widget-content.ui-datatable-odd {
     background-color: rgba(245, 245, 243, 0.7); }
   body .ui-paginator a {
     color: #1E1E1E; }
   body .ui-paginator .ui-paginator-page.ui-state-active {
-    background-color: #263D5C; }
+    background-color: #263D5C;
+    border-color: #263D5C; }
   body .ui-state-default {
-    border: 1px solid #B3B3AB; }
+    border: 1px solid #B3B3AB;
+    color: #1E1E1E; }
   body .ui-state-error {
     border-color: #D9534F; }
   body .ui-state-highlight {

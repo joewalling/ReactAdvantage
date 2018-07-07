@@ -1,17 +1,5 @@
 @import "global-styles/common.scss";
 
-.users-list {
-    padding: 20px 5px 5px;
-    box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1);
-    border-radius: 3px;
-}
-
-.user-table {
-    background: $white;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
 .users-list-cell-value {
     span {
         display: block;
@@ -39,12 +27,4 @@
             min-width: 101px !important;
         }
     }
-}
-
-.users-table-header {
-    margin-bottom: 40px;
-}
-
-.users-table-select {
-    margin-bottom: 10px;
 }

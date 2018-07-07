@@ -7,6 +7,7 @@ import Button from 'components/Button';
 import SearchQuery from 'components/SearchQuery';
 import PageHeader from 'components/PageHeader';
 import ConfirmTag from 'components/ConfirmTag';
+import BoxShadowContainer from 'components/BoxShadowContainer';
 import Form from './components/Form';
 import { ApolloClient } from 'apollo-client';
 import gql from 'graphql-tag';
@@ -289,13 +290,11 @@ export default class UsersList extends Component {
 
     renderDropdown() {
         return (
-            <div className="users-table-select">
-                <Dropdown
-                    options={this.entries}
-                    value={this.state.entries}
-                    onChange={this.onDropdownChange}
-                />
-            </div>
+            <Dropdown
+                options={this.entries}
+                value={this.state.entries}
+                onChange={this.onDropdownChange}
+            />
         );
     }
 
@@ -407,18 +406,16 @@ export default class UsersList extends Component {
         const columns = this.columns.map(this.renderColumn);
 
         return (
-            <section className="users-list">
+            <BoxShadowContainer>
                 {this.renderHeader()}
                 <div className="user-table">
-                    <div className="users-table-header">
-                        {this.renderTableHeader()}
-                    </div>
+                    {this.renderTableHeader()}
                     {this.renderDropdown()}
                     {this.renderTable(tableValue, columns)}
                     {this.renderHiddenTable(tableValue, columns)}
                 </div>
                 {this.state.popupVisible && this.renderEditForm()}
-            </section>
+            </BoxShadowContainer>
         );
     }
 }
