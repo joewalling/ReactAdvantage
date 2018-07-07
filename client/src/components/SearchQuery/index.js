@@ -3,6 +3,7 @@ import TwoWayQuerybuilder from 'react-two-way-querybuilder-custom-select-fork';
 
 import Button from 'components/Button';
 import Dropdown from 'components/Dropdown';
+import Calendar from 'components/Calendar';
 
 import './index.css';
 
@@ -16,10 +17,11 @@ export default class SearchQuery extends Component {
                 rule: 'rule',
                 condition: 'condition',
                 select: 'querySelect',
-                input: 'ui-inputtext ui-state-default ui-corner-all',
+                input: 'ui-inputtext ui-state-default ui-corner-all ui-widget',
                 txtArea: 'queryText',
             },
             selectRenderer: this.renderSelect,
+            datepickerRenderer: this.renderDatepicker,
         };
     }
 
@@ -36,6 +38,15 @@ export default class SearchQuery extends Component {
             onChange={({ value }) => {
                 onChange(value);
             }}
+        />
+    )
+
+    renderDatepicker = ({ value, onChange }) => (
+        <Calendar
+            showTime
+            className="filters-datepicker"
+            value={value}
+            onChange={({ originalEvent, value }) => onChange(value)}
         />
     )
 

@@ -213,6 +213,13 @@ export default class UsersList extends Component {
         input: {
             type: 'text'
         },
+    }, {
+        name: 'date',
+        operators: 'all',
+        label: 'Date',
+        input: {
+            type: 'date'
+        },
     }];
 
     normalizeUsers() {
