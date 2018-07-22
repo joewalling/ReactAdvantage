@@ -47,22 +47,26 @@ export default class UsersList extends Component {
             field: 'lastName',
             sortable: true,
             body: this.renderCellTemplate,
-        }, {
-            header: 'Roles',
-            field: 'roles',
-            body: this.renderCellTemplate,
-        }, {
+        }, 
+        //{
+        //     header: 'Roles',
+        //     field: 'roles',
+        //     body: this.renderCellTemplate,
+        // }, 
+        {
             header: 'Email',
             field: 'email',
             sortable: true,
             body: this.renderCellTemplate,
-        }, {
-            header: 'Email Confirm',
-            field: 'emailConfirm',
-            sortable: true,
-            body: this.renderTag,
-            className: 'users-tag-cell'
-        }, {
+        }, 
+        //{
+        //     header: 'Email Confirm',
+        //     field: 'emailConfirm',
+        //     sortable: true,
+        //     body: this.renderTag,
+        //     className: 'users-tag-cell'
+        // }, 
+        {
             header: 'Active',
             field: 'active',
             sortable: true,
@@ -77,7 +81,7 @@ export default class UsersList extends Component {
     }
     componentWillMount() {
         const link = new HttpLink({
-            uri: `${process.env.REACT_APP_API_URI}/api/GetUsers`,
+            uri: `${process.env.REACT_APP_API_URI}/graphql`,
             headers:
                 {
                     'content-type': 'application/json'
@@ -96,8 +100,8 @@ export default class UsersList extends Component {
         client.query({
             query: gql`
               query FeedQuery {
-                users {
-                    name  firstName lastName  email emailConfirm  active roles
+                allusers {
+                    name  firstName lastName  email isactive
                 }
               }
             `
