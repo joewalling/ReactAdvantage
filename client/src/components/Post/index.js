@@ -6,19 +6,21 @@ import Button from "../Button";
 import "./index.css"
 
 export default class Post extends Component {
+    renderReadMoreButton() {
+        return (
+            <Button
+                className="ui-button-secondary"
+                label="Read more"
+            />
+        );
+    }
 
     render() {
-        let readMoreButton = <Button
-            className="ui-button-secondary"
-            label="Read more"
-        />;
-
         return (
             <div className="post">
-                <Card className="content" footer={readMoreButton}>
+                <Card className="content" footer={this.renderReadMoreButton()}>
                     {this.props.text}
                 </Card>
-
             </div>
         );
     }

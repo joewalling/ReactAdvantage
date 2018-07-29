@@ -1,0 +1,294 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`checkbox with label renders correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Checkbox
+    id="test"
+    label="test"
+/>,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <Checkbox
+          checked={false}
+          className={null}
+          disabled={false}
+          id="test"
+          inputId={null}
+          name={null}
+          onChange={null}
+          onContextMenu={null}
+          onMouseDown={null}
+          readOnly={false}
+          style={null}
+          value={null}
+/>,
+        <label
+          className="checkbox-label"
+          htmlFor={undefined}
+>
+          test
+</label>,
+      ],
+      "className": "checkbox-wrapper",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "checked": false,
+          "className": null,
+          "disabled": false,
+          "id": "test",
+          "inputId": null,
+          "name": null,
+          "onChange": null,
+          "onContextMenu": null,
+          "onMouseDown": null,
+          "readOnly": false,
+          "style": null,
+          "value": null,
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": "test",
+          "className": "checkbox-label",
+          "htmlFor": undefined,
+        },
+        "ref": null,
+        "rendered": "test",
+        "type": "label",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <Checkbox
+            checked={false}
+            className={null}
+            disabled={false}
+            id="test"
+            inputId={null}
+            name={null}
+            onChange={null}
+            onContextMenu={null}
+            onMouseDown={null}
+            readOnly={false}
+            style={null}
+            value={null}
+/>,
+          <label
+            className="checkbox-label"
+            htmlFor={undefined}
+>
+            test
+</label>,
+        ],
+        "className": "checkbox-wrapper",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "checked": false,
+            "className": null,
+            "disabled": false,
+            "id": "test",
+            "inputId": null,
+            "name": null,
+            "onChange": null,
+            "onContextMenu": null,
+            "onMouseDown": null,
+            "readOnly": false,
+            "style": null,
+            "value": null,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": "test",
+            "className": "checkbox-label",
+            "htmlFor": undefined,
+          },
+          "ref": null,
+          "rendered": "test",
+          "type": "label",
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`checkbox without label renders correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Checkbox />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <Checkbox
+          checked={false}
+          className={null}
+          disabled={false}
+          id={null}
+          inputId={null}
+          name={null}
+          onChange={null}
+          onContextMenu={null}
+          onMouseDown={null}
+          readOnly={false}
+          style={null}
+          value={null}
+/>,
+        undefined,
+      ],
+      "className": "checkbox-wrapper",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "checked": false,
+          "className": null,
+          "disabled": false,
+          "id": null,
+          "inputId": null,
+          "name": null,
+          "onChange": null,
+          "onContextMenu": null,
+          "onMouseDown": null,
+          "readOnly": false,
+          "style": null,
+          "value": null,
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      undefined,
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <Checkbox
+            checked={false}
+            className={null}
+            disabled={false}
+            id={null}
+            inputId={null}
+            name={null}
+            onChange={null}
+            onContextMenu={null}
+            onMouseDown={null}
+            readOnly={false}
+            style={null}
+            value={null}
+/>,
+          undefined,
+        ],
+        "className": "checkbox-wrapper",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "checked": false,
+            "className": null,
+            "disabled": false,
+            "id": null,
+            "inputId": null,
+            "name": null,
+            "onChange": null,
+            "onContextMenu": null,
+            "onMouseDown": null,
+            "readOnly": false,
+            "style": null,
+            "value": null,
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        undefined,
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

@@ -34,7 +34,7 @@ export default class Form extends Component {
 
         formValues.subscription = moment(formValues.subscription).format('X');
 
-        onSubmit(formValues)
+        onSubmit(formValues);
     }
 
     onChange = (name, value) => {
@@ -80,7 +80,7 @@ export default class Form extends Component {
                 value: this.editions[0].value,
             },
             subscription: {
-                value: new Date(),
+                value: new Date(1529242113),
                 validators: ['isFilled'],
                 error: '',
             },
@@ -136,7 +136,7 @@ export default class Form extends Component {
                     </label>
                     <Calendar
                         value={form.subscription.value}
-                        minDate={new Date()}
+                        minDate={new Date(1529292113)}
                         onChange={({ value }) => this.onChange('subscription', value)}
                     />
                 </div>
@@ -160,11 +160,13 @@ export default class Form extends Component {
                 <Button
                     secondary
                     onClick={this.props.onHide}
+                    className="edit-tenant-cancel-button"
                 >
                     Cancel
                 </Button>
                 <Button
                     onClick={this.onSubmit}
+                    className="edit-tenant-save-button"
                 >
                     Save
                 </Button>

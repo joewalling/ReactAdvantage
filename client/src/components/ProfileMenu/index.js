@@ -41,24 +41,29 @@ export default class ProfileMenu extends Component {
 
     links = [{
         icon: <i className="fa fa-user-circle" />,
+        classnames: 'profile-link profile-link-settings',
         link: '',
         text: 'My profile',
         counter: true,
         onClick: this.onSettingsClick,
     }, {
         icon: <i className="fa fa-superpowers" />,
+        classnames: 'profile-link',
         link: '',
         text: 'Activity',
     }, {
         icon: <i className="fa fa-cogs" />,
+        classnames: 'profile-link',
         link: '',
         text: 'My settings',
     }, {
         icon: <i className="fa fa-question-circle" />,
+        classnames: 'profile-link',
         link: '',
         text: 'Faq',
     }, {
         icon: <i className="fa fa-life-ring" />,
+        classnames: 'profile-link',
         link: '',
         text: 'Support',
     }];
@@ -74,6 +79,7 @@ export default class ProfileMenu extends Component {
     renderLinks() {
         return this.links.map(({
             icon,
+            classnames,
             link,
             text,
             counter,
@@ -81,7 +87,7 @@ export default class ProfileMenu extends Component {
         }, index) => (
             <li key={index}>
                 <Link
-                    className="profile-link"
+                    className={classnames}
                     to={link}
                     onClick={onClick}
                 >

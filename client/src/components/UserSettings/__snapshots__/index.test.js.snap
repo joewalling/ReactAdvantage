@@ -1,0 +1,2621 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <UserSettings />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": <ModalPopup
+        className="popup"
+        footer={
+                <div>
+                        <Button
+                                className="profile-form-cancel"
+                                onClick={[Function]}
+                                secondary={true}
+                        >
+                                Cancel
+                        </Button>
+                        <Button
+                                className="profile-form-save"
+                                onClick={[Function]}
+                        >
+                                Save
+                        </Button>
+                </div>
+        }
+        header="Edit user"
+        inPortal={true}
+        modal={true}
+        onHide={undefined}
+        visible={undefined}
+>
+        <div
+                className="profile-form"
+        >
+                <form
+                        onSubmit={[Function]}
+                >
+                        <div
+                                className="profile-form-upload"
+                        >
+                                <label>
+                                        <FileUpload
+                                                auto={true}
+                                                className="custom-file-upload"
+                                                mode="basic"
+                                                onSelect={[Function]}
+                                        />
+                                        <img
+                                                alt="User"
+                                                src="profile-default-image.svg"
+                                        />
+                                        <div
+                                                className="profile-form-upload-hint"
+                                        >
+                                                Click here to change image
+                                        </div>
+                                </label>
+                        </div>
+                        <div
+                                className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                        >
+                                <label
+                                        className="profile-form-label"
+                                        htmlFor="first-name"
+                                >
+                                        First Name 
+                                        <sup>
+                                                *
+                                        </sup>
+                                </label>
+                                <Input
+                                        error=""
+                                        id="first-name"
+                                        name="firstName"
+                                        onChange={[Function]}
+                                        value="admin"
+                                />
+                        </div>
+                        <div
+                                className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                        >
+                                <label
+                                        className="profile-form-label"
+                                        htmlFor="last-name"
+                                >
+                                        Last Name 
+                                        <sup>
+                                                *
+                                        </sup>
+                                </label>
+                                <Input
+                                        error=""
+                                        id="last-name"
+                                        name="lastName"
+                                        onChange={[Function]}
+                                        value="admin"
+                                />
+                        </div>
+                        <div
+                                className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+                        >
+                                <label
+                                        className="profile-form-label"
+                                        htmlFor="email-address"
+                                >
+                                        Email Address 
+                                        <sup>
+                                                *
+                                        </sup>
+                                </label>
+                                <Input
+                                        error=""
+                                        id="email-address"
+                                        name="email"
+                                        onChange={[Function]}
+                                        value="jwalling@jwallingis.com"
+                                />
+                        </div>
+                        <div
+                                className="profile-form-input-wrapper"
+                        >
+                                <label
+                                        className="profile-form-label"
+                                        htmlFor="phone-number"
+                                >
+                                        Phone Number
+                                </label>
+                                <Input
+                                        id="phone-number"
+                                        mask="(999) 999-9999"
+                                        name="phone"
+                                        onChange={[Function]}
+                                        value=""
+                                />
+                        </div>
+                        <div
+                                className="profile-form-input-wrapper"
+                        >
+                                <label
+                                        className="profile-form-label"
+                                >
+                                        User Name 
+                                        <sup>
+                                                *
+                                        </sup>
+                                </label>
+                                <Input
+                                        disabled={true}
+                                        value="admin"
+                                />
+                                <div
+                                        className="profile-form-tip"
+                                >
+                                        Can not change username of admin
+                                </div>
+                        </div>
+                        <div
+                                className="profile-form-input-wrapper"
+                        >
+                                <label
+                                        className="profile-form-label"
+                                        htmlFor="password"
+                                >
+                                        Password
+                                </label>
+                                <Input
+                                        error={undefined}
+                                        id="password"
+                                        name="password"
+                                        onChange={[Function]}
+                                        password={true}
+                                        value=""
+                                />
+                        </div>
+                        <div
+                                className="profile-form-input-wrapper"
+                        >
+                                <label
+                                        className="profile-form-label"
+                                        htmlFor="repeat-password"
+                                >
+                                        Repeat Password
+                                </label>
+                                <Input
+                                        error={undefined}
+                                        id="repeat-password"
+                                        name="repeatPassword"
+                                        onChange={[Function]}
+                                        value=""
+                                />
+                        </div>
+                </form>
+        </div>
+</ModalPopup>,
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "children": <div
+          className="profile-form"
+>
+          <form
+                    onSubmit={[Function]}
+          >
+                    <div
+                              className="profile-form-upload"
+                    >
+                              <label>
+                                        <FileUpload
+                                                  auto={true}
+                                                  className="custom-file-upload"
+                                                  mode="basic"
+                                                  onSelect={[Function]}
+                                        />
+                                        <img
+                                                  alt="User"
+                                                  src="profile-default-image.svg"
+                                        />
+                                        <div
+                                                  className="profile-form-upload-hint"
+                                        >
+                                                  Click here to change image
+                                        </div>
+                              </label>
+                    </div>
+                    <div
+                              className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                    >
+                              <label
+                                        className="profile-form-label"
+                                        htmlFor="first-name"
+                              >
+                                        First Name 
+                                        <sup>
+                                                  *
+                                        </sup>
+                              </label>
+                              <Input
+                                        error=""
+                                        id="first-name"
+                                        name="firstName"
+                                        onChange={[Function]}
+                                        value="admin"
+                              />
+                    </div>
+                    <div
+                              className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                    >
+                              <label
+                                        className="profile-form-label"
+                                        htmlFor="last-name"
+                              >
+                                        Last Name 
+                                        <sup>
+                                                  *
+                                        </sup>
+                              </label>
+                              <Input
+                                        error=""
+                                        id="last-name"
+                                        name="lastName"
+                                        onChange={[Function]}
+                                        value="admin"
+                              />
+                    </div>
+                    <div
+                              className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+                    >
+                              <label
+                                        className="profile-form-label"
+                                        htmlFor="email-address"
+                              >
+                                        Email Address 
+                                        <sup>
+                                                  *
+                                        </sup>
+                              </label>
+                              <Input
+                                        error=""
+                                        id="email-address"
+                                        name="email"
+                                        onChange={[Function]}
+                                        value="jwalling@jwallingis.com"
+                              />
+                    </div>
+                    <div
+                              className="profile-form-input-wrapper"
+                    >
+                              <label
+                                        className="profile-form-label"
+                                        htmlFor="phone-number"
+                              >
+                                        Phone Number
+                              </label>
+                              <Input
+                                        id="phone-number"
+                                        mask="(999) 999-9999"
+                                        name="phone"
+                                        onChange={[Function]}
+                                        value=""
+                              />
+                    </div>
+                    <div
+                              className="profile-form-input-wrapper"
+                    >
+                              <label
+                                        className="profile-form-label"
+                              >
+                                        User Name 
+                                        <sup>
+                                                  *
+                                        </sup>
+                              </label>
+                              <Input
+                                        disabled={true}
+                                        value="admin"
+                              />
+                              <div
+                                        className="profile-form-tip"
+                              >
+                                        Can not change username of admin
+                              </div>
+                    </div>
+                    <div
+                              className="profile-form-input-wrapper"
+                    >
+                              <label
+                                        className="profile-form-label"
+                                        htmlFor="password"
+                              >
+                                        Password
+                              </label>
+                              <Input
+                                        error={undefined}
+                                        id="password"
+                                        name="password"
+                                        onChange={[Function]}
+                                        password={true}
+                                        value=""
+                              />
+                    </div>
+                    <div
+                              className="profile-form-input-wrapper"
+                    >
+                              <label
+                                        className="profile-form-label"
+                                        htmlFor="repeat-password"
+                              >
+                                        Repeat Password
+                              </label>
+                              <Input
+                                        error={undefined}
+                                        id="repeat-password"
+                                        name="repeatPassword"
+                                        onChange={[Function]}
+                                        value=""
+                              />
+                    </div>
+          </form>
+</div>,
+        "className": "popup",
+        "footer": <div>
+          <Button
+                    className="profile-form-cancel"
+                    onClick={[Function]}
+                    secondary={true}
+          >
+                    Cancel
+          </Button>
+          <Button
+                    className="profile-form-save"
+                    onClick={[Function]}
+          >
+                    Save
+          </Button>
+</div>,
+        "header": "Edit user",
+        "inPortal": true,
+        "modal": true,
+        "onHide": undefined,
+        "visible": undefined,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <form
+            onSubmit={[Function]}
+>
+            <div
+                        className="profile-form-upload"
+            >
+                        <label>
+                                    <FileUpload
+                                                auto={true}
+                                                className="custom-file-upload"
+                                                mode="basic"
+                                                onSelect={[Function]}
+                                    />
+                                    <img
+                                                alt="User"
+                                                src="profile-default-image.svg"
+                                    />
+                                    <div
+                                                className="profile-form-upload-hint"
+                                    >
+                                                Click here to change image
+                                    </div>
+                        </label>
+            </div>
+            <div
+                        className="profile-form-input-wrapper profile-form-input-wrapper-right"
+            >
+                        <label
+                                    className="profile-form-label"
+                                    htmlFor="first-name"
+                        >
+                                    First Name 
+                                    <sup>
+                                                *
+                                    </sup>
+                        </label>
+                        <Input
+                                    error=""
+                                    id="first-name"
+                                    name="firstName"
+                                    onChange={[Function]}
+                                    value="admin"
+                        />
+            </div>
+            <div
+                        className="profile-form-input-wrapper profile-form-input-wrapper-right"
+            >
+                        <label
+                                    className="profile-form-label"
+                                    htmlFor="last-name"
+                        >
+                                    Last Name 
+                                    <sup>
+                                                *
+                                    </sup>
+                        </label>
+                        <Input
+                                    error=""
+                                    id="last-name"
+                                    name="lastName"
+                                    onChange={[Function]}
+                                    value="admin"
+                        />
+            </div>
+            <div
+                        className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+            >
+                        <label
+                                    className="profile-form-label"
+                                    htmlFor="email-address"
+                        >
+                                    Email Address 
+                                    <sup>
+                                                *
+                                    </sup>
+                        </label>
+                        <Input
+                                    error=""
+                                    id="email-address"
+                                    name="email"
+                                    onChange={[Function]}
+                                    value="jwalling@jwallingis.com"
+                        />
+            </div>
+            <div
+                        className="profile-form-input-wrapper"
+            >
+                        <label
+                                    className="profile-form-label"
+                                    htmlFor="phone-number"
+                        >
+                                    Phone Number
+                        </label>
+                        <Input
+                                    id="phone-number"
+                                    mask="(999) 999-9999"
+                                    name="phone"
+                                    onChange={[Function]}
+                                    value=""
+                        />
+            </div>
+            <div
+                        className="profile-form-input-wrapper"
+            >
+                        <label
+                                    className="profile-form-label"
+                        >
+                                    User Name 
+                                    <sup>
+                                                *
+                                    </sup>
+                        </label>
+                        <Input
+                                    disabled={true}
+                                    value="admin"
+                        />
+                        <div
+                                    className="profile-form-tip"
+                        >
+                                    Can not change username of admin
+                        </div>
+            </div>
+            <div
+                        className="profile-form-input-wrapper"
+            >
+                        <label
+                                    className="profile-form-label"
+                                    htmlFor="password"
+                        >
+                                    Password
+                        </label>
+                        <Input
+                                    error={undefined}
+                                    id="password"
+                                    name="password"
+                                    onChange={[Function]}
+                                    password={true}
+                                    value=""
+                        />
+            </div>
+            <div
+                        className="profile-form-input-wrapper"
+            >
+                        <label
+                                    className="profile-form-label"
+                                    htmlFor="repeat-password"
+                        >
+                                    Repeat Password
+                        </label>
+                        <Input
+                                    error={undefined}
+                                    id="repeat-password"
+                                    name="repeatPassword"
+                                    onChange={[Function]}
+                                    value=""
+                        />
+            </div>
+</form>,
+          "className": "profile-form",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="profile-form-upload"
+>
+                <label>
+                                <FileUpload
+                                                auto={true}
+                                                className="custom-file-upload"
+                                                mode="basic"
+                                                onSelect={[Function]}
+                                />
+                                <img
+                                                alt="User"
+                                                src="profile-default-image.svg"
+                                />
+                                <div
+                                                className="profile-form-upload-hint"
+                                >
+                                                Click here to change image
+                                </div>
+                </label>
+</div>,
+              <div
+                className="profile-form-input-wrapper profile-form-input-wrapper-right"
+>
+                <label
+                                className="profile-form-label"
+                                htmlFor="first-name"
+                >
+                                First Name 
+                                <sup>
+                                                *
+                                </sup>
+                </label>
+                <Input
+                                error=""
+                                id="first-name"
+                                name="firstName"
+                                onChange={[Function]}
+                                value="admin"
+                />
+</div>,
+              <div
+                className="profile-form-input-wrapper profile-form-input-wrapper-right"
+>
+                <label
+                                className="profile-form-label"
+                                htmlFor="last-name"
+                >
+                                Last Name 
+                                <sup>
+                                                *
+                                </sup>
+                </label>
+                <Input
+                                error=""
+                                id="last-name"
+                                name="lastName"
+                                onChange={[Function]}
+                                value="admin"
+                />
+</div>,
+              <div
+                className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+>
+                <label
+                                className="profile-form-label"
+                                htmlFor="email-address"
+                >
+                                Email Address 
+                                <sup>
+                                                *
+                                </sup>
+                </label>
+                <Input
+                                error=""
+                                id="email-address"
+                                name="email"
+                                onChange={[Function]}
+                                value="jwalling@jwallingis.com"
+                />
+</div>,
+              <div
+                className="profile-form-input-wrapper"
+>
+                <label
+                                className="profile-form-label"
+                                htmlFor="phone-number"
+                >
+                                Phone Number
+                </label>
+                <Input
+                                id="phone-number"
+                                mask="(999) 999-9999"
+                                name="phone"
+                                onChange={[Function]}
+                                value=""
+                />
+</div>,
+              <div
+                className="profile-form-input-wrapper"
+>
+                <label
+                                className="profile-form-label"
+                >
+                                User Name 
+                                <sup>
+                                                *
+                                </sup>
+                </label>
+                <Input
+                                disabled={true}
+                                value="admin"
+                />
+                <div
+                                className="profile-form-tip"
+                >
+                                Can not change username of admin
+                </div>
+</div>,
+              <div
+                className="profile-form-input-wrapper"
+>
+                <label
+                                className="profile-form-label"
+                                htmlFor="password"
+                >
+                                Password
+                </label>
+                <Input
+                                error={undefined}
+                                id="password"
+                                name="password"
+                                onChange={[Function]}
+                                password={true}
+                                value=""
+                />
+</div>,
+              <div
+                className="profile-form-input-wrapper"
+>
+                <label
+                                className="profile-form-label"
+                                htmlFor="repeat-password"
+                >
+                                Repeat Password
+                </label>
+                <Input
+                                error={undefined}
+                                id="repeat-password"
+                                name="repeatPassword"
+                                onChange={[Function]}
+                                value=""
+                />
+</div>,
+            ],
+            "onSubmit": [Function],
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <label>
+                  <FileUpload
+                                    auto={true}
+                                    className="custom-file-upload"
+                                    mode="basic"
+                                    onSelect={[Function]}
+                  />
+                  <img
+                                    alt="User"
+                                    src="profile-default-image.svg"
+                  />
+                  <div
+                                    className="profile-form-upload-hint"
+                  >
+                                    Click here to change image
+                  </div>
+</label>,
+                "className": "profile-form-upload",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <FileUpload
+                      auto={true}
+                      className="custom-file-upload"
+                      mode="basic"
+                      onSelect={[Function]}
+/>,
+                    <img
+                      alt="User"
+                      src="profile-default-image.svg"
+/>,
+                    <div
+                      className="profile-form-upload-hint"
+>
+                      Click here to change image
+</div>,
+                  ],
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "auto": true,
+                      "className": "custom-file-upload",
+                      "mode": "basic",
+                      "onSelect": [Function],
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "alt": "User",
+                      "src": "profile-default-image.svg",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": "img",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Click here to change image",
+                      "className": "profile-form-upload-hint",
+                    },
+                    "ref": null,
+                    "rendered": "Click here to change image",
+                    "type": "div",
+                  },
+                ],
+                "type": "label",
+              },
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="profile-form-label"
+                    htmlFor="first-name"
+>
+                    First Name 
+                    <sup>
+                                        *
+                    </sup>
+</label>,
+                  <Input
+                    error=""
+                    id="first-name"
+                    name="firstName"
+                    onChange={[Function]}
+                    value="admin"
+/>,
+                ],
+                "className": "profile-form-input-wrapper profile-form-input-wrapper-right",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      "First Name ",
+                      <sup>
+                        *
+</sup>,
+                    ],
+                    "className": "profile-form-label",
+                    "htmlFor": "first-name",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "First Name ",
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "*",
+                      },
+                      "ref": null,
+                      "rendered": "*",
+                      "type": "sup",
+                    },
+                  ],
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "error": "",
+                    "id": "first-name",
+                    "name": "firstName",
+                    "onChange": [Function],
+                    "value": "admin",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="profile-form-label"
+                    htmlFor="last-name"
+>
+                    Last Name 
+                    <sup>
+                                        *
+                    </sup>
+</label>,
+                  <Input
+                    error=""
+                    id="last-name"
+                    name="lastName"
+                    onChange={[Function]}
+                    value="admin"
+/>,
+                ],
+                "className": "profile-form-input-wrapper profile-form-input-wrapper-right",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      "Last Name ",
+                      <sup>
+                        *
+</sup>,
+                    ],
+                    "className": "profile-form-label",
+                    "htmlFor": "last-name",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Last Name ",
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "*",
+                      },
+                      "ref": null,
+                      "rendered": "*",
+                      "type": "sup",
+                    },
+                  ],
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "error": "",
+                    "id": "last-name",
+                    "name": "lastName",
+                    "onChange": [Function],
+                    "value": "admin",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="profile-form-label"
+                    htmlFor="email-address"
+>
+                    Email Address 
+                    <sup>
+                                        *
+                    </sup>
+</label>,
+                  <Input
+                    error=""
+                    id="email-address"
+                    name="email"
+                    onChange={[Function]}
+                    value="jwalling@jwallingis.com"
+/>,
+                ],
+                "className": "profile-form-input-wrapper profile-form-input-wrapper-clear",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      "Email Address ",
+                      <sup>
+                        *
+</sup>,
+                    ],
+                    "className": "profile-form-label",
+                    "htmlFor": "email-address",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "Email Address ",
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "*",
+                      },
+                      "ref": null,
+                      "rendered": "*",
+                      "type": "sup",
+                    },
+                  ],
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "error": "",
+                    "id": "email-address",
+                    "name": "email",
+                    "onChange": [Function],
+                    "value": "jwalling@jwallingis.com",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="profile-form-label"
+                    htmlFor="phone-number"
+>
+                    Phone Number
+</label>,
+                  <Input
+                    id="phone-number"
+                    mask="(999) 999-9999"
+                    name="phone"
+                    onChange={[Function]}
+                    value=""
+/>,
+                ],
+                "className": "profile-form-input-wrapper",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Phone Number",
+                    "className": "profile-form-label",
+                    "htmlFor": "phone-number",
+                  },
+                  "ref": null,
+                  "rendered": "Phone Number",
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "id": "phone-number",
+                    "mask": "(999) 999-9999",
+                    "name": "phone",
+                    "onChange": [Function],
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="profile-form-label"
+>
+                    User Name 
+                    <sup>
+                                        *
+                    </sup>
+</label>,
+                  <Input
+                    disabled={true}
+                    value="admin"
+/>,
+                  <div
+                    className="profile-form-tip"
+>
+                    Can not change username of admin
+</div>,
+                ],
+                "className": "profile-form-input-wrapper",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      "User Name ",
+                      <sup>
+                        *
+</sup>,
+                    ],
+                    "className": "profile-form-label",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    "User Name ",
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "*",
+                      },
+                      "ref": null,
+                      "rendered": "*",
+                      "type": "sup",
+                    },
+                  ],
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "disabled": true,
+                    "value": "admin",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Can not change username of admin",
+                    "className": "profile-form-tip",
+                  },
+                  "ref": null,
+                  "rendered": "Can not change username of admin",
+                  "type": "div",
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="profile-form-label"
+                    htmlFor="password"
+>
+                    Password
+</label>,
+                  <Input
+                    error={undefined}
+                    id="password"
+                    name="password"
+                    onChange={[Function]}
+                    password={true}
+                    value=""
+/>,
+                ],
+                "className": "profile-form-input-wrapper",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Password",
+                    "className": "profile-form-label",
+                    "htmlFor": "password",
+                  },
+                  "ref": null,
+                  "rendered": "Password",
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "error": undefined,
+                    "id": "password",
+                    "name": "password",
+                    "onChange": [Function],
+                    "password": true,
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <label
+                    className="profile-form-label"
+                    htmlFor="repeat-password"
+>
+                    Repeat Password
+</label>,
+                  <Input
+                    error={undefined}
+                    id="repeat-password"
+                    name="repeatPassword"
+                    onChange={[Function]}
+                    value=""
+/>,
+                ],
+                "className": "profile-form-input-wrapper",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": "Repeat Password",
+                    "className": "profile-form-label",
+                    "htmlFor": "repeat-password",
+                  },
+                  "ref": null,
+                  "rendered": "Repeat Password",
+                  "type": "label",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "class",
+                  "props": Object {
+                    "error": undefined,
+                    "id": "repeat-password",
+                    "name": "repeatPassword",
+                    "onChange": [Function],
+                    "value": "",
+                  },
+                  "ref": null,
+                  "rendered": null,
+                  "type": [Function],
+                },
+              ],
+              "type": "div",
+            },
+          ],
+          "type": "form",
+        },
+        "type": "div",
+      },
+      "type": [Function],
+    },
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": <ModalPopup
+          className="popup"
+          footer={
+                    <div>
+                              <Button
+                                        className="profile-form-cancel"
+                                        onClick={[Function]}
+                                        secondary={true}
+                              >
+                                        Cancel
+                              </Button>
+                              <Button
+                                        className="profile-form-save"
+                                        onClick={[Function]}
+                              >
+                                        Save
+                              </Button>
+                    </div>
+          }
+          header="Edit user"
+          inPortal={true}
+          modal={true}
+          onHide={undefined}
+          visible={undefined}
+>
+          <div
+                    className="profile-form"
+          >
+                    <form
+                              onSubmit={[Function]}
+                    >
+                              <div
+                                        className="profile-form-upload"
+                              >
+                                        <label>
+                                                  <FileUpload
+                                                            auto={true}
+                                                            className="custom-file-upload"
+                                                            mode="basic"
+                                                            onSelect={[Function]}
+                                                  />
+                                                  <img
+                                                            alt="User"
+                                                            src="profile-default-image.svg"
+                                                  />
+                                                  <div
+                                                            className="profile-form-upload-hint"
+                                                  >
+                                                            Click here to change image
+                                                  </div>
+                                        </label>
+                              </div>
+                              <div
+                                        className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                              >
+                                        <label
+                                                  className="profile-form-label"
+                                                  htmlFor="first-name"
+                                        >
+                                                  First Name 
+                                                  <sup>
+                                                            *
+                                                  </sup>
+                                        </label>
+                                        <Input
+                                                  error=""
+                                                  id="first-name"
+                                                  name="firstName"
+                                                  onChange={[Function]}
+                                                  value="admin"
+                                        />
+                              </div>
+                              <div
+                                        className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                              >
+                                        <label
+                                                  className="profile-form-label"
+                                                  htmlFor="last-name"
+                                        >
+                                                  Last Name 
+                                                  <sup>
+                                                            *
+                                                  </sup>
+                                        </label>
+                                        <Input
+                                                  error=""
+                                                  id="last-name"
+                                                  name="lastName"
+                                                  onChange={[Function]}
+                                                  value="admin"
+                                        />
+                              </div>
+                              <div
+                                        className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+                              >
+                                        <label
+                                                  className="profile-form-label"
+                                                  htmlFor="email-address"
+                                        >
+                                                  Email Address 
+                                                  <sup>
+                                                            *
+                                                  </sup>
+                                        </label>
+                                        <Input
+                                                  error=""
+                                                  id="email-address"
+                                                  name="email"
+                                                  onChange={[Function]}
+                                                  value="jwalling@jwallingis.com"
+                                        />
+                              </div>
+                              <div
+                                        className="profile-form-input-wrapper"
+                              >
+                                        <label
+                                                  className="profile-form-label"
+                                                  htmlFor="phone-number"
+                                        >
+                                                  Phone Number
+                                        </label>
+                                        <Input
+                                                  id="phone-number"
+                                                  mask="(999) 999-9999"
+                                                  name="phone"
+                                                  onChange={[Function]}
+                                                  value=""
+                                        />
+                              </div>
+                              <div
+                                        className="profile-form-input-wrapper"
+                              >
+                                        <label
+                                                  className="profile-form-label"
+                                        >
+                                                  User Name 
+                                                  <sup>
+                                                            *
+                                                  </sup>
+                                        </label>
+                                        <Input
+                                                  disabled={true}
+                                                  value="admin"
+                                        />
+                                        <div
+                                                  className="profile-form-tip"
+                                        >
+                                                  Can not change username of admin
+                                        </div>
+                              </div>
+                              <div
+                                        className="profile-form-input-wrapper"
+                              >
+                                        <label
+                                                  className="profile-form-label"
+                                                  htmlFor="password"
+                                        >
+                                                  Password
+                                        </label>
+                                        <Input
+                                                  error={undefined}
+                                                  id="password"
+                                                  name="password"
+                                                  onChange={[Function]}
+                                                  password={true}
+                                                  value=""
+                                        />
+                              </div>
+                              <div
+                                        className="profile-form-input-wrapper"
+                              >
+                                        <label
+                                                  className="profile-form-label"
+                                                  htmlFor="repeat-password"
+                                        >
+                                                  Repeat Password
+                                        </label>
+                                        <Input
+                                                  error={undefined}
+                                                  id="repeat-password"
+                                                  name="repeatPassword"
+                                                  onChange={[Function]}
+                                                  value=""
+                                        />
+                              </div>
+                    </form>
+          </div>
+</ModalPopup>,
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "children": <div
+            className="profile-form"
+>
+            <form
+                        onSubmit={[Function]}
+            >
+                        <div
+                                    className="profile-form-upload"
+                        >
+                                    <label>
+                                                <FileUpload
+                                                            auto={true}
+                                                            className="custom-file-upload"
+                                                            mode="basic"
+                                                            onSelect={[Function]}
+                                                />
+                                                <img
+                                                            alt="User"
+                                                            src="profile-default-image.svg"
+                                                />
+                                                <div
+                                                            className="profile-form-upload-hint"
+                                                >
+                                                            Click here to change image
+                                                </div>
+                                    </label>
+                        </div>
+                        <div
+                                    className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                        >
+                                    <label
+                                                className="profile-form-label"
+                                                htmlFor="first-name"
+                                    >
+                                                First Name 
+                                                <sup>
+                                                            *
+                                                </sup>
+                                    </label>
+                                    <Input
+                                                error=""
+                                                id="first-name"
+                                                name="firstName"
+                                                onChange={[Function]}
+                                                value="admin"
+                                    />
+                        </div>
+                        <div
+                                    className="profile-form-input-wrapper profile-form-input-wrapper-right"
+                        >
+                                    <label
+                                                className="profile-form-label"
+                                                htmlFor="last-name"
+                                    >
+                                                Last Name 
+                                                <sup>
+                                                            *
+                                                </sup>
+                                    </label>
+                                    <Input
+                                                error=""
+                                                id="last-name"
+                                                name="lastName"
+                                                onChange={[Function]}
+                                                value="admin"
+                                    />
+                        </div>
+                        <div
+                                    className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+                        >
+                                    <label
+                                                className="profile-form-label"
+                                                htmlFor="email-address"
+                                    >
+                                                Email Address 
+                                                <sup>
+                                                            *
+                                                </sup>
+                                    </label>
+                                    <Input
+                                                error=""
+                                                id="email-address"
+                                                name="email"
+                                                onChange={[Function]}
+                                                value="jwalling@jwallingis.com"
+                                    />
+                        </div>
+                        <div
+                                    className="profile-form-input-wrapper"
+                        >
+                                    <label
+                                                className="profile-form-label"
+                                                htmlFor="phone-number"
+                                    >
+                                                Phone Number
+                                    </label>
+                                    <Input
+                                                id="phone-number"
+                                                mask="(999) 999-9999"
+                                                name="phone"
+                                                onChange={[Function]}
+                                                value=""
+                                    />
+                        </div>
+                        <div
+                                    className="profile-form-input-wrapper"
+                        >
+                                    <label
+                                                className="profile-form-label"
+                                    >
+                                                User Name 
+                                                <sup>
+                                                            *
+                                                </sup>
+                                    </label>
+                                    <Input
+                                                disabled={true}
+                                                value="admin"
+                                    />
+                                    <div
+                                                className="profile-form-tip"
+                                    >
+                                                Can not change username of admin
+                                    </div>
+                        </div>
+                        <div
+                                    className="profile-form-input-wrapper"
+                        >
+                                    <label
+                                                className="profile-form-label"
+                                                htmlFor="password"
+                                    >
+                                                Password
+                                    </label>
+                                    <Input
+                                                error={undefined}
+                                                id="password"
+                                                name="password"
+                                                onChange={[Function]}
+                                                password={true}
+                                                value=""
+                                    />
+                        </div>
+                        <div
+                                    className="profile-form-input-wrapper"
+                        >
+                                    <label
+                                                className="profile-form-label"
+                                                htmlFor="repeat-password"
+                                    >
+                                                Repeat Password
+                                    </label>
+                                    <Input
+                                                error={undefined}
+                                                id="repeat-password"
+                                                name="repeatPassword"
+                                                onChange={[Function]}
+                                                value=""
+                                    />
+                        </div>
+            </form>
+</div>,
+          "className": "popup",
+          "footer": <div>
+            <Button
+                        className="profile-form-cancel"
+                        onClick={[Function]}
+                        secondary={true}
+            >
+                        Cancel
+            </Button>
+            <Button
+                        className="profile-form-save"
+                        onClick={[Function]}
+            >
+                        Save
+            </Button>
+</div>,
+          "header": "Edit user",
+          "inPortal": true,
+          "modal": true,
+          "onHide": undefined,
+          "visible": undefined,
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <form
+              onSubmit={[Function]}
+>
+              <div
+                            className="profile-form-upload"
+              >
+                            <label>
+                                          <FileUpload
+                                                        auto={true}
+                                                        className="custom-file-upload"
+                                                        mode="basic"
+                                                        onSelect={[Function]}
+                                          />
+                                          <img
+                                                        alt="User"
+                                                        src="profile-default-image.svg"
+                                          />
+                                          <div
+                                                        className="profile-form-upload-hint"
+                                          >
+                                                        Click here to change image
+                                          </div>
+                            </label>
+              </div>
+              <div
+                            className="profile-form-input-wrapper profile-form-input-wrapper-right"
+              >
+                            <label
+                                          className="profile-form-label"
+                                          htmlFor="first-name"
+                            >
+                                          First Name 
+                                          <sup>
+                                                        *
+                                          </sup>
+                            </label>
+                            <Input
+                                          error=""
+                                          id="first-name"
+                                          name="firstName"
+                                          onChange={[Function]}
+                                          value="admin"
+                            />
+              </div>
+              <div
+                            className="profile-form-input-wrapper profile-form-input-wrapper-right"
+              >
+                            <label
+                                          className="profile-form-label"
+                                          htmlFor="last-name"
+                            >
+                                          Last Name 
+                                          <sup>
+                                                        *
+                                          </sup>
+                            </label>
+                            <Input
+                                          error=""
+                                          id="last-name"
+                                          name="lastName"
+                                          onChange={[Function]}
+                                          value="admin"
+                            />
+              </div>
+              <div
+                            className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+              >
+                            <label
+                                          className="profile-form-label"
+                                          htmlFor="email-address"
+                            >
+                                          Email Address 
+                                          <sup>
+                                                        *
+                                          </sup>
+                            </label>
+                            <Input
+                                          error=""
+                                          id="email-address"
+                                          name="email"
+                                          onChange={[Function]}
+                                          value="jwalling@jwallingis.com"
+                            />
+              </div>
+              <div
+                            className="profile-form-input-wrapper"
+              >
+                            <label
+                                          className="profile-form-label"
+                                          htmlFor="phone-number"
+                            >
+                                          Phone Number
+                            </label>
+                            <Input
+                                          id="phone-number"
+                                          mask="(999) 999-9999"
+                                          name="phone"
+                                          onChange={[Function]}
+                                          value=""
+                            />
+              </div>
+              <div
+                            className="profile-form-input-wrapper"
+              >
+                            <label
+                                          className="profile-form-label"
+                            >
+                                          User Name 
+                                          <sup>
+                                                        *
+                                          </sup>
+                            </label>
+                            <Input
+                                          disabled={true}
+                                          value="admin"
+                            />
+                            <div
+                                          className="profile-form-tip"
+                            >
+                                          Can not change username of admin
+                            </div>
+              </div>
+              <div
+                            className="profile-form-input-wrapper"
+              >
+                            <label
+                                          className="profile-form-label"
+                                          htmlFor="password"
+                            >
+                                          Password
+                            </label>
+                            <Input
+                                          error={undefined}
+                                          id="password"
+                                          name="password"
+                                          onChange={[Function]}
+                                          password={true}
+                                          value=""
+                            />
+              </div>
+              <div
+                            className="profile-form-input-wrapper"
+              >
+                            <label
+                                          className="profile-form-label"
+                                          htmlFor="repeat-password"
+                            >
+                                          Repeat Password
+                            </label>
+                            <Input
+                                          error={undefined}
+                                          id="repeat-password"
+                                          name="repeatPassword"
+                                          onChange={[Function]}
+                                          value=""
+                            />
+              </div>
+</form>,
+            "className": "profile-form",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="profile-form-upload"
+>
+                  <label>
+                                    <FileUpload
+                                                      auto={true}
+                                                      className="custom-file-upload"
+                                                      mode="basic"
+                                                      onSelect={[Function]}
+                                    />
+                                    <img
+                                                      alt="User"
+                                                      src="profile-default-image.svg"
+                                    />
+                                    <div
+                                                      className="profile-form-upload-hint"
+                                    >
+                                                      Click here to change image
+                                    </div>
+                  </label>
+</div>,
+                <div
+                  className="profile-form-input-wrapper profile-form-input-wrapper-right"
+>
+                  <label
+                                    className="profile-form-label"
+                                    htmlFor="first-name"
+                  >
+                                    First Name 
+                                    <sup>
+                                                      *
+                                    </sup>
+                  </label>
+                  <Input
+                                    error=""
+                                    id="first-name"
+                                    name="firstName"
+                                    onChange={[Function]}
+                                    value="admin"
+                  />
+</div>,
+                <div
+                  className="profile-form-input-wrapper profile-form-input-wrapper-right"
+>
+                  <label
+                                    className="profile-form-label"
+                                    htmlFor="last-name"
+                  >
+                                    Last Name 
+                                    <sup>
+                                                      *
+                                    </sup>
+                  </label>
+                  <Input
+                                    error=""
+                                    id="last-name"
+                                    name="lastName"
+                                    onChange={[Function]}
+                                    value="admin"
+                  />
+</div>,
+                <div
+                  className="profile-form-input-wrapper profile-form-input-wrapper-clear"
+>
+                  <label
+                                    className="profile-form-label"
+                                    htmlFor="email-address"
+                  >
+                                    Email Address 
+                                    <sup>
+                                                      *
+                                    </sup>
+                  </label>
+                  <Input
+                                    error=""
+                                    id="email-address"
+                                    name="email"
+                                    onChange={[Function]}
+                                    value="jwalling@jwallingis.com"
+                  />
+</div>,
+                <div
+                  className="profile-form-input-wrapper"
+>
+                  <label
+                                    className="profile-form-label"
+                                    htmlFor="phone-number"
+                  >
+                                    Phone Number
+                  </label>
+                  <Input
+                                    id="phone-number"
+                                    mask="(999) 999-9999"
+                                    name="phone"
+                                    onChange={[Function]}
+                                    value=""
+                  />
+</div>,
+                <div
+                  className="profile-form-input-wrapper"
+>
+                  <label
+                                    className="profile-form-label"
+                  >
+                                    User Name 
+                                    <sup>
+                                                      *
+                                    </sup>
+                  </label>
+                  <Input
+                                    disabled={true}
+                                    value="admin"
+                  />
+                  <div
+                                    className="profile-form-tip"
+                  >
+                                    Can not change username of admin
+                  </div>
+</div>,
+                <div
+                  className="profile-form-input-wrapper"
+>
+                  <label
+                                    className="profile-form-label"
+                                    htmlFor="password"
+                  >
+                                    Password
+                  </label>
+                  <Input
+                                    error={undefined}
+                                    id="password"
+                                    name="password"
+                                    onChange={[Function]}
+                                    password={true}
+                                    value=""
+                  />
+</div>,
+                <div
+                  className="profile-form-input-wrapper"
+>
+                  <label
+                                    className="profile-form-label"
+                                    htmlFor="repeat-password"
+                  >
+                                    Repeat Password
+                  </label>
+                  <Input
+                                    error={undefined}
+                                    id="repeat-password"
+                                    name="repeatPassword"
+                                    onChange={[Function]}
+                                    value=""
+                  />
+</div>,
+              ],
+              "onSubmit": [Function],
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <label>
+                    <FileUpload
+                                        auto={true}
+                                        className="custom-file-upload"
+                                        mode="basic"
+                                        onSelect={[Function]}
+                    />
+                    <img
+                                        alt="User"
+                                        src="profile-default-image.svg"
+                    />
+                    <div
+                                        className="profile-form-upload-hint"
+                    >
+                                        Click here to change image
+                    </div>
+</label>,
+                  "className": "profile-form-upload",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <FileUpload
+                        auto={true}
+                        className="custom-file-upload"
+                        mode="basic"
+                        onSelect={[Function]}
+/>,
+                      <img
+                        alt="User"
+                        src="profile-default-image.svg"
+/>,
+                      <div
+                        className="profile-form-upload-hint"
+>
+                        Click here to change image
+</div>,
+                    ],
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {
+                        "auto": true,
+                        "className": "custom-file-upload",
+                        "mode": "basic",
+                        "onSelect": [Function],
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "alt": "User",
+                        "src": "profile-default-image.svg",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": "img",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": "Click here to change image",
+                        "className": "profile-form-upload-hint",
+                      },
+                      "ref": null,
+                      "rendered": "Click here to change image",
+                      "type": "div",
+                    },
+                  ],
+                  "type": "label",
+                },
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <label
+                      className="profile-form-label"
+                      htmlFor="first-name"
+>
+                      First Name 
+                      <sup>
+                                            *
+                      </sup>
+</label>,
+                    <Input
+                      error=""
+                      id="first-name"
+                      name="firstName"
+                      onChange={[Function]}
+                      value="admin"
+/>,
+                  ],
+                  "className": "profile-form-input-wrapper profile-form-input-wrapper-right",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        "First Name ",
+                        <sup>
+                          *
+</sup>,
+                      ],
+                      "className": "profile-form-label",
+                      "htmlFor": "first-name",
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      "First Name ",
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "*",
+                        },
+                        "ref": null,
+                        "rendered": "*",
+                        "type": "sup",
+                      },
+                    ],
+                    "type": "label",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "error": "",
+                      "id": "first-name",
+                      "name": "firstName",
+                      "onChange": [Function],
+                      "value": "admin",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <label
+                      className="profile-form-label"
+                      htmlFor="last-name"
+>
+                      Last Name 
+                      <sup>
+                                            *
+                      </sup>
+</label>,
+                    <Input
+                      error=""
+                      id="last-name"
+                      name="lastName"
+                      onChange={[Function]}
+                      value="admin"
+/>,
+                  ],
+                  "className": "profile-form-input-wrapper profile-form-input-wrapper-right",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        "Last Name ",
+                        <sup>
+                          *
+</sup>,
+                      ],
+                      "className": "profile-form-label",
+                      "htmlFor": "last-name",
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      "Last Name ",
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "*",
+                        },
+                        "ref": null,
+                        "rendered": "*",
+                        "type": "sup",
+                      },
+                    ],
+                    "type": "label",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "error": "",
+                      "id": "last-name",
+                      "name": "lastName",
+                      "onChange": [Function],
+                      "value": "admin",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <label
+                      className="profile-form-label"
+                      htmlFor="email-address"
+>
+                      Email Address 
+                      <sup>
+                                            *
+                      </sup>
+</label>,
+                    <Input
+                      error=""
+                      id="email-address"
+                      name="email"
+                      onChange={[Function]}
+                      value="jwalling@jwallingis.com"
+/>,
+                  ],
+                  "className": "profile-form-input-wrapper profile-form-input-wrapper-clear",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        "Email Address ",
+                        <sup>
+                          *
+</sup>,
+                      ],
+                      "className": "profile-form-label",
+                      "htmlFor": "email-address",
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      "Email Address ",
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "*",
+                        },
+                        "ref": null,
+                        "rendered": "*",
+                        "type": "sup",
+                      },
+                    ],
+                    "type": "label",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "error": "",
+                      "id": "email-address",
+                      "name": "email",
+                      "onChange": [Function],
+                      "value": "jwalling@jwallingis.com",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <label
+                      className="profile-form-label"
+                      htmlFor="phone-number"
+>
+                      Phone Number
+</label>,
+                    <Input
+                      id="phone-number"
+                      mask="(999) 999-9999"
+                      name="phone"
+                      onChange={[Function]}
+                      value=""
+/>,
+                  ],
+                  "className": "profile-form-input-wrapper",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Phone Number",
+                      "className": "profile-form-label",
+                      "htmlFor": "phone-number",
+                    },
+                    "ref": null,
+                    "rendered": "Phone Number",
+                    "type": "label",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "id": "phone-number",
+                      "mask": "(999) 999-9999",
+                      "name": "phone",
+                      "onChange": [Function],
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <label
+                      className="profile-form-label"
+>
+                      User Name 
+                      <sup>
+                                            *
+                      </sup>
+</label>,
+                    <Input
+                      disabled={true}
+                      value="admin"
+/>,
+                    <div
+                      className="profile-form-tip"
+>
+                      Can not change username of admin
+</div>,
+                  ],
+                  "className": "profile-form-input-wrapper",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        "User Name ",
+                        <sup>
+                          *
+</sup>,
+                      ],
+                      "className": "profile-form-label",
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      "User Name ",
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": "*",
+                        },
+                        "ref": null,
+                        "rendered": "*",
+                        "type": "sup",
+                      },
+                    ],
+                    "type": "label",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "disabled": true,
+                      "value": "admin",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Can not change username of admin",
+                      "className": "profile-form-tip",
+                    },
+                    "ref": null,
+                    "rendered": "Can not change username of admin",
+                    "type": "div",
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <label
+                      className="profile-form-label"
+                      htmlFor="password"
+>
+                      Password
+</label>,
+                    <Input
+                      error={undefined}
+                      id="password"
+                      name="password"
+                      onChange={[Function]}
+                      password={true}
+                      value=""
+/>,
+                  ],
+                  "className": "profile-form-input-wrapper",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Password",
+                      "className": "profile-form-label",
+                      "htmlFor": "password",
+                    },
+                    "ref": null,
+                    "rendered": "Password",
+                    "type": "label",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "error": undefined,
+                      "id": "password",
+                      "name": "password",
+                      "onChange": [Function],
+                      "password": true,
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <label
+                      className="profile-form-label"
+                      htmlFor="repeat-password"
+>
+                      Repeat Password
+</label>,
+                    <Input
+                      error={undefined}
+                      id="repeat-password"
+                      name="repeatPassword"
+                      onChange={[Function]}
+                      value=""
+/>,
+                  ],
+                  "className": "profile-form-input-wrapper",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": "Repeat Password",
+                      "className": "profile-form-label",
+                      "htmlFor": "repeat-password",
+                    },
+                    "ref": null,
+                    "rendered": "Repeat Password",
+                    "type": "label",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "error": undefined,
+                      "id": "repeat-password",
+                      "name": "repeatPassword",
+                      "onChange": [Function],
+                      "value": "",
+                    },
+                    "ref": null,
+                    "rendered": null,
+                    "type": [Function],
+                  },
+                ],
+                "type": "div",
+              },
+            ],
+            "type": "form",
+          },
+          "type": "div",
+        },
+        "type": [Function],
+      },
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;

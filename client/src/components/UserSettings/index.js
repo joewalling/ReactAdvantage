@@ -31,7 +31,7 @@ export default class UserSettings extends Component {
             return values;
         }, {});
 
-        onSave(formValues)
+        onSave(formValues);
     }
 
     onChange = ({ target: { name, value } }) => {
@@ -113,6 +113,7 @@ export default class UserSettings extends Component {
         return (
             <div>
                 <Button
+                    className="profile-form-cancel"
                     secondary
                     onClick={this.onHide}
                 >
@@ -120,6 +121,7 @@ export default class UserSettings extends Component {
                 </Button>
                 <Button
                     onClick={this.onSubmit}
+                    className="profile-form-save"
                 >
                     Save
                 </Button>

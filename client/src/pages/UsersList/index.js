@@ -161,7 +161,6 @@ export default class UsersList extends Component {
         popupVisible: false,
         selectedUserId: null,
         UsersList: [],
-        rows: 0,
     };
 
     entries = [{

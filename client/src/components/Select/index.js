@@ -6,7 +6,7 @@ import './index.css'
 export default class MultiSelect extends Component {
     render() {
         return (
-            <div >
+            <div>
                 <PrimeMultiSelect className="select" {...this.props} />
             </div>
         );

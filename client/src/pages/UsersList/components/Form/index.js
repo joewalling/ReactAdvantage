@@ -395,6 +395,7 @@ export default class Form extends Component {
                         key={`${id}${name}`}
                     >
                         <Checkbox
+                            className="edit-user-roles-checkbox"
                             inputId={`${id}${name}`}
                             label={name}
                             name={`${id}${name}`}
@@ -414,11 +415,13 @@ export default class Form extends Component {
                 <Button
                     secondary
                     onClick={this.props.onHide}
+                    className="edit-user-cancel-button"
                 >
                     Cancel
                 </Button>
                 <Button
                     onClick={this.onSubmit}
+                    className="edit-user-save-button"
                 >
                     Save
                 </Button>

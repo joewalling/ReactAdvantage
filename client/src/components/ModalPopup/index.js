@@ -7,15 +7,18 @@ import './index.css';
 const modalRoot = document.getElementById('modal-root');
 
 export default class ModalPopup extends Component {
+    constructor(props) {
+        super(props);
+        this.el = document.createElement('div');
+    }
+
     componentDidMount() {
-        modalRoot.appendChild(this.el);
+        modalRoot && modalRoot.appendChild(this.el);
     }
 
     componentWillUnmount() {
-        modalRoot.removeChild(this.el);
+        modalRoot && modalRoot.removeChild(this.el);
     }
-
-    el = document.createElement('div');
 
     render() {
         const { inPortal, ...props } = this.props;

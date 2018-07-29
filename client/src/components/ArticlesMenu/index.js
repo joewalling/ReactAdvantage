@@ -8,11 +8,11 @@ const modalRoot = document.getElementById('modal-root');
 
 export default class SidebarMenu extends Component {
     componentDidMount() {
-        modalRoot.appendChild(this.el);
+        modalRoot && modalRoot.appendChild(this.el);
     }
 
     componentWillUnmount() {
-        modalRoot.removeChild(this.el);
+        modalRoot && modalRoot.removeChild(this.el);
     }
 
     onSidebarHide = () => {
