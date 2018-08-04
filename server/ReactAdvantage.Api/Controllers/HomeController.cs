@@ -8,20 +8,11 @@ namespace ReactAdvantage.Api.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction(nameof(GraphqlPlayground));
         }
 
-        public IActionResult About()
+        public IActionResult GraphqlPlayground()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 

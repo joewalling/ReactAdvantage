@@ -26,6 +26,7 @@ namespace ReactAdvantage.Api.Controllers
             {
                 _.Schema = schema;
                 _.Query = query.Query;
+                _.Inputs = new Inputs(query.Variables);
 
             }).ConfigureAwait(false);
 

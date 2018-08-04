@@ -20,5 +20,11 @@
     },
     // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/view-resources/Home/GraphqlPlayground.min.js",
+    "inputFiles": [
+      "wwwroot/view-resources/Home/GraphqlPlayground.js"
+    ]
   }
 ]
