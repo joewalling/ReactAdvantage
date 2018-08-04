@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Extensions\" />
+    <Folder Include="wwwroot\lib\graphql-playground-react\build\static\css\" />
+    <Folder Include="wwwroot\lib\graphql-playground-react\build\static\js\" />
   </ItemGroup>
 
   <ItemGroup>
