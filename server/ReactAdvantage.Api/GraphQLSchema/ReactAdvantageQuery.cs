@@ -1,44 +1,35 @@
-﻿using GraphQL.Types;
-using Microsoft.EntityFrameworkCore;
-using ReactAdvantage.Application.Services;
+﻿using System;
+using System.Collections.Generic;
+using GraphQL.Types;
 using ReactAdvantage.Data;
-using ReactAdvantage.Domain.Models;
 using System.Linq;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {
     public class ReactAdvantageQuery : ObjectGraphType
     {
-        public ReactAdvantageQuery(ReactAdvantageContext db )
+        public ReactAdvantageQuery(ReactAdvantageContext db)
         {
-            var projects = new ProjectService();
-
-
             Name = "Query";
 
             Field<UserType>(
-                "userbyid",
+                "user",
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
                 resolve: context => db.Users.FindAsync(context.GetArgument<int>("id"))
             );
 
             Field<ListGraphType<UserType>>(
-                "allusers",
-                resolve: context => db.Users
-            );
-
-            Field<ListGraphType<UserType>>(
                 "users",
                 arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" },
+                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
                     new QueryArgument<StringGraphType> { Name = "firstname" },
                     new QueryArgument<StringGraphType> { Name = "lastname" },
                     new QueryArgument<StringGraphType> { Name = "name" },
                     new QueryArgument<StringGraphType> { Name = "email" }
                 ),
                 resolve: context => db.Users
-                    .HandleQueryArgument(new ArgumentGetter<int>("id", context), (arg, query) => 
-                        query.Where(x => x.Id == arg))
+                    .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                        query.Where(x => arg.Contains(x.Id)))
                     .HandleQueryArgument(new ArgumentGetter<string>("firstname", context), (arg, query) => 
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.FirstName.Contains(arg)))
                     .HandleQueryArgument(new ArgumentGetter<string>("lastname", context), (arg, query) =>
@@ -49,46 +40,55 @@ namespace ReactAdvantage.Api.GraphQLSchema
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Email.Contains(arg)))
             );
 
-            Field<ListGraphType<ProjectType>>(
-                "allprojects",
-                resolve: context => db.Projects.ToListAsync()
-            );
-
-            Field<ProjectType>(
-                  "projectbyid",
-                  arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                  resolve: context => db.Projects.FindAsync(context.GetArgument<int>("id"))
-              );
             Field<ProjectType>(
                 "project",
                 arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context => projects.GetProjectByIdAsync(context.GetArgument<int>("id"))
+                resolve: context => db.Projects.FindAsync(context.GetArgument<int>("id"))
             );
 
             Field<ListGraphType<ProjectType>>(
                 "projects",
                 arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" },
+                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
                     new QueryArgument<StringGraphType> { Name = "name" }
                 ),
                 resolve: context => db.Projects
-                    .HandleQueryArgument(new ArgumentGetter<int>("id", context), (arg, query) =>
-                        query.Where(x => x.Id == arg))
+                    .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                        query.Where(x => arg.Contains(x.Id)))
                     .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Name.Contains(arg)))
             );
 
+            Field<TaskType>(
+                "task",
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
+                resolve: context => db.Tasks.FindAsync(context.GetArgument<int>("id"))
+            );
 
-
-            //Field<TaskType>(
-            //    "task",
-            //    resolve: context => new Task { Id = 1, Name = "Task 1" }
-            //);
-
-            //Field<TasksQuery>(
-            //    "tasks",
-            //    resolve: context => new TasksQuery(new TaskService())
-            //);
+            Field<ListGraphType<TaskType>>(
+                "tasks",
+                arguments: new QueryArguments(
+                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
+                    new QueryArgument<IntGraphType> { Name = "projectid" },
+                    new QueryArgument<StringGraphType> { Name = "name" },
+                    new QueryArgument<BooleanGraphType> { Name = "iscompleted" },
+                    new QueryArgument<DateGraphType> { Name = "duedate" },
+                    new QueryArgument<DateGraphType> { Name = "completiondate" }
+                ),
+                resolve: context => db.Tasks
+                    .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                        query.Where(x => arg.Contains(x.Id)))
+                    .HandleQueryArgument(new ArgumentGetter<int>("projectid", context), (arg, query) =>
+                        query.Where(x => x.ProjectId == arg))
+                    .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
+                        string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Name.Contains(arg)))
+                    .HandleQueryArgument(new ArgumentGetter<bool>("iscompleted", context), (arg, query) =>
+                        query.Where(x => x.Completed == arg))
+                    .HandleQueryArgument(new ArgumentGetter<DateTime>("duedate", context), (arg, query) =>
+                        query.Where(x => x.DueDate >= arg.Date && x.DueDate < arg.Date.AddDays(1)))
+                    .HandleQueryArgument(new ArgumentGetter<DateTime>("completiondate", context), (arg, query) =>
+                        query.Where(x => x.CompletionDate >= arg.Date && x.CompletionDate < arg.Date.AddDays(1)))
+            );
 
         }
     }

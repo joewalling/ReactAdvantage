@@ -1,22 +1,21 @@
 ﻿using GraphQL.Types;
-using ReactAdvantage.Application.Services;
+using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {
     public class TaskType : ObjectGraphType<Task>
     {
-        public TaskType(IProjectService projects)
+        public TaskType(ReactAdvantageContext db)
         {
             Field(c => c.Id);
-            Field(c => c.Name);
-            Field(o => o.Description);
-            Field(o => o.DueDate);
-            Field(o => o.Completed);
-            Field(o => o.CompletionDate);
+            Field(c => c.Name, nullable: true);
+            Field(o => o.Description, nullable: true);
+            Field(o => o.DueDate, nullable: true);
+            Field(o => o.Completed, nullable: false);
+            Field(o => o.CompletionDate, nullable: true);
             Field<ProjectType>("project",
-                resolve: context => projects.GetProjectByIdAsync(context.Source.ProjectId));
-
+                resolve: context => db.Projects.FindAsync(context.Source.ProjectId));
         }
     }
 }
