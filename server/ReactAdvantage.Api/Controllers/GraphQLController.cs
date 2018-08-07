@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
@@ -10,29 +11,35 @@ namespace ReactAdvantage.Api.Controllers
     [Route("graphql")]
     public class GraphQLController : ControllerBase
     {
-        private ReactAdvantageQuery _reactAdvantageQuery { get; set; }
+        private readonly IDocumentExecuter _documentExecuter;
+        private readonly ISchema _schema;
 
-        public GraphQLController(ReactAdvantageQuery reactAdvantageQuery)
+        public GraphQLController(ISchema schema, IDocumentExecuter documentExecuter)
         {
-            _reactAdvantageQuery = reactAdvantageQuery;
+            _schema = schema;
+            _documentExecuter = documentExecuter;
         }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] GraphQLQuery query)
         {
-            var schema = new Schema { Query = _reactAdvantageQuery };
-
-            var result = await new DocumentExecuter().ExecuteAsync(_ =>
+            if (query == null)
             {
-                _.Schema = schema;
-                _.Query = query.Query;
-                _.Inputs = new Inputs(query.Variables);
+                throw new ArgumentNullException(nameof(query));
+            }
 
-            }).ConfigureAwait(false);
+            var executionOptions = new ExecutionOptions
+            {
+                Schema = _schema,
+                Query = query.Query,
+                Inputs = query.Variables.ToInputs()
+            };
+
+            var result = await _documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);
 
             if (result.Errors?.Count > 0)
             {
-                return BadRequest();
+                return BadRequest(result);
             }
 
             return Ok(result);

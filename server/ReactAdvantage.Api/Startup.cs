@@ -1,4 +1,5 @@
 ﻿using GraphQL;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -6,8 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Api.GraphQLSchema;
-using ReactAdvantage.Api.Services;
-using ReactAdvantage.Application.Services;
 using ReactAdvantage.Data;
 
 namespace ReactAdvantage.Api
@@ -37,10 +36,14 @@ namespace ReactAdvantage.Api
                 options.UseSqlServer(connectionString));
 
             // Add application services.
+            services.AddTransient<IDocumentExecuter, DocumentExecuter>();
             services.AddTransient<ReactAdvantageQuery>();
-
-            services.AddSingleton<IDependencyResolver>(
-                c => new FuncDependencyResolver(type => c.GetRequiredService(type)));
+            //todo add mutation
+            services.AddTransient<TaskType>();
+            services.AddTransient<UserType>();
+            services.AddTransient<ProjectType>();
+            var sp = services.BuildServiceProvider();
+            services.AddTransient<ISchema>(x => new ReactAdvantageSchema(new FuncDependencyResolver(type => sp.GetService(type))));
 
             services.AddMvc();
 

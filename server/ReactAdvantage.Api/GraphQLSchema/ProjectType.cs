@@ -8,7 +8,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
         public ProjectType()
         {
             Field(c => c.Id);
-            Field(c => c.Name);
+            Field(c => c.Name, nullable: true);
         }
     }
 }
