@@ -65,16 +65,18 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 resolve: context => projects.GetProjectByIdAsync(context.GetArgument<int>("id"))
             );
 
-            // TODO: Need to create a composable query that can include any of Id, FirstName, LastName,  
-            // Email,Name to query the user. Note that some of these arguments may be null and query needs 
-            // to handle that in a performant manner.
-            //Field<ListGraphType<ProjectType>>(
-            //    "users",
-            //    arguments: new QueryArguments{
-            //        new QueryArgument<IntGraphType> { Name = "id" }
-            //    },
-            //    resolve: context => db.Projects.Where(u => u.Id == context.GetArgument<int>("id"))
-            //);
+            Field<ListGraphType<ProjectType>>(
+                "projects",
+                arguments: new QueryArguments(
+                    new QueryArgument<IntGraphType> { Name = "id" },
+                    new QueryArgument<StringGraphType> { Name = "name" }
+                ),
+                resolve: context => db.Projects
+                    .HandleQueryArgument(new ArgumentGetter<int>("id", context), (arg, query) =>
+                        query.Where(x => x.Id == arg))
+                    .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
+                        string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Name.Contains(arg)))
+            );
 
 
 
