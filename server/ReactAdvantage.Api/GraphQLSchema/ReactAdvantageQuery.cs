@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GraphQL.Types;
 using ReactAdvantage.Data;
 using System.Linq;
@@ -20,15 +21,15 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field<ListGraphType<UserType>>(
                 "users",
                 arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" },
+                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
                     new QueryArgument<StringGraphType> { Name = "firstname" },
                     new QueryArgument<StringGraphType> { Name = "lastname" },
                     new QueryArgument<StringGraphType> { Name = "name" },
                     new QueryArgument<StringGraphType> { Name = "email" }
                 ),
                 resolve: context => db.Users
-                    .HandleQueryArgument(new ArgumentGetter<int>("id", context), (arg, query) => 
-                        query.Where(x => x.Id == arg))
+                    .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                        query.Where(x => arg.Contains(x.Id)))
                     .HandleQueryArgument(new ArgumentGetter<string>("firstname", context), (arg, query) => 
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.FirstName.Contains(arg)))
                     .HandleQueryArgument(new ArgumentGetter<string>("lastname", context), (arg, query) =>
@@ -48,12 +49,12 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field<ListGraphType<ProjectType>>(
                 "projects",
                 arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" },
+                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
                     new QueryArgument<StringGraphType> { Name = "name" }
                 ),
                 resolve: context => db.Projects
-                    .HandleQueryArgument(new ArgumentGetter<int>("id", context), (arg, query) =>
-                        query.Where(x => x.Id == arg))
+                    .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                        query.Where(x => arg.Contains(x.Id)))
                     .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Name.Contains(arg)))
             );
@@ -67,7 +68,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field<ListGraphType<TaskType>>(
                 "tasks",
                 arguments: new QueryArguments(
-                    new QueryArgument<IntGraphType> { Name = "id" },
+                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
                     new QueryArgument<IntGraphType> { Name = "projectid" },
                     new QueryArgument<StringGraphType> { Name = "name" },
                     new QueryArgument<BooleanGraphType> { Name = "iscompleted" },
@@ -75,8 +76,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     new QueryArgument<DateGraphType> { Name = "completiondate" }
                 ),
                 resolve: context => db.Tasks
-                    .HandleQueryArgument(new ArgumentGetter<int>("id", context), (arg, query) =>
-                        query.Where(x => x.Id == arg))
+                    .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                        query.Where(x => arg.Contains(x.Id)))
                     .HandleQueryArgument(new ArgumentGetter<int>("projectid", context), (arg, query) =>
                         query.Where(x => x.ProjectId == arg))
                     .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
