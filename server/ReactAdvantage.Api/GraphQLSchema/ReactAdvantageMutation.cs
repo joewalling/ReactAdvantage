@@ -35,6 +35,34 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     db.SaveChanges();
                     return user;
                 });
+
+            Field<ProjectType>(
+                "addProject",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<ProjectInputType>> { Name = "project" }
+                ),
+                resolve: context =>
+                {
+                    var project = context.GetArgument<Project>("project");
+                    project.Id = 0;
+                    db.Add(project);
+                    db.SaveChanges();
+                    return project;
+                });
+
+            Field<ProjectType>(
+                "editProject",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<ProjectInputType>> { Name = "project" }
+                ),
+                resolve: context =>
+                {
+                    var project = context.GetArgument<Project>("project");
+                    var entity = db.Projects.Find(project.Id);
+                    db.Entry(entity).CurrentValues.SetValues(project);
+                    db.SaveChanges();
+                    return project;
+                });
         }
     }
 }

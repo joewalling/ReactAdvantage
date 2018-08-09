@@ -43,6 +43,7 @@ namespace ReactAdvantage.Api
             services.AddTransient<UserType>();
             services.AddTransient<UserInputType>();
             services.AddTransient<ProjectType>();
+            services.AddTransient<ProjectInputType>();
             var sp = services.BuildServiceProvider();
             services.AddTransient<ISchema>(x => new ReactAdvantageSchema(new FuncDependencyResolver(type => sp.GetService(type))));
 
