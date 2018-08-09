@@ -63,6 +63,34 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     db.SaveChanges();
                     return project;
                 });
+
+            Field<TaskType>(
+                "addTask",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<TaskInputType>> { Name = "task" }
+                ),
+                resolve: context =>
+                {
+                    var task = context.GetArgument<Task>("task");
+                    task.Id = 0;
+                    db.Add(task);
+                    db.SaveChanges();
+                    return task;
+                });
+
+            Field<TaskType>(
+                "editTask",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<TaskInputType>> { Name = "task" }
+                ),
+                resolve: context =>
+                {
+                    var task = context.GetArgument<Task>("task");
+                    var entity = db.Tasks.Find(task.Id);
+                    db.Entry(entity).CurrentValues.SetValues(task);
+                    db.SaveChanges();
+                    return task;
+                });
         }
     }
 }

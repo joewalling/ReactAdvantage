@@ -40,6 +40,7 @@ namespace ReactAdvantage.Api
             services.AddTransient<ReactAdvantageQuery>();
             services.AddTransient<ReactAdvantageMutation>();
             services.AddTransient<TaskType>();
+            services.AddTransient<TaskInputType>();
             services.AddTransient<UserType>();
             services.AddTransient<UserInputType>();
             services.AddTransient<ProjectType>();
