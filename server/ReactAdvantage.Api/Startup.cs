@@ -38,10 +38,13 @@ namespace ReactAdvantage.Api
             // Add application services.
             services.AddTransient<IDocumentExecuter, DocumentExecuter>();
             services.AddTransient<ReactAdvantageQuery>();
-            //todo add mutation
+            services.AddTransient<ReactAdvantageMutation>();
             services.AddTransient<TaskType>();
+            services.AddTransient<TaskInputType>();
             services.AddTransient<UserType>();
+            services.AddTransient<UserInputType>();
             services.AddTransient<ProjectType>();
+            services.AddTransient<ProjectInputType>();
             var sp = services.BuildServiceProvider();
             services.AddTransient<ISchema>(x => new ReactAdvantageSchema(new FuncDependencyResolver(type => sp.GetService(type))));
 

@@ -1,6 +1,4 @@
 ﻿using GraphQL;
-using Microsoft.EntityFrameworkCore;
-using ReactAdvantage.Data;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {
@@ -10,7 +8,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
         public ReactAdvantageSchema(IDependencyResolver resolver) : base(resolver)
         {
             Query = resolver.Resolve<ReactAdvantageQuery>();
-            //Mutation = mutation;
+            Mutation = resolver.Resolve<ReactAdvantageMutation>();
             //Subscription = subscription;
         }
     }
