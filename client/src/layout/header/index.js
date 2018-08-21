@@ -14,19 +14,19 @@ const modalRoot = document.getElementById('modal-root');
 
 export default class Header extends Component {
     componentDidMount() {
-        modalRoot.appendChild(this.el);
+        modalRoot && modalRoot.appendChild(this.el);
         this.handleResize();
         window.addEventListener('resize', this.handleResize);
     }
 
     componentWillUnmount() {
-        modalRoot.removeChild(this.el);
+        modalRoot && modalRoot.removeChild(this.el);
         window.removeEventListener('resize', this.handleResize);
     }
 
     onHide = () => {
         this.setState({
-            visible: false
+            mobileMenuVisible: false
         });
     }
 
@@ -37,7 +37,7 @@ export default class Header extends Component {
     }
 
     state = {
-        visible: false,
+        mobileMenuVisible: false,
         controlsVisible: false,
     }
 
@@ -54,7 +54,7 @@ export default class Header extends Component {
             ReactDOM.createPortal(
                 <Sidebar
                     key="menu"
-                    visible={this.state.visible}
+                    visible={this.state.mobileMenuVisible}
                     position='right'
                     className="mobile-menu-wrapper"
                     onHide={this.onHide}
@@ -133,7 +133,7 @@ export default class Header extends Component {
             <button
                 key="nav"
                 className="header-bar-button"
-                onClick={() => this.setState({ visible: true })}
+                onClick={() => this.setState({ mobileMenuVisible: true })}
             >
                 <i className="fa far fa-navicon" />
             </button>

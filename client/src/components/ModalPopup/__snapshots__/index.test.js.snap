@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <ModalPopup
+    onHide={[Function]}
+/>,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": <Dialog
+        appendTo={null}
+        autoAlign={true}
+        baseZIndex={0}
+        breakpoint={640}
+        className={null}
+        closable={true}
+        closeOnEscape={true}
+        contentStyle={null}
+        dismissableMask={false}
+        draggable={true}
+        footer={null}
+        header={null}
+        height="auto"
+        id={null}
+        minHeight={150}
+        minWidth={150}
+        minX={0}
+        minY={0}
+        modal={false}
+        onHide={[Function]}
+        onShow={null}
+        positionLeft={-1}
+        positionTop={-1}
+        resizable={true}
+        responsive={true}
+        rtl={false}
+        showHeader={true}
+        style={null}
+        visible={false}
+        width="auto"
+/>,
+      "className": "dialog-wrapper",
+    },
+    "ref": null,
+    "rendered": Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "class",
+      "props": Object {
+        "appendTo": null,
+        "autoAlign": true,
+        "baseZIndex": 0,
+        "breakpoint": 640,
+        "children": undefined,
+        "className": null,
+        "closable": true,
+        "closeOnEscape": true,
+        "contentStyle": null,
+        "dismissableMask": false,
+        "draggable": true,
+        "footer": null,
+        "header": null,
+        "height": "auto",
+        "id": null,
+        "minHeight": 150,
+        "minWidth": 150,
+        "minX": 0,
+        "minY": 0,
+        "modal": false,
+        "onHide": [Function],
+        "onShow": null,
+        "positionLeft": -1,
+        "positionTop": -1,
+        "resizable": true,
+        "responsive": true,
+        "rtl": false,
+        "showHeader": true,
+        "style": null,
+        "visible": false,
+        "width": "auto",
+      },
+      "ref": null,
+      "rendered": null,
+      "type": [Function],
+    },
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": <Dialog
+          appendTo={null}
+          autoAlign={true}
+          baseZIndex={0}
+          breakpoint={640}
+          className={null}
+          closable={true}
+          closeOnEscape={true}
+          contentStyle={null}
+          dismissableMask={false}
+          draggable={true}
+          footer={null}
+          header={null}
+          height="auto"
+          id={null}
+          minHeight={150}
+          minWidth={150}
+          minX={0}
+          minY={0}
+          modal={false}
+          onHide={[Function]}
+          onShow={null}
+          positionLeft={-1}
+          positionTop={-1}
+          resizable={true}
+          responsive={true}
+          rtl={false}
+          showHeader={true}
+          style={null}
+          visible={false}
+          width="auto"
+/>,
+        "className": "dialog-wrapper",
+      },
+      "ref": null,
+      "rendered": Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "appendTo": null,
+          "autoAlign": true,
+          "baseZIndex": 0,
+          "breakpoint": 640,
+          "children": undefined,
+          "className": null,
+          "closable": true,
+          "closeOnEscape": true,
+          "contentStyle": null,
+          "dismissableMask": false,
+          "draggable": true,
+          "footer": null,
+          "header": null,
+          "height": "auto",
+          "id": null,
+          "minHeight": 150,
+          "minWidth": 150,
+          "minX": 0,
+          "minY": 0,
+          "modal": false,
+          "onHide": [Function],
+          "onShow": null,
+          "positionLeft": -1,
+          "positionTop": -1,
+          "resizable": true,
+          "responsive": true,
+          "rtl": false,
+          "showHeader": true,
+          "style": null,
+          "visible": false,
+          "width": "auto",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
