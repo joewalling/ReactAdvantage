@@ -29,6 +29,15 @@ namespace ReactAdvantage.Tests.Unit.Graphql
                 db.Users.Add(new User { Id = 15, Name = "BarbaraSmith3", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = true });
                 db.Users.Add(new User { Id = 16, Name = "BarbaraSmith4", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = false });
                 db.SaveChanges();
+
+                db.Projects.Add(new Project { Id = 1, Name = "Test Project 1" });
+                db.Projects.Add(new Project { Id = 2, Name = "Test Project 2" });
+                db.Projects.Add(new Project { Id = 3, Name = "Another Project 3" });
+                db.SaveChanges();
+
+                db.Tasks.Add(new Task { Id = 1, ProjectId = 1, Name = "Task 1" });
+                db.Tasks.Add(new Task { Id = 2, ProjectId = 1, Name = "Task 2" });
+                db.SaveChanges();
             }
         }
 
@@ -121,7 +130,7 @@ namespace ReactAdvantage.Tests.Unit.Graphql
             AssertValidGraphqlExecutionResult(result);
 
             AssertGraphqlResultDictionary(result.Data,
-                userResult => AssertPairEqual(userResult,
+                usersResult => AssertPairEqual(usersResult,
                     "users", users => AssertGraphqlResultArray(users,
                         user => AssertGraphqlResultDictionary(user,
                             field => AssertPairEqual(field, "id", 1),
@@ -157,7 +166,7 @@ namespace ReactAdvantage.Tests.Unit.Graphql
             AssertValidGraphqlExecutionResult(result);
 
             AssertGraphqlResultDictionary(result.Data,
-                userResult => AssertPairEqual(userResult,
+                usersResult => AssertPairEqual(usersResult,
                     "users", users =>
                     {
                         var usersArray = Assert.IsType<object[]>(users);
@@ -171,6 +180,77 @@ namespace ReactAdvantage.Tests.Unit.Graphql
             );
         }
 
+        [Fact]
+        public async void ReturnProject()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { project(id: 2) { id name } }"
+            });
 
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                projectResult => AssertPairEqual(projectResult,
+                    "project", project => AssertGraphqlResultDictionary(project,
+                        field => AssertPairEqual(field, "id", 2),
+                        field => AssertPairEqual(field, "name", "Test Project 2")
+                    )
+                )
+            );
+        }
+
+        [Fact]
+        public async void ReturnAllProjects()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { projects { id name } }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+            
+            AssertGraphqlResultDictionary(result.Data,
+                projectsResult => AssertPairEqual(projectsResult,
+                    "projects", projects =>
+                    {
+                        var projectsArray = Assert.IsType<object[]>(projects);
+                        Assert.Equal(3, projectsArray.Length);
+                        AssertGraphqlResultDictionary(projectsArray.First(),
+                            field => AssertPairEqual(field, "id", 1),
+                            field => AssertPairEqual(field, "name", "Test Project 1")
+                        );
+                    }
+                )
+            );
+        }
+
+        [Fact]
+        public async void ReturnQueriedProjects()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { projects(id: [2, 3], name: \"Test\") { id name } }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                projectsResult => AssertPairEqual(projectsResult,
+                    "projects", projects => AssertGraphqlResultArray(projects,
+                        project => AssertGraphqlResultDictionary(project,
+                            field => AssertPairEqual(field, "id", 2),
+                            field => AssertPairEqual(field, "name", "Test Project 2")
+                        )
+                    )
+                )
+            );
+        }
     }
 }
