@@ -96,6 +96,7 @@ namespace ReactAdvantage.Tests.Unit.Graphql
         protected void AssertPairEqual(KeyValuePair<string, object> field, string fieldName, Action<object> valueInspector)
         {
             Assert.Equal(fieldName, field.Key);
+            valueInspector = valueInspector ?? Assert.Null;
             valueInspector(field.Value);
         }
     }
