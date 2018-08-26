@@ -1,4 +1,5 @@
 ﻿using ReactAdvantage.Api.GraphQLSchema;
+using ReactAdvantage.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -63,6 +64,68 @@ namespace ReactAdvantage.Tests.Unit.Graphql
             using (var db = GetInMemoryDbContext())
             {
                 var user = db.Users.Find(userId);
+                Assert.Equal("Test User", user.Name);
+                Assert.Equal("Tom", user.FirstName);
+                Assert.Equal("Smith", user.LastName);
+                Assert.Equal("test@test.com", user.Email);
+                Assert.True(user.IsActive);
+            }
+        }
+
+        [Fact]
+        public async void EditUser()
+        {
+            // Given
+            using (var db = GetInMemoryDbContext())
+            {
+                db.Users.Add(new User { Id = 1, Name = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false });
+                db.SaveChanges();
+            }
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        editUser(user: { 
+                            id: 1
+                            name: ""Test User""
+                            firstName: ""Tom""
+                            lastName: ""Smith""
+                            email: ""test@test.com""
+                            isActive: true
+                        })
+                        { 
+                            id
+                            name
+                            firstName
+                            lastName
+                            email
+                            isActive
+                        }
+                    }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                editUserResult => AssertPairEqual(editUserResult,
+                    "editUser", user => AssertGraphqlResultDictionary(user,
+                        field => AssertPairEqual(field, "id", 1),
+                        field => AssertPairEqual(field, "name", "Test User"),
+                        field => AssertPairEqual(field, "firstName", "Tom"),
+                        field => AssertPairEqual(field, "lastName", "Smith"),
+                        field => AssertPairEqual(field, "email", "test@test.com"),
+                        field => AssertPairEqual(field, "isActive", true)
+                    )
+                )
+            );
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find(1);
                 Assert.Equal("Test User", user.Name);
                 Assert.Equal("Tom", user.FirstName);
                 Assert.Equal("Smith", user.LastName);
