@@ -133,5 +133,98 @@ namespace ReactAdvantage.Tests.Unit.Graphql
                 Assert.True(user.IsActive);
             }
         }
+
+        [Fact]
+        public async void AddProject()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        addProject(project: { 
+                            name: ""Test Project""
+                        })
+                        { 
+                            id
+                            name
+                        }
+                    }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            var projectId = 0;
+
+            AssertGraphqlResultDictionary(result.Data,
+                addProjectResult => AssertPairEqual(addProjectResult,
+                    "addProject", project => AssertGraphqlResultDictionary(project,
+                        field => AssertPairEqual(field, "id", idObject =>
+                        {
+                            var id = Assert.IsType<int>(idObject);
+                            Assert.True(id > 0);
+                            projectId = id;
+                        }),
+                        field => AssertPairEqual(field, "name", "Test Project")
+                    )
+                )
+            );
+
+            Assert.True(projectId > 0);
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var project = db.Projects.Find(projectId);
+                Assert.Equal("Test Project", project.Name);
+            }
+        }
+
+        [Fact]
+        public async void EditProject()
+        {
+            // Given
+            using (var db = GetInMemoryDbContext())
+            {
+                db.Projects.Add(new Project { Id = 1, Name = "Test Project 1" });
+                db.SaveChanges();
+            }
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        editProject(project: { 
+                            id: 1
+                            name: ""Changed name""
+                        })
+                        { 
+                            id
+                            name
+                        }
+                    }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                editProjectResult => AssertPairEqual(editProjectResult,
+                    "editProject", project => AssertGraphqlResultDictionary(project,
+                        field => AssertPairEqual(field, "id", 1),
+                        field => AssertPairEqual(field, "name", "Changed name")
+                    )
+                )
+            );
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var project = db.Projects.Find(1);
+                Assert.Equal("Changed name", project.Name);
+            }
+        }
     }
 }
