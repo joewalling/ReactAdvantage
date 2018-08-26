@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GraphQL;
+﻿using GraphQL;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,9 +17,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
             services.AddTransient<UserInputType>();
             services.AddTransient<ProjectType>();
             services.AddTransient<ProjectInputType>();
-
-            var sp = services.BuildServiceProvider();
-            services.AddTransient<ISchema>(x => new ReactAdvantageSchema(new FuncDependencyResolver(type => sp.GetService(type))));
+            services.AddTransient<ISchema, ReactAdvantageSchema>();
 
             return services;
         }
