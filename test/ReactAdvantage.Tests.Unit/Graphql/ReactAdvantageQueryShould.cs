@@ -343,6 +343,30 @@ namespace ReactAdvantage.Tests.Unit.Graphql
             );
         }
 
+        [Fact]
+        public async void ReturnTwoQueries()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { user(id: 1) { name }, project(id: 1) { name } }"
+            });
+            
+            // Then
+            AssertValidGraphqlExecutionResult(result);
 
+            AssertGraphqlResultDictionary(result.Data,
+                userResult => AssertPairEqual(userResult,
+                    "user", user => AssertGraphqlResultDictionary(user,
+                        field => AssertPairEqual(field, "name", "BobRay1")
+                    )
+                ),
+                projectResult => AssertPairEqual(projectResult,
+                    "project", project => AssertGraphqlResultDictionary(project,
+                        field => AssertPairEqual(field, "name", "Test Project 1")
+                    )
+                )
+            );
+        }
     }
 }
