@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
@@ -57,7 +58,7 @@ namespace ReactAdvantage.Tests.Unit.Graphql
         protected void AssertValidGraphqlExecutionResult(ExecutionResult result)
         {
             Assert.NotNull(result);
-            Assert.False(result.Errors?.Count > 0, "Graphql result should contain no errors");
+            Assert.False(result.Errors?.Count > 0, result.Errors?.Count > 0 ? "Graphql error: " + string.Join("; ", result.Errors.Select(x => x.Message)) : "");
             Assert.NotNull(result.Data);
         }
 

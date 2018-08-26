@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Domain.Models;
 using Xunit;
@@ -35,8 +36,15 @@ namespace ReactAdvantage.Tests.Unit.Graphql
                 db.Projects.Add(new Project { Id = 3, Name = "Another Project 3" });
                 db.SaveChanges();
 
-                db.Tasks.Add(new Task { Id = 1, ProjectId = 1, Name = "Task 1" });
-                db.Tasks.Add(new Task { Id = 2, ProjectId = 1, Name = "Task 2" });
+                db.Tasks.Add(new Task { Id = 1, ProjectId = 1, Name = "Task 1", Description = "This is a test task", DueDate = new DateTime(2020, 1, 1) });
+                db.Tasks.Add(new Task { Id = 2, ProjectId = 1, Name = "Task 2", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { Id = 3, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { Id = 4, ProjectId = 2, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { Id = 5, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2001, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { Id = 6, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = false, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { Id = 7, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2011, 1, 1) });
+                db.Tasks.Add(new Task { Id = 8, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = null });
+                db.Tasks.Add(new Task { Id = 9, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
                 db.SaveChanges();
             }
         }
@@ -252,5 +260,89 @@ namespace ReactAdvantage.Tests.Unit.Graphql
                 )
             );
         }
+
+        [Fact]
+        public async void ReturnTask()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { task(id: 2) { id name description dueDate completed completionDate project { id name } } }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                taskResult => AssertPairEqual(taskResult,
+                    "task", task => AssertGraphqlResultDictionary(task,
+                        field => AssertPairEqual(field, "id", 2),
+                        field => AssertPairEqual(field, "name", "Task 2"),
+                        field => AssertPairEqual(field, "description", "Another test task"),
+                        field => AssertPairEqual(field, "dueDate", new DateTime(2000, 1, 1)),
+                        field => AssertPairEqual(field, "completed", true),
+                        field => AssertPairEqual(field, "completionDate", new DateTime(2010, 1, 1)),
+                        field => AssertPairEqual(field, "project",
+                            project => AssertGraphqlResultDictionary(project,
+                                projectField => AssertPairEqual(projectField, "id", 1),
+                                projectField => AssertPairEqual(projectField, "name", "Test Project 1")
+                            )
+                        )
+                    )
+                )
+            );
+        }
+
+        [Fact]
+        public async void ReturnAllTasks()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { tasks { id name } }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                tasksResult => AssertPairEqual(tasksResult,
+                    "tasks", tasks =>
+                    {
+                        var tasksArray = Assert.IsType<object[]>(tasks);
+                        Assert.Equal(9, tasksArray.Length);
+                        AssertGraphqlResultDictionary(tasksArray.First(),
+                            field => AssertPairEqual(field, "id", 1),
+                            field => AssertPairEqual(field, "name", "Task 1")
+                        );
+                    }
+                )
+            );
+        }
+
+        [Fact]
+        public async void ReturnQueriedTasks()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { tasks(id: [1, 2, 3, 4, 5, 6, 7, 8], name: \"Test Task Query\", projectid: 1, iscompleted: true, duedate: \"2000-01-01\", completiondate: \"2010-01-01\") { id } }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                projectsResult => AssertPairEqual(projectsResult,
+                    "tasks", tasks => AssertGraphqlResultArray(tasks,
+                        task => AssertGraphqlResultDictionary(task,
+                            field => AssertPairEqual(field, "id", 3)
+                        )
+                    )
+                )
+            );
+        }
+
+
     }
 }
