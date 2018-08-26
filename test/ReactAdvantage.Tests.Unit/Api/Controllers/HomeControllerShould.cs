@@ -2,7 +2,7 @@
 using ReactAdvantage.Api.Controllers;
 using Xunit;
 
-namespace ReactAdvantage.Tests.Unit.Controllers
+namespace ReactAdvantage.Tests.Unit.Api.Controllers
 {
     public class HomeControllerShould
     {

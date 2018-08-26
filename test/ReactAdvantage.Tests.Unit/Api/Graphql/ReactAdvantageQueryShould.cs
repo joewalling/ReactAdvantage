@@ -4,7 +4,7 @@ using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Domain.Models;
 using Xunit;
 
-namespace ReactAdvantage.Tests.Unit.Graphql
+namespace ReactAdvantage.Tests.Unit.Api.Graphql
 {
     public class ReactAdvantageQueryShould : GraphqlTestBase
     {

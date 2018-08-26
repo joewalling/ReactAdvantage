@@ -7,7 +7,7 @@ using ReactAdvantage.Api.Controllers;
 using ReactAdvantage.Api.GraphQLSchema;
 using Xunit;
 
-namespace ReactAdvantage.Tests.Unit.Controllers
+namespace ReactAdvantage.Tests.Unit.Api.Controllers
 {
     public class GraphQLControllerShould
     {

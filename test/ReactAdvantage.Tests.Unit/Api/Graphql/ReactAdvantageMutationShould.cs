@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace ReactAdvantage.Tests.Unit.Graphql
+namespace ReactAdvantage.Tests.Unit.Api.Graphql
 {
     public class ReactAdvantageMutationShould : GraphqlTestBase
     {
