@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Logging;
 using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.Data
@@ -8,6 +9,7 @@ namespace ReactAdvantage.Data
     {
         public static void EnsureSeedData(this ReactAdvantageContext db)
         {
+            db.Logger.LogInformation("Seeding database");
             SeedUsers(db);
             SeedTasks(db);
             db.SaveChanges();
@@ -18,6 +20,8 @@ namespace ReactAdvantage.Data
         {
             if (!db.Tasks.Any())
             {
+                db.Logger.LogInformation("Seeding tasks and projects");
+
                 var project = new Project {Name = "Create a software product"};
 
                 db.Tasks.Add(new Task
@@ -58,6 +62,8 @@ namespace ReactAdvantage.Data
         {
             if (!db.Users.Any())
             {
+                db.Logger.LogInformation("Seeding users");
+
                 db.Users.Add(new User
                 {
                     FirstName = "John",
