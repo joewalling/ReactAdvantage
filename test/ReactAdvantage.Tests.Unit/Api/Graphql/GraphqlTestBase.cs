@@ -6,6 +6,8 @@ using GraphQL;
 using GraphQL.Types;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Moq;
 using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Data;
 using Xunit;
@@ -52,13 +54,15 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 .UseInMemoryDatabase(databaseName: _databaseName)
                 .Options;
 
-            return new ReactAdvantageContext(options);
+            var dbLogger = new Mock<ILogger<ReactAdvantageContext>>();
+
+            return new ReactAdvantageContext(options, dbLogger.Object);
         }
         
         protected void AssertValidGraphqlExecutionResult(ExecutionResult result)
         {
             Assert.NotNull(result);
-            Assert.False(result.Errors?.Count > 0, result.Errors?.Count > 0 ? "Graphql error: " + string.Join("; ", result.Errors.Select(x => x.Message)) : "");
+            Assert.False(result.Errors?.Count > 0, result.Errors?.Count > 0 ? "GraphQL error: " + string.Join("; ", result.Errors.Select(x => x.Message)) : "");
             Assert.NotNull(result.Data);
         }
 

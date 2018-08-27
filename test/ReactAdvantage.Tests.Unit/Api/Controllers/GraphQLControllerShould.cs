@@ -2,6 +2,7 @@
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Moq;
 using ReactAdvantage.Api.Controllers;
 using ReactAdvantage.Api.GraphQLSchema;
@@ -19,7 +20,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Controllers
             var documentExecutor = new Mock<IDocumentExecuter>();
             documentExecutor.Setup(x => x.ExecuteAsync(It.IsAny<ExecutionOptions>())).Returns(Task.FromResult(new ExecutionResult()));
             var schema = new Mock<ISchema>();
-            _graphqlController = new GraphQLController(schema.Object, documentExecutor.Object);
+            var logger = new Mock<ILogger<GraphQLController>>();
+            _graphqlController = new GraphQLController(schema.Object, documentExecutor.Object, logger.Object);
         }
 
         [Fact]
