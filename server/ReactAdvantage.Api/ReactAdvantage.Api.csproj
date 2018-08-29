@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <UserSecretsId>aspnet-ReactAdvantage.Api-25D09E5F-19A9-42B7-89FD-9DA26ACC3175</UserSecretsId>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
 
 
