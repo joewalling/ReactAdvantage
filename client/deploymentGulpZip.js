@@ -19,7 +19,7 @@ gulp.task('default', function () {
 					'!**/typings/**',
 					'!typings', 
 					'!_package', 
-					'!gulpfile.js']
+					'!deploymentGulpZip.js']
 	
 	//add exclusion patterns for all dev dependencies
 	var packageJSON = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'));
