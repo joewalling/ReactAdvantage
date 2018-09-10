@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.Domain", "se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.Data", "server\ReactAdvantageData\ReactAdvantage.Data.csproj", "{3BB2736D-D4D9-4F4F-A259-DA7F5DE0DF00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactAdvantage.IdentityServer", "server\ReactAdvantage.IdentityServer\ReactAdvantage.IdentityServer.csproj", "{D6CF37CA-CE87-4B9F-A756-340F51E124EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{3BB2736D-D4D9-4F4F-A259-DA7F5DE0DF00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BB2736D-D4D9-4F4F-A259-DA7F5DE0DF00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BB2736D-D4D9-4F4F-A259-DA7F5DE0DF00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6CF37CA-CE87-4B9F-A756-340F51E124EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6CF37CA-CE87-4B9F-A756-340F51E124EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6CF37CA-CE87-4B9F-A756-340F51E124EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6CF37CA-CE87-4B9F-A756-340F51E124EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,6 +45,7 @@ Global
 		{67BEBCF6-B4A2-49F2-93ED-ECFD04BE50E0} = {74D91951-5588-4AA1-9552-4CB1D71CBAEA}
 		{7E671C77-588F-4EF7-9E15-1289460AA3A7} = {74D91951-5588-4AA1-9552-4CB1D71CBAEA}
 		{3BB2736D-D4D9-4F4F-A259-DA7F5DE0DF00} = {74D91951-5588-4AA1-9552-4CB1D71CBAEA}
+		{D6CF37CA-CE87-4B9F-A756-340F51E124EC} = {74D91951-5588-4AA1-9552-4CB1D71CBAEA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {74FA9AB4-04D9-4836-A2B9-7150BDE82D7E}

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ReactAdvantage.Domain.Models;
 
-namespace ReactAdvantage.Application.Services
+namespace ReactAdvantage.Api.Services
 {
     public class ProjectService : IProjectService
     {

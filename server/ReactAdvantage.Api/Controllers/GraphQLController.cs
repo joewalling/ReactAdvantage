@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReactAdvantage.Api.GraphQLSchema;
 
@@ -9,6 +10,7 @@ namespace ReactAdvantage.Api.Controllers
 {
     [Produces("application/json")]
     [Route("graphql")]
+    [Authorize]
     public class GraphQLController : ControllerBase
     {
         private readonly IDocumentExecuter _documentExecuter;

@@ -1,5 +1,3 @@
-using System;
-
 namespace ReactAdvantage.Api.Models
 {
     public class ErrorViewModel

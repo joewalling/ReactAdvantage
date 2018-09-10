@@ -20,7 +20,6 @@ namespace ReactAdvantage.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -49,11 +48,27 @@ namespace ReactAdvantage.Api
             services.AddTransient<ISchema>(x => new ReactAdvantageSchema(new FuncDependencyResolver(type => sp.GetService(type))));
 
             services.AddMvc();
+            
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:44338";
+                    options.RequireHttpsMetadata = true;
 
+                    options.ApiName = "ReactAdvantageApi";
+                });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins("https://localhost:44398")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env,
                                 ILoggerFactory loggerFactory, ReactAdvantageContext db)
         {
@@ -70,6 +85,8 @@ namespace ReactAdvantage.Api
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
+            app.UseCors("default");
 
             app.UseAuthentication();
 
