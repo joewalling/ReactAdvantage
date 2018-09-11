@@ -234,6 +234,7 @@ export default class Login extends Component {
                 <div className="login-button-wrapper">
                     <Button
                         onClick={this.onForgotPasswordBackClick}
+                        className="login-forgot-password-back-btn"
                         secondary
                     >
                         Back

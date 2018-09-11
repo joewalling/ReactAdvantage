@@ -137,28 +137,31 @@ export default class TenantsList extends Component{
         }));
     }
 
-    //Needs Refactoring
-
     renderButtonOptions(id) {
+        const actionItems = [{
+            label: 'Login as this Tenant',
+            icon: '',
+            command: e => console.log(`Login as this Tenant has been clicked, id is: ${id}`),
+        }, {
+            label: 'Edit',
+            icon: '',
+            command: e => console.log(`Edit has been clicked, id is: ${id}`),
+        }, {
+            label: 'Features',
+            icon: '',
+            command: e => console.log(`Features has been clicked, id is: ${id}`),
+        }, {
+            label: 'Delete',
+            icon: '',
+            command: e => console.log(`Delete has been clicked, id is: ${id}`),
+        }];
+
         return (
-            <div>
-                <Button
-                    label="Login"
-                    onClick={() => console.log(`Login has been clicked, id is: ${id}`)}
-                />
-                <Button
-                    label="Edit"
-                    onClick={() => this.onEdit(id)}
-                />
-                <Button
-                    label="Features"
-                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
-                />
-                <Button
-                    label="Delete"
-                    onClick={() => console.log(`Edit has been clicked, id is: ${id}`)}
-                />
-            </div>
+            <ButtonMenu
+                label="Action"
+                items={actionItems}
+                onClick={() => console.log("Action Click")}
+            />
         );
     }
 

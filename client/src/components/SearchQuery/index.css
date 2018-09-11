@@ -72,3 +72,7 @@
   .filters-dropdown .ui-dropdown-panel,
   .filters-dropdown .ui-dropdown-items-wrapper {
     margin-left: 0; }
+
+.filters-datepicker,
+.filters-datepicker * {
+  margin-left: 0; }

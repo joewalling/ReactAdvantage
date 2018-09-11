@@ -1,0 +1,4421 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`header controls are showing after click on controls button controls is visible after click on controls button 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Header />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="header-top-wrapper"
+>
+          <div
+                    className="header-top"
+          >
+                    <div
+                              className="header-left"
+                    >
+                              <div
+                                        className="logo"
+                              >
+                                        <Link
+                                                  replace={false}
+                                                  to="/"
+                                        >
+                                                  <img
+                                                            alt=""
+                                                            src="logo.png"
+                                                  />
+                                        </Link>
+                              </div>
+                              <div
+                                        className="header-mobile-buttons"
+                              >
+                                        <button
+                                                  className="header-bar-button"
+                                                  onClick={[Function]}
+                                        >
+                                                  <i
+                                                            className="fa far fa-navicon"
+                                                  />
+                                        </button>
+                                        <button
+                                                  className="controls-button"
+                                                  onClick={[Function]}
+                                        >
+                                                  <i
+                                                            className="fa far fa-ellipsis-h"
+                                                  />
+                                        </button>
+                              </div>
+                    </div>
+                    <div
+                              className="header-right show-controls"
+                    >
+                              <div
+                                        className="options"
+                              >
+                                        <div
+                                                  className="header-notifications"
+                                        >
+                                                  <Notifications />
+                                        </div>
+                                        <div
+                                                  className="header-profile"
+                                        >
+                                                  <ProfileMenu />
+                                        </div>
+                                        <div
+                                                  className="header-news"
+                                        >
+                                                  <SidebarMenu />
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+</div>,
+        <Headroom
+          calcHeightOnResize={true}
+          disable={false}
+          disableInlineStyles={true}
+          downTolerance={0}
+          onPin={[Function]}
+          onUnfix={[Function]}
+          onUnpin={[Function]}
+          parent={[Function]}
+          pinStart={0}
+          upTolerance={5}
+          wrapperStyle={Object {}}
+>
+          <div
+                    className="header-bottom"
+          >
+                    <ul
+                              className="menu"
+                    >
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/"
+                                        >
+                                                  Dashboard
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/login"
+                                        >
+                                                  Login
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/users"
+                                        >
+                                                  Users
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/roles"
+                                        >
+                                                  Roles
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/tenants"
+                                        >
+                                                  Tenants
+                                        </NavLink>
+                              </li>
+                    </ul>
+          </div>
+</Headroom>,
+        Object {
+          "$$typeof": Symbol(react.portal),
+          "children": <Sidebar
+            className="mobile-menu-wrapper"
+            onHide={[Function]}
+            position="right"
+            visible={false}
+>
+            <ul
+                        className="menu"
+            >
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                    >
+                                                Dashboard
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                    >
+                                                Login
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                    >
+                                                Users
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                    >
+                                                Roles
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                    >
+                                                Tenants
+                                    </NavLink>
+                        </li>
+            </ul>
+</Sidebar>,
+          "containerInfo": <div />,
+          "implementation": null,
+          "key": null,
+        },
+      ],
+      "className": "header controls-visible",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <div
+            className="header-top"
+>
+            <div
+                        className="header-left"
+            >
+                        <div
+                                    className="logo"
+                        >
+                                    <Link
+                                                replace={false}
+                                                to="/"
+                                    >
+                                                <img
+                                                            alt=""
+                                                            src="logo.png"
+                                                />
+                                    </Link>
+                        </div>
+                        <div
+                                    className="header-mobile-buttons"
+                        >
+                                    <button
+                                                className="header-bar-button"
+                                                onClick={[Function]}
+                                    >
+                                                <i
+                                                            className="fa far fa-navicon"
+                                                />
+                                    </button>
+                                    <button
+                                                className="controls-button"
+                                                onClick={[Function]}
+                                    >
+                                                <i
+                                                            className="fa far fa-ellipsis-h"
+                                                />
+                                    </button>
+                        </div>
+            </div>
+            <div
+                        className="header-right show-controls"
+            >
+                        <div
+                                    className="options"
+                        >
+                                    <div
+                                                className="header-notifications"
+                                    >
+                                                <Notifications />
+                                    </div>
+                                    <div
+                                                className="header-profile"
+                                    >
+                                                <ProfileMenu />
+                                    </div>
+                                    <div
+                                                className="header-news"
+                                    >
+                                                <SidebarMenu />
+                                    </div>
+                        </div>
+            </div>
+</div>,
+          "className": "header-top-wrapper",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="header-left"
+>
+                <div
+                                className="logo"
+                >
+                                <Link
+                                                replace={false}
+                                                to="/"
+                                >
+                                                <img
+                                                                alt=""
+                                                                src="logo.png"
+                                                />
+                                </Link>
+                </div>
+                <div
+                                className="header-mobile-buttons"
+                >
+                                <button
+                                                className="header-bar-button"
+                                                onClick={[Function]}
+                                >
+                                                <i
+                                                                className="fa far fa-navicon"
+                                                />
+                                </button>
+                                <button
+                                                className="controls-button"
+                                                onClick={[Function]}
+                                >
+                                                <i
+                                                                className="fa far fa-ellipsis-h"
+                                                />
+                                </button>
+                </div>
+</div>,
+              <div
+                className="header-right show-controls"
+>
+                <div
+                                className="options"
+                >
+                                <div
+                                                className="header-notifications"
+                                >
+                                                <Notifications />
+                                </div>
+                                <div
+                                                className="header-profile"
+                                >
+                                                <ProfileMenu />
+                                </div>
+                                <div
+                                                className="header-news"
+                                >
+                                                <SidebarMenu />
+                                </div>
+                </div>
+</div>,
+            ],
+            "className": "header-top",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <div
+                    className="logo"
+>
+                    <Link
+                                        replace={false}
+                                        to="/"
+                    >
+                                        <img
+                                                            alt=""
+                                                            src="logo.png"
+                                        />
+                    </Link>
+</div>,
+                  <div
+                    className="header-mobile-buttons"
+>
+                    <button
+                                        className="header-bar-button"
+                                        onClick={[Function]}
+                    >
+                                        <i
+                                                            className="fa far fa-navicon"
+                                        />
+                    </button>
+                    <button
+                                        className="controls-button"
+                                        onClick={[Function]}
+                    >
+                                        <i
+                                                            className="fa far fa-ellipsis-h"
+                                        />
+                    </button>
+</div>,
+                ],
+                "className": "header-left",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <Link
+                      replace={false}
+                      to="/"
+>
+                      <img
+                                            alt=""
+                                            src="logo.png"
+                      />
+</Link>,
+                    "className": "logo",
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "children": <img
+                        alt=""
+                        src="logo.png"
+/>,
+                      "replace": false,
+                      "to": "/",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "alt": "",
+                        "src": "logo.png",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": "img",
+                    },
+                    "type": [Function],
+                  },
+                  "type": "div",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <button
+                        className="header-bar-button"
+                        onClick={[Function]}
+>
+                        <i
+                                                className="fa far fa-navicon"
+                        />
+</button>,
+                      <button
+                        className="controls-button"
+                        onClick={[Function]}
+>
+                        <i
+                                                className="fa far fa-ellipsis-h"
+                        />
+</button>,
+                    ],
+                    "className": "header-mobile-buttons",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": "nav",
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <i
+                          className="fa far fa-navicon"
+/>,
+                        "className": "header-bar-button",
+                        "onClick": [Function],
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "className": "fa far fa-navicon",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": "i",
+                      },
+                      "type": "button",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <i
+                          className="fa far fa-ellipsis-h"
+/>,
+                        "className": "controls-button",
+                        "onClick": [Function],
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "className": "fa far fa-ellipsis-h",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": "i",
+                      },
+                      "type": "button",
+                    },
+                  ],
+                  "type": "div",
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <div
+                  className="options"
+>
+                  <div
+                                    className="header-notifications"
+                  >
+                                    <Notifications />
+                  </div>
+                  <div
+                                    className="header-profile"
+                  >
+                                    <ProfileMenu />
+                  </div>
+                  <div
+                                    className="header-news"
+                  >
+                                    <SidebarMenu />
+                  </div>
+</div>,
+                "className": "header-right show-controls",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <div
+                      className="header-notifications"
+>
+                      <Notifications />
+</div>,
+                    <div
+                      className="header-profile"
+>
+                      <ProfileMenu />
+</div>,
+                    <div
+                      className="header-news"
+>
+                      <SidebarMenu />
+</div>,
+                  ],
+                  "className": "options",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <Notifications />,
+                      "className": "header-notifications",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {},
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <ProfileMenu />,
+                      "className": "header-profile",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {},
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <SidebarMenu />,
+                      "className": "header-news",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {},
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                ],
+                "type": "div",
+              },
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "calcHeightOnResize": true,
+          "children": <div
+            className="header-bottom"
+>
+            <ul
+                        className="menu"
+            >
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                    >
+                                                Dashboard
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                    >
+                                                Login
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                    >
+                                                Users
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                    >
+                                                Roles
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                    >
+                                                Tenants
+                                    </NavLink>
+                        </li>
+            </ul>
+</div>,
+          "disable": false,
+          "disableInlineStyles": true,
+          "downTolerance": 0,
+          "onPin": [Function],
+          "onUnfix": [Function],
+          "onUnpin": [Function],
+          "parent": [Function],
+          "pinStart": 0,
+          "upTolerance": 5,
+          "wrapperStyle": Object {},
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <ul
+              className="menu"
+>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/"
+                            >
+                                          Dashboard
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/login"
+                            >
+                                          Login
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/users"
+                            >
+                                          Users
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/roles"
+                            >
+                                          Roles
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/tenants"
+                            >
+                                          Tenants
+                            </NavLink>
+              </li>
+</ul>,
+            "className": "header-bottom",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/"
+                  >
+                                    Dashboard
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/login"
+                  >
+                                    Login
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/users"
+                  >
+                                    Users
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/roles"
+                  >
+                                    Roles
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/tenants"
+                  >
+                                    Tenants
+                  </NavLink>
+</li>,
+              ],
+              "className": "menu",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/"
+>
+                    Dashboard
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Dashboard",
+                    "exact": true,
+                    "to": "/",
+                  },
+                  "ref": null,
+                  "rendered": "Dashboard",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/login"
+>
+                    Login
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Login",
+                    "exact": true,
+                    "to": "/login",
+                  },
+                  "ref": null,
+                  "rendered": "Login",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/users"
+>
+                    Users
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Users",
+                    "exact": true,
+                    "to": "/users",
+                  },
+                  "ref": null,
+                  "rendered": "Users",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/roles"
+>
+                    Roles
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Roles",
+                    "exact": true,
+                    "to": "/roles",
+                  },
+                  "ref": null,
+                  "rendered": "Roles",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/tenants"
+>
+                    Tenants
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Tenants",
+                    "exact": true,
+                    "to": "/tenants",
+                  },
+                  "ref": null,
+                  "rendered": "Tenants",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+            ],
+            "type": "ul",
+          },
+          "type": "div",
+        },
+        "type": [Function],
+      },
+      Object {
+        "$$typeof": Symbol(react.portal),
+        "children": <Sidebar
+          className="mobile-menu-wrapper"
+          onHide={[Function]}
+          position="right"
+          visible={false}
+>
+          <ul
+                    className="menu"
+          >
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/"
+                              >
+                                        Dashboard
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/login"
+                              >
+                                        Login
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/users"
+                              >
+                                        Users
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/roles"
+                              >
+                                        Roles
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/tenants"
+                              >
+                                        Tenants
+                              </NavLink>
+                    </li>
+          </ul>
+</Sidebar>,
+        "containerInfo": <div />,
+        "implementation": null,
+        "key": null,
+      },
+    ],
+    "type": "header",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="header-top-wrapper"
+>
+            <div
+                        className="header-top"
+            >
+                        <div
+                                    className="header-left"
+                        >
+                                    <div
+                                                className="logo"
+                                    >
+                                                <Link
+                                                            replace={false}
+                                                            to="/"
+                                                >
+                                                            <img
+                                                                        alt=""
+                                                                        src="logo.png"
+                                                            />
+                                                </Link>
+                                    </div>
+                                    <div
+                                                className="header-mobile-buttons"
+                                    >
+                                                <button
+                                                            className="header-bar-button"
+                                                            onClick={[Function]}
+                                                >
+                                                            <i
+                                                                        className="fa far fa-navicon"
+                                                            />
+                                                </button>
+                                                <button
+                                                            className="controls-button"
+                                                            onClick={[Function]}
+                                                >
+                                                            <i
+                                                                        className="fa far fa-ellipsis-h"
+                                                            />
+                                                </button>
+                                    </div>
+                        </div>
+                        <div
+                                    className="header-right show-controls"
+                        >
+                                    <div
+                                                className="options"
+                                    >
+                                                <div
+                                                            className="header-notifications"
+                                                >
+                                                            <Notifications />
+                                                </div>
+                                                <div
+                                                            className="header-profile"
+                                                >
+                                                            <ProfileMenu />
+                                                </div>
+                                                <div
+                                                            className="header-news"
+                                                >
+                                                            <SidebarMenu />
+                                                </div>
+                                    </div>
+                        </div>
+            </div>
+</div>,
+          <Headroom
+            calcHeightOnResize={true}
+            disable={false}
+            disableInlineStyles={true}
+            downTolerance={0}
+            onPin={[Function]}
+            onUnfix={[Function]}
+            onUnpin={[Function]}
+            parent={[Function]}
+            pinStart={0}
+            upTolerance={5}
+            wrapperStyle={Object {}}
+>
+            <div
+                        className="header-bottom"
+            >
+                        <ul
+                                    className="menu"
+                        >
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/"
+                                                >
+                                                            Dashboard
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/login"
+                                                >
+                                                            Login
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/users"
+                                                >
+                                                            Users
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/roles"
+                                                >
+                                                            Roles
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/tenants"
+                                                >
+                                                            Tenants
+                                                </NavLink>
+                                    </li>
+                        </ul>
+            </div>
+</Headroom>,
+          Object {
+            "$$typeof": Symbol(react.portal),
+            "children": <Sidebar
+              className="mobile-menu-wrapper"
+              onHide={[Function]}
+              position="right"
+              visible={false}
+>
+              <ul
+                            className="menu"
+              >
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/"
+                                          >
+                                                        Dashboard
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/login"
+                                          >
+                                                        Login
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/users"
+                                          >
+                                                        Users
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/roles"
+                                          >
+                                                        Roles
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/tenants"
+                                          >
+                                                        Tenants
+                                          </NavLink>
+                            </li>
+              </ul>
+</Sidebar>,
+            "containerInfo": <div />,
+            "implementation": null,
+            "key": null,
+          },
+        ],
+        "className": "header controls-visible",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <div
+              className="header-top"
+>
+              <div
+                            className="header-left"
+              >
+                            <div
+                                          className="logo"
+                            >
+                                          <Link
+                                                        replace={false}
+                                                        to="/"
+                                          >
+                                                        <img
+                                                                      alt=""
+                                                                      src="logo.png"
+                                                        />
+                                          </Link>
+                            </div>
+                            <div
+                                          className="header-mobile-buttons"
+                            >
+                                          <button
+                                                        className="header-bar-button"
+                                                        onClick={[Function]}
+                                          >
+                                                        <i
+                                                                      className="fa far fa-navicon"
+                                                        />
+                                          </button>
+                                          <button
+                                                        className="controls-button"
+                                                        onClick={[Function]}
+                                          >
+                                                        <i
+                                                                      className="fa far fa-ellipsis-h"
+                                                        />
+                                          </button>
+                            </div>
+              </div>
+              <div
+                            className="header-right show-controls"
+              >
+                            <div
+                                          className="options"
+                            >
+                                          <div
+                                                        className="header-notifications"
+                                          >
+                                                        <Notifications />
+                                          </div>
+                                          <div
+                                                        className="header-profile"
+                                          >
+                                                        <ProfileMenu />
+                                          </div>
+                                          <div
+                                                        className="header-news"
+                                          >
+                                                        <SidebarMenu />
+                                          </div>
+                            </div>
+              </div>
+</div>,
+            "className": "header-top-wrapper",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="header-left"
+>
+                  <div
+                                    className="logo"
+                  >
+                                    <Link
+                                                      replace={false}
+                                                      to="/"
+                                    >
+                                                      <img
+                                                                        alt=""
+                                                                        src="logo.png"
+                                                      />
+                                    </Link>
+                  </div>
+                  <div
+                                    className="header-mobile-buttons"
+                  >
+                                    <button
+                                                      className="header-bar-button"
+                                                      onClick={[Function]}
+                                    >
+                                                      <i
+                                                                        className="fa far fa-navicon"
+                                                      />
+                                    </button>
+                                    <button
+                                                      className="controls-button"
+                                                      onClick={[Function]}
+                                    >
+                                                      <i
+                                                                        className="fa far fa-ellipsis-h"
+                                                      />
+                                    </button>
+                  </div>
+</div>,
+                <div
+                  className="header-right show-controls"
+>
+                  <div
+                                    className="options"
+                  >
+                                    <div
+                                                      className="header-notifications"
+                                    >
+                                                      <Notifications />
+                                    </div>
+                                    <div
+                                                      className="header-profile"
+                                    >
+                                                      <ProfileMenu />
+                                    </div>
+                                    <div
+                                                      className="header-news"
+                                    >
+                                                      <SidebarMenu />
+                                    </div>
+                  </div>
+</div>,
+              ],
+              "className": "header-top",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <div
+                      className="logo"
+>
+                      <Link
+                                            replace={false}
+                                            to="/"
+                      >
+                                            <img
+                                                                  alt=""
+                                                                  src="logo.png"
+                                            />
+                      </Link>
+</div>,
+                    <div
+                      className="header-mobile-buttons"
+>
+                      <button
+                                            className="header-bar-button"
+                                            onClick={[Function]}
+                      >
+                                            <i
+                                                                  className="fa far fa-navicon"
+                                            />
+                      </button>
+                      <button
+                                            className="controls-button"
+                                            onClick={[Function]}
+                      >
+                                            <i
+                                                                  className="fa far fa-ellipsis-h"
+                                            />
+                      </button>
+</div>,
+                  ],
+                  "className": "header-left",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <Link
+                        replace={false}
+                        to="/"
+>
+                        <img
+                                                alt=""
+                                                src="logo.png"
+                        />
+</Link>,
+                      "className": "logo",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {
+                        "children": <img
+                          alt=""
+                          src="logo.png"
+/>,
+                        "replace": false,
+                        "to": "/",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "alt": "",
+                          "src": "logo.png",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": "img",
+                      },
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        <button
+                          className="header-bar-button"
+                          onClick={[Function]}
+>
+                          <i
+                                                    className="fa far fa-navicon"
+                          />
+</button>,
+                        <button
+                          className="controls-button"
+                          onClick={[Function]}
+>
+                          <i
+                                                    className="fa far fa-ellipsis-h"
+                          />
+</button>,
+                      ],
+                      "className": "header-mobile-buttons",
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      Object {
+                        "instance": null,
+                        "key": "nav",
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": <i
+                            className="fa far fa-navicon"
+/>,
+                          "className": "header-bar-button",
+                          "onClick": [Function],
+                        },
+                        "ref": null,
+                        "rendered": Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "host",
+                          "props": Object {
+                            "className": "fa far fa-navicon",
+                          },
+                          "ref": null,
+                          "rendered": null,
+                          "type": "i",
+                        },
+                        "type": "button",
+                      },
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": <i
+                            className="fa far fa-ellipsis-h"
+/>,
+                          "className": "controls-button",
+                          "onClick": [Function],
+                        },
+                        "ref": null,
+                        "rendered": Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "host",
+                          "props": Object {
+                            "className": "fa far fa-ellipsis-h",
+                          },
+                          "ref": null,
+                          "rendered": null,
+                          "type": "i",
+                        },
+                        "type": "button",
+                      },
+                    ],
+                    "type": "div",
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <div
+                    className="options"
+>
+                    <div
+                                        className="header-notifications"
+                    >
+                                        <Notifications />
+                    </div>
+                    <div
+                                        className="header-profile"
+                    >
+                                        <ProfileMenu />
+                    </div>
+                    <div
+                                        className="header-news"
+                    >
+                                        <SidebarMenu />
+                    </div>
+</div>,
+                  "className": "header-right show-controls",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <div
+                        className="header-notifications"
+>
+                        <Notifications />
+</div>,
+                      <div
+                        className="header-profile"
+>
+                        <ProfileMenu />
+</div>,
+                      <div
+                        className="header-news"
+>
+                        <SidebarMenu />
+</div>,
+                    ],
+                    "className": "options",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <Notifications />,
+                        "className": "header-notifications",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "class",
+                        "props": Object {},
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
+                      "type": "div",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <ProfileMenu />,
+                        "className": "header-profile",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "class",
+                        "props": Object {},
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
+                      "type": "div",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <SidebarMenu />,
+                        "className": "header-news",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "class",
+                        "props": Object {},
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
+                      "type": "div",
+                    },
+                  ],
+                  "type": "div",
+                },
+                "type": "div",
+              },
+            ],
+            "type": "div",
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "calcHeightOnResize": true,
+            "children": <div
+              className="header-bottom"
+>
+              <ul
+                            className="menu"
+              >
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/"
+                                          >
+                                                        Dashboard
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/login"
+                                          >
+                                                        Login
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/users"
+                                          >
+                                                        Users
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/roles"
+                                          >
+                                                        Roles
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/tenants"
+                                          >
+                                                        Tenants
+                                          </NavLink>
+                            </li>
+              </ul>
+</div>,
+            "disable": false,
+            "disableInlineStyles": true,
+            "downTolerance": 0,
+            "onPin": [Function],
+            "onUnfix": [Function],
+            "onUnpin": [Function],
+            "parent": [Function],
+            "pinStart": 0,
+            "upTolerance": 5,
+            "wrapperStyle": Object {},
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <ul
+                className="menu"
+>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                >
+                                                Dashboard
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                >
+                                                Login
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                >
+                                                Users
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                >
+                                                Roles
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                >
+                                                Tenants
+                                </NavLink>
+                </li>
+</ul>,
+              "className": "header-bottom",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/"
+                    >
+                                        Dashboard
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/login"
+                    >
+                                        Login
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/users"
+                    >
+                                        Users
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/roles"
+                    >
+                                        Roles
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/tenants"
+                    >
+                                        Tenants
+                    </NavLink>
+</li>,
+                ],
+                "className": "menu",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/"
+>
+                      Dashboard
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Dashboard",
+                      "exact": true,
+                      "to": "/",
+                    },
+                    "ref": null,
+                    "rendered": "Dashboard",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/login"
+>
+                      Login
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Login",
+                      "exact": true,
+                      "to": "/login",
+                    },
+                    "ref": null,
+                    "rendered": "Login",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/users"
+>
+                      Users
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Users",
+                      "exact": true,
+                      "to": "/users",
+                    },
+                    "ref": null,
+                    "rendered": "Users",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/roles"
+>
+                      Roles
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Roles",
+                      "exact": true,
+                      "to": "/roles",
+                    },
+                    "ref": null,
+                    "rendered": "Roles",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/tenants"
+>
+                      Tenants
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Tenants",
+                      "exact": true,
+                      "to": "/tenants",
+                    },
+                    "ref": null,
+                    "rendered": "Tenants",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+              ],
+              "type": "ul",
+            },
+            "type": "div",
+          },
+          "type": [Function],
+        },
+        Object {
+          "$$typeof": Symbol(react.portal),
+          "children": <Sidebar
+            className="mobile-menu-wrapper"
+            onHide={[Function]}
+            position="right"
+            visible={false}
+>
+            <ul
+                        className="menu"
+            >
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                    >
+                                                Dashboard
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                    >
+                                                Login
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                    >
+                                                Users
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                    >
+                                                Roles
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                    >
+                                                Tenants
+                                    </NavLink>
+                        </li>
+            </ul>
+</Sidebar>,
+          "containerInfo": <div />,
+          "implementation": null,
+          "key": null,
+        },
+      ],
+      "type": "header",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
+
+exports[`renders correctly 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <Header />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="header-top-wrapper"
+>
+          <div
+                    className="header-top"
+          >
+                    <div
+                              className="header-left"
+                    >
+                              <div
+                                        className="logo"
+                              >
+                                        <Link
+                                                  replace={false}
+                                                  to="/"
+                                        >
+                                                  <img
+                                                            alt=""
+                                                            src="logo.png"
+                                                  />
+                                        </Link>
+                              </div>
+                              <div
+                                        className="header-mobile-buttons"
+                              >
+                                        <button
+                                                  className="header-bar-button"
+                                                  onClick={[Function]}
+                                        >
+                                                  <i
+                                                            className="fa far fa-navicon"
+                                                  />
+                                        </button>
+                                        <button
+                                                  className="controls-button"
+                                                  onClick={[Function]}
+                                        >
+                                                  <i
+                                                            className="fa far fa-ellipsis-h"
+                                                  />
+                                        </button>
+                              </div>
+                    </div>
+                    <div
+                              className="header-right"
+                    >
+                              <div
+                                        className="options"
+                              >
+                                        <div
+                                                  className="header-notifications"
+                                        >
+                                                  <Notifications />
+                                        </div>
+                                        <div
+                                                  className="header-profile"
+                                        >
+                                                  <ProfileMenu />
+                                        </div>
+                                        <div
+                                                  className="header-news"
+                                        >
+                                                  <SidebarMenu />
+                                        </div>
+                              </div>
+                    </div>
+          </div>
+</div>,
+        <Headroom
+          calcHeightOnResize={true}
+          disable={false}
+          disableInlineStyles={true}
+          downTolerance={0}
+          onPin={[Function]}
+          onUnfix={[Function]}
+          onUnpin={[Function]}
+          parent={[Function]}
+          pinStart={0}
+          upTolerance={5}
+          wrapperStyle={Object {}}
+>
+          <div
+                    className="header-bottom"
+          >
+                    <ul
+                              className="menu"
+                    >
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/"
+                                        >
+                                                  Dashboard
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/login"
+                                        >
+                                                  Login
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/users"
+                                        >
+                                                  Users
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/roles"
+                                        >
+                                                  Roles
+                                        </NavLink>
+                              </li>
+                              <li>
+                                        <NavLink
+                                                  activeClassName="active"
+                                                  ariaCurrent="true"
+                                                  exact={true}
+                                                  to="/tenants"
+                                        >
+                                                  Tenants
+                                        </NavLink>
+                              </li>
+                    </ul>
+          </div>
+</Headroom>,
+        Object {
+          "$$typeof": Symbol(react.portal),
+          "children": <Sidebar
+            className="mobile-menu-wrapper"
+            onHide={[Function]}
+            position="right"
+            visible={false}
+>
+            <ul
+                        className="menu"
+            >
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                    >
+                                                Dashboard
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                    >
+                                                Login
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                    >
+                                                Users
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                    >
+                                                Roles
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                    >
+                                                Tenants
+                                    </NavLink>
+                        </li>
+            </ul>
+</Sidebar>,
+          "containerInfo": <div />,
+          "implementation": null,
+          "key": null,
+        },
+      ],
+      "className": "header",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <div
+            className="header-top"
+>
+            <div
+                        className="header-left"
+            >
+                        <div
+                                    className="logo"
+                        >
+                                    <Link
+                                                replace={false}
+                                                to="/"
+                                    >
+                                                <img
+                                                            alt=""
+                                                            src="logo.png"
+                                                />
+                                    </Link>
+                        </div>
+                        <div
+                                    className="header-mobile-buttons"
+                        >
+                                    <button
+                                                className="header-bar-button"
+                                                onClick={[Function]}
+                                    >
+                                                <i
+                                                            className="fa far fa-navicon"
+                                                />
+                                    </button>
+                                    <button
+                                                className="controls-button"
+                                                onClick={[Function]}
+                                    >
+                                                <i
+                                                            className="fa far fa-ellipsis-h"
+                                                />
+                                    </button>
+                        </div>
+            </div>
+            <div
+                        className="header-right"
+            >
+                        <div
+                                    className="options"
+                        >
+                                    <div
+                                                className="header-notifications"
+                                    >
+                                                <Notifications />
+                                    </div>
+                                    <div
+                                                className="header-profile"
+                                    >
+                                                <ProfileMenu />
+                                    </div>
+                                    <div
+                                                className="header-news"
+                                    >
+                                                <SidebarMenu />
+                                    </div>
+                        </div>
+            </div>
+</div>,
+          "className": "header-top-wrapper",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="header-left"
+>
+                <div
+                                className="logo"
+                >
+                                <Link
+                                                replace={false}
+                                                to="/"
+                                >
+                                                <img
+                                                                alt=""
+                                                                src="logo.png"
+                                                />
+                                </Link>
+                </div>
+                <div
+                                className="header-mobile-buttons"
+                >
+                                <button
+                                                className="header-bar-button"
+                                                onClick={[Function]}
+                                >
+                                                <i
+                                                                className="fa far fa-navicon"
+                                                />
+                                </button>
+                                <button
+                                                className="controls-button"
+                                                onClick={[Function]}
+                                >
+                                                <i
+                                                                className="fa far fa-ellipsis-h"
+                                                />
+                                </button>
+                </div>
+</div>,
+              <div
+                className="header-right"
+>
+                <div
+                                className="options"
+                >
+                                <div
+                                                className="header-notifications"
+                                >
+                                                <Notifications />
+                                </div>
+                                <div
+                                                className="header-profile"
+                                >
+                                                <ProfileMenu />
+                                </div>
+                                <div
+                                                className="header-news"
+                                >
+                                                <SidebarMenu />
+                                </div>
+                </div>
+</div>,
+            ],
+            "className": "header-top",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <div
+                    className="logo"
+>
+                    <Link
+                                        replace={false}
+                                        to="/"
+                    >
+                                        <img
+                                                            alt=""
+                                                            src="logo.png"
+                                        />
+                    </Link>
+</div>,
+                  <div
+                    className="header-mobile-buttons"
+>
+                    <button
+                                        className="header-bar-button"
+                                        onClick={[Function]}
+                    >
+                                        <i
+                                                            className="fa far fa-navicon"
+                                        />
+                    </button>
+                    <button
+                                        className="controls-button"
+                                        onClick={[Function]}
+                    >
+                                        <i
+                                                            className="fa far fa-ellipsis-h"
+                                        />
+                    </button>
+</div>,
+                ],
+                "className": "header-left",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <Link
+                      replace={false}
+                      to="/"
+>
+                      <img
+                                            alt=""
+                                            src="logo.png"
+                      />
+</Link>,
+                    "className": "logo",
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "class",
+                    "props": Object {
+                      "children": <img
+                        alt=""
+                        src="logo.png"
+/>,
+                      "replace": false,
+                      "to": "/",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "alt": "",
+                        "src": "logo.png",
+                      },
+                      "ref": null,
+                      "rendered": null,
+                      "type": "img",
+                    },
+                    "type": [Function],
+                  },
+                  "type": "div",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <button
+                        className="header-bar-button"
+                        onClick={[Function]}
+>
+                        <i
+                                                className="fa far fa-navicon"
+                        />
+</button>,
+                      <button
+                        className="controls-button"
+                        onClick={[Function]}
+>
+                        <i
+                                                className="fa far fa-ellipsis-h"
+                        />
+</button>,
+                    ],
+                    "className": "header-mobile-buttons",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": "nav",
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <i
+                          className="fa far fa-navicon"
+/>,
+                        "className": "header-bar-button",
+                        "onClick": [Function],
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "className": "fa far fa-navicon",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": "i",
+                      },
+                      "type": "button",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <i
+                          className="fa far fa-ellipsis-h"
+/>,
+                        "className": "controls-button",
+                        "onClick": [Function],
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "className": "fa far fa-ellipsis-h",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": "i",
+                      },
+                      "type": "button",
+                    },
+                  ],
+                  "type": "div",
+                },
+              ],
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": <div
+                  className="options"
+>
+                  <div
+                                    className="header-notifications"
+                  >
+                                    <Notifications />
+                  </div>
+                  <div
+                                    className="header-profile"
+                  >
+                                    <ProfileMenu />
+                  </div>
+                  <div
+                                    className="header-news"
+                  >
+                                    <SidebarMenu />
+                  </div>
+</div>,
+                "className": "header-right",
+              },
+              "ref": null,
+              "rendered": Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <div
+                      className="header-notifications"
+>
+                      <Notifications />
+</div>,
+                    <div
+                      className="header-profile"
+>
+                      <ProfileMenu />
+</div>,
+                    <div
+                      className="header-news"
+>
+                      <SidebarMenu />
+</div>,
+                  ],
+                  "className": "options",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <Notifications />,
+                      "className": "header-notifications",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {},
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <ProfileMenu />,
+                      "className": "header-profile",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {},
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <SidebarMenu />,
+                      "className": "header-news",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {},
+                      "ref": null,
+                      "rendered": null,
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                ],
+                "type": "div",
+              },
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "class",
+        "props": Object {
+          "calcHeightOnResize": true,
+          "children": <div
+            className="header-bottom"
+>
+            <ul
+                        className="menu"
+            >
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                    >
+                                                Dashboard
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                    >
+                                                Login
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                    >
+                                                Users
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                    >
+                                                Roles
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                    >
+                                                Tenants
+                                    </NavLink>
+                        </li>
+            </ul>
+</div>,
+          "disable": false,
+          "disableInlineStyles": true,
+          "downTolerance": 0,
+          "onPin": [Function],
+          "onUnfix": [Function],
+          "onUnpin": [Function],
+          "parent": [Function],
+          "pinStart": 0,
+          "upTolerance": 5,
+          "wrapperStyle": Object {},
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <ul
+              className="menu"
+>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/"
+                            >
+                                          Dashboard
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/login"
+                            >
+                                          Login
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/users"
+                            >
+                                          Users
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/roles"
+                            >
+                                          Roles
+                            </NavLink>
+              </li>
+              <li>
+                            <NavLink
+                                          activeClassName="active"
+                                          ariaCurrent="true"
+                                          exact={true}
+                                          to="/tenants"
+                            >
+                                          Tenants
+                            </NavLink>
+              </li>
+</ul>,
+            "className": "header-bottom",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/"
+                  >
+                                    Dashboard
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/login"
+                  >
+                                    Login
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/users"
+                  >
+                                    Users
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/roles"
+                  >
+                                    Roles
+                  </NavLink>
+</li>,
+                <li>
+                  <NavLink
+                                    activeClassName="active"
+                                    ariaCurrent="true"
+                                    exact={true}
+                                    to="/tenants"
+                  >
+                                    Tenants
+                  </NavLink>
+</li>,
+              ],
+              "className": "menu",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/"
+>
+                    Dashboard
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Dashboard",
+                    "exact": true,
+                    "to": "/",
+                  },
+                  "ref": null,
+                  "rendered": "Dashboard",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/login"
+>
+                    Login
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Login",
+                    "exact": true,
+                    "to": "/login",
+                  },
+                  "ref": null,
+                  "rendered": "Login",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/users"
+>
+                    Users
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Users",
+                    "exact": true,
+                    "to": "/users",
+                  },
+                  "ref": null,
+                  "rendered": "Users",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/roles"
+>
+                    Roles
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Roles",
+                    "exact": true,
+                    "to": "/roles",
+                  },
+                  "ref": null,
+                  "rendered": "Roles",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <NavLink
+                    activeClassName="active"
+                    ariaCurrent="true"
+                    exact={true}
+                    to="/tenants"
+>
+                    Tenants
+</NavLink>,
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "function",
+                  "props": Object {
+                    "activeClassName": "active",
+                    "ariaCurrent": "true",
+                    "children": "Tenants",
+                    "exact": true,
+                    "to": "/tenants",
+                  },
+                  "ref": null,
+                  "rendered": "Tenants",
+                  "type": [Function],
+                },
+                "type": "li",
+              },
+            ],
+            "type": "ul",
+          },
+          "type": "div",
+        },
+        "type": [Function],
+      },
+      Object {
+        "$$typeof": Symbol(react.portal),
+        "children": <Sidebar
+          className="mobile-menu-wrapper"
+          onHide={[Function]}
+          position="right"
+          visible={false}
+>
+          <ul
+                    className="menu"
+          >
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/"
+                              >
+                                        Dashboard
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/login"
+                              >
+                                        Login
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/users"
+                              >
+                                        Users
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/roles"
+                              >
+                                        Roles
+                              </NavLink>
+                    </li>
+                    <li>
+                              <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/tenants"
+                              >
+                                        Tenants
+                              </NavLink>
+                    </li>
+          </ul>
+</Sidebar>,
+        "containerInfo": <div />,
+        "implementation": null,
+        "key": null,
+      },
+    ],
+    "type": "header",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="header-top-wrapper"
+>
+            <div
+                        className="header-top"
+            >
+                        <div
+                                    className="header-left"
+                        >
+                                    <div
+                                                className="logo"
+                                    >
+                                                <Link
+                                                            replace={false}
+                                                            to="/"
+                                                >
+                                                            <img
+                                                                        alt=""
+                                                                        src="logo.png"
+                                                            />
+                                                </Link>
+                                    </div>
+                                    <div
+                                                className="header-mobile-buttons"
+                                    >
+                                                <button
+                                                            className="header-bar-button"
+                                                            onClick={[Function]}
+                                                >
+                                                            <i
+                                                                        className="fa far fa-navicon"
+                                                            />
+                                                </button>
+                                                <button
+                                                            className="controls-button"
+                                                            onClick={[Function]}
+                                                >
+                                                            <i
+                                                                        className="fa far fa-ellipsis-h"
+                                                            />
+                                                </button>
+                                    </div>
+                        </div>
+                        <div
+                                    className="header-right"
+                        >
+                                    <div
+                                                className="options"
+                                    >
+                                                <div
+                                                            className="header-notifications"
+                                                >
+                                                            <Notifications />
+                                                </div>
+                                                <div
+                                                            className="header-profile"
+                                                >
+                                                            <ProfileMenu />
+                                                </div>
+                                                <div
+                                                            className="header-news"
+                                                >
+                                                            <SidebarMenu />
+                                                </div>
+                                    </div>
+                        </div>
+            </div>
+</div>,
+          <Headroom
+            calcHeightOnResize={true}
+            disable={false}
+            disableInlineStyles={true}
+            downTolerance={0}
+            onPin={[Function]}
+            onUnfix={[Function]}
+            onUnpin={[Function]}
+            parent={[Function]}
+            pinStart={0}
+            upTolerance={5}
+            wrapperStyle={Object {}}
+>
+            <div
+                        className="header-bottom"
+            >
+                        <ul
+                                    className="menu"
+                        >
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/"
+                                                >
+                                                            Dashboard
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/login"
+                                                >
+                                                            Login
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/users"
+                                                >
+                                                            Users
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/roles"
+                                                >
+                                                            Roles
+                                                </NavLink>
+                                    </li>
+                                    <li>
+                                                <NavLink
+                                                            activeClassName="active"
+                                                            ariaCurrent="true"
+                                                            exact={true}
+                                                            to="/tenants"
+                                                >
+                                                            Tenants
+                                                </NavLink>
+                                    </li>
+                        </ul>
+            </div>
+</Headroom>,
+          Object {
+            "$$typeof": Symbol(react.portal),
+            "children": <Sidebar
+              className="mobile-menu-wrapper"
+              onHide={[Function]}
+              position="right"
+              visible={false}
+>
+              <ul
+                            className="menu"
+              >
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/"
+                                          >
+                                                        Dashboard
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/login"
+                                          >
+                                                        Login
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/users"
+                                          >
+                                                        Users
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/roles"
+                                          >
+                                                        Roles
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/tenants"
+                                          >
+                                                        Tenants
+                                          </NavLink>
+                            </li>
+              </ul>
+</Sidebar>,
+            "containerInfo": <div />,
+            "implementation": null,
+            "key": null,
+          },
+        ],
+        "className": "header",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <div
+              className="header-top"
+>
+              <div
+                            className="header-left"
+              >
+                            <div
+                                          className="logo"
+                            >
+                                          <Link
+                                                        replace={false}
+                                                        to="/"
+                                          >
+                                                        <img
+                                                                      alt=""
+                                                                      src="logo.png"
+                                                        />
+                                          </Link>
+                            </div>
+                            <div
+                                          className="header-mobile-buttons"
+                            >
+                                          <button
+                                                        className="header-bar-button"
+                                                        onClick={[Function]}
+                                          >
+                                                        <i
+                                                                      className="fa far fa-navicon"
+                                                        />
+                                          </button>
+                                          <button
+                                                        className="controls-button"
+                                                        onClick={[Function]}
+                                          >
+                                                        <i
+                                                                      className="fa far fa-ellipsis-h"
+                                                        />
+                                          </button>
+                            </div>
+              </div>
+              <div
+                            className="header-right"
+              >
+                            <div
+                                          className="options"
+                            >
+                                          <div
+                                                        className="header-notifications"
+                                          >
+                                                        <Notifications />
+                                          </div>
+                                          <div
+                                                        className="header-profile"
+                                          >
+                                                        <ProfileMenu />
+                                          </div>
+                                          <div
+                                                        className="header-news"
+                                          >
+                                                        <SidebarMenu />
+                                          </div>
+                            </div>
+              </div>
+</div>,
+            "className": "header-top-wrapper",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": Array [
+                <div
+                  className="header-left"
+>
+                  <div
+                                    className="logo"
+                  >
+                                    <Link
+                                                      replace={false}
+                                                      to="/"
+                                    >
+                                                      <img
+                                                                        alt=""
+                                                                        src="logo.png"
+                                                      />
+                                    </Link>
+                  </div>
+                  <div
+                                    className="header-mobile-buttons"
+                  >
+                                    <button
+                                                      className="header-bar-button"
+                                                      onClick={[Function]}
+                                    >
+                                                      <i
+                                                                        className="fa far fa-navicon"
+                                                      />
+                                    </button>
+                                    <button
+                                                      className="controls-button"
+                                                      onClick={[Function]}
+                                    >
+                                                      <i
+                                                                        className="fa far fa-ellipsis-h"
+                                                      />
+                                    </button>
+                  </div>
+</div>,
+                <div
+                  className="header-right"
+>
+                  <div
+                                    className="options"
+                  >
+                                    <div
+                                                      className="header-notifications"
+                                    >
+                                                      <Notifications />
+                                    </div>
+                                    <div
+                                                      className="header-profile"
+                                    >
+                                                      <ProfileMenu />
+                                    </div>
+                                    <div
+                                                      className="header-news"
+                                    >
+                                                      <SidebarMenu />
+                                    </div>
+                  </div>
+</div>,
+              ],
+              "className": "header-top",
+            },
+            "ref": null,
+            "rendered": Array [
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": Array [
+                    <div
+                      className="logo"
+>
+                      <Link
+                                            replace={false}
+                                            to="/"
+                      >
+                                            <img
+                                                                  alt=""
+                                                                  src="logo.png"
+                                            />
+                      </Link>
+</div>,
+                    <div
+                      className="header-mobile-buttons"
+>
+                      <button
+                                            className="header-bar-button"
+                                            onClick={[Function]}
+                      >
+                                            <i
+                                                                  className="fa far fa-navicon"
+                                            />
+                      </button>
+                      <button
+                                            className="controls-button"
+                                            onClick={[Function]}
+                      >
+                                            <i
+                                                                  className="fa far fa-ellipsis-h"
+                                            />
+                      </button>
+</div>,
+                  ],
+                  "className": "header-left",
+                },
+                "ref": null,
+                "rendered": Array [
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": <Link
+                        replace={false}
+                        to="/"
+>
+                        <img
+                                                alt=""
+                                                src="logo.png"
+                        />
+</Link>,
+                      "className": "logo",
+                    },
+                    "ref": null,
+                    "rendered": Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "class",
+                      "props": Object {
+                        "children": <img
+                          alt=""
+                          src="logo.png"
+/>,
+                        "replace": false,
+                        "to": "/",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "alt": "",
+                          "src": "logo.png",
+                        },
+                        "ref": null,
+                        "rendered": null,
+                        "type": "img",
+                      },
+                      "type": [Function],
+                    },
+                    "type": "div",
+                  },
+                  Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "host",
+                    "props": Object {
+                      "children": Array [
+                        <button
+                          className="header-bar-button"
+                          onClick={[Function]}
+>
+                          <i
+                                                    className="fa far fa-navicon"
+                          />
+</button>,
+                        <button
+                          className="controls-button"
+                          onClick={[Function]}
+>
+                          <i
+                                                    className="fa far fa-ellipsis-h"
+                          />
+</button>,
+                      ],
+                      "className": "header-mobile-buttons",
+                    },
+                    "ref": null,
+                    "rendered": Array [
+                      Object {
+                        "instance": null,
+                        "key": "nav",
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": <i
+                            className="fa far fa-navicon"
+/>,
+                          "className": "header-bar-button",
+                          "onClick": [Function],
+                        },
+                        "ref": null,
+                        "rendered": Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "host",
+                          "props": Object {
+                            "className": "fa far fa-navicon",
+                          },
+                          "ref": null,
+                          "rendered": null,
+                          "type": "i",
+                        },
+                        "type": "button",
+                      },
+                      Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "host",
+                        "props": Object {
+                          "children": <i
+                            className="fa far fa-ellipsis-h"
+/>,
+                          "className": "controls-button",
+                          "onClick": [Function],
+                        },
+                        "ref": null,
+                        "rendered": Object {
+                          "instance": null,
+                          "key": undefined,
+                          "nodeType": "host",
+                          "props": Object {
+                            "className": "fa far fa-ellipsis-h",
+                          },
+                          "ref": null,
+                          "rendered": null,
+                          "type": "i",
+                        },
+                        "type": "button",
+                      },
+                    ],
+                    "type": "div",
+                  },
+                ],
+                "type": "div",
+              },
+              Object {
+                "instance": null,
+                "key": undefined,
+                "nodeType": "host",
+                "props": Object {
+                  "children": <div
+                    className="options"
+>
+                    <div
+                                        className="header-notifications"
+                    >
+                                        <Notifications />
+                    </div>
+                    <div
+                                        className="header-profile"
+                    >
+                                        <ProfileMenu />
+                    </div>
+                    <div
+                                        className="header-news"
+                    >
+                                        <SidebarMenu />
+                    </div>
+</div>,
+                  "className": "header-right",
+                },
+                "ref": null,
+                "rendered": Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": Array [
+                      <div
+                        className="header-notifications"
+>
+                        <Notifications />
+</div>,
+                      <div
+                        className="header-profile"
+>
+                        <ProfileMenu />
+</div>,
+                      <div
+                        className="header-news"
+>
+                        <SidebarMenu />
+</div>,
+                    ],
+                    "className": "options",
+                  },
+                  "ref": null,
+                  "rendered": Array [
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <Notifications />,
+                        "className": "header-notifications",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "class",
+                        "props": Object {},
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
+                      "type": "div",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <ProfileMenu />,
+                        "className": "header-profile",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "class",
+                        "props": Object {},
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
+                      "type": "div",
+                    },
+                    Object {
+                      "instance": null,
+                      "key": undefined,
+                      "nodeType": "host",
+                      "props": Object {
+                        "children": <SidebarMenu />,
+                        "className": "header-news",
+                      },
+                      "ref": null,
+                      "rendered": Object {
+                        "instance": null,
+                        "key": undefined,
+                        "nodeType": "class",
+                        "props": Object {},
+                        "ref": null,
+                        "rendered": null,
+                        "type": [Function],
+                      },
+                      "type": "div",
+                    },
+                  ],
+                  "type": "div",
+                },
+                "type": "div",
+              },
+            ],
+            "type": "div",
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "calcHeightOnResize": true,
+            "children": <div
+              className="header-bottom"
+>
+              <ul
+                            className="menu"
+              >
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/"
+                                          >
+                                                        Dashboard
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/login"
+                                          >
+                                                        Login
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/users"
+                                          >
+                                                        Users
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/roles"
+                                          >
+                                                        Roles
+                                          </NavLink>
+                            </li>
+                            <li>
+                                          <NavLink
+                                                        activeClassName="active"
+                                                        ariaCurrent="true"
+                                                        exact={true}
+                                                        to="/tenants"
+                                          >
+                                                        Tenants
+                                          </NavLink>
+                            </li>
+              </ul>
+</div>,
+            "disable": false,
+            "disableInlineStyles": true,
+            "downTolerance": 0,
+            "onPin": [Function],
+            "onUnfix": [Function],
+            "onUnpin": [Function],
+            "parent": [Function],
+            "pinStart": 0,
+            "upTolerance": 5,
+            "wrapperStyle": Object {},
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": <ul
+                className="menu"
+>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                >
+                                                Dashboard
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                >
+                                                Login
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                >
+                                                Users
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                >
+                                                Roles
+                                </NavLink>
+                </li>
+                <li>
+                                <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                >
+                                                Tenants
+                                </NavLink>
+                </li>
+</ul>,
+              "className": "header-bottom",
+            },
+            "ref": null,
+            "rendered": Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": Array [
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/"
+                    >
+                                        Dashboard
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/login"
+                    >
+                                        Login
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/users"
+                    >
+                                        Users
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/roles"
+                    >
+                                        Roles
+                    </NavLink>
+</li>,
+                  <li>
+                    <NavLink
+                                        activeClassName="active"
+                                        ariaCurrent="true"
+                                        exact={true}
+                                        to="/tenants"
+                    >
+                                        Tenants
+                    </NavLink>
+</li>,
+                ],
+                "className": "menu",
+              },
+              "ref": null,
+              "rendered": Array [
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/"
+>
+                      Dashboard
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Dashboard",
+                      "exact": true,
+                      "to": "/",
+                    },
+                    "ref": null,
+                    "rendered": "Dashboard",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/login"
+>
+                      Login
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Login",
+                      "exact": true,
+                      "to": "/login",
+                    },
+                    "ref": null,
+                    "rendered": "Login",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/users"
+>
+                      Users
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Users",
+                      "exact": true,
+                      "to": "/users",
+                    },
+                    "ref": null,
+                    "rendered": "Users",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/roles"
+>
+                      Roles
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Roles",
+                      "exact": true,
+                      "to": "/roles",
+                    },
+                    "ref": null,
+                    "rendered": "Roles",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+                Object {
+                  "instance": null,
+                  "key": undefined,
+                  "nodeType": "host",
+                  "props": Object {
+                    "children": <NavLink
+                      activeClassName="active"
+                      ariaCurrent="true"
+                      exact={true}
+                      to="/tenants"
+>
+                      Tenants
+</NavLink>,
+                  },
+                  "ref": null,
+                  "rendered": Object {
+                    "instance": null,
+                    "key": undefined,
+                    "nodeType": "function",
+                    "props": Object {
+                      "activeClassName": "active",
+                      "ariaCurrent": "true",
+                      "children": "Tenants",
+                      "exact": true,
+                      "to": "/tenants",
+                    },
+                    "ref": null,
+                    "rendered": "Tenants",
+                    "type": [Function],
+                  },
+                  "type": "li",
+                },
+              ],
+              "type": "ul",
+            },
+            "type": "div",
+          },
+          "type": [Function],
+        },
+        Object {
+          "$$typeof": Symbol(react.portal),
+          "children": <Sidebar
+            className="mobile-menu-wrapper"
+            onHide={[Function]}
+            position="right"
+            visible={false}
+>
+            <ul
+                        className="menu"
+            >
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/"
+                                    >
+                                                Dashboard
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/login"
+                                    >
+                                                Login
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/users"
+                                    >
+                                                Users
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/roles"
+                                    >
+                                                Roles
+                                    </NavLink>
+                        </li>
+                        <li>
+                                    <NavLink
+                                                activeClassName="active"
+                                                ariaCurrent="true"
+                                                exact={true}
+                                                to="/tenants"
+                                    >
+                                                Tenants
+                                    </NavLink>
+                        </li>
+            </ul>
+</Sidebar>,
+          "containerInfo": <div />,
+          "implementation": null,
+          "key": null,
+        },
+      ],
+      "type": "header",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+  },
+}
+`;
