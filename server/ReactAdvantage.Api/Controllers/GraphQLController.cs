@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using ReactAdvantage.Api.GraphQLSchema;
 
 namespace ReactAdvantage.Api.Controllers
@@ -12,12 +15,14 @@ namespace ReactAdvantage.Api.Controllers
     public class GraphQLController : ControllerBase
     {
         private readonly IDocumentExecuter _documentExecuter;
+        private readonly ILogger _logger;
         private readonly ISchema _schema;
 
-        public GraphQLController(ISchema schema, IDocumentExecuter documentExecuter)
+        public GraphQLController(ISchema schema, IDocumentExecuter documentExecuter, ILogger<GraphQLController> logger)
         {
             _schema = schema;
             _documentExecuter = documentExecuter;
+            _logger = logger;
         }
 
         [HttpPost]
@@ -39,9 +44,11 @@ namespace ReactAdvantage.Api.Controllers
 
             if (result.Errors?.Count > 0)
             {
+                _logger.LogError("GraphQL error: {0}", string.Join("; ", result.Errors.Select(x => x.Message)));
                 return BadRequest(result);
             }
 
+            _logger.LogDebug("GraphQL execution result: {result}", JsonConvert.SerializeObject(result.Data));
             return Ok(result);
         }
     }
