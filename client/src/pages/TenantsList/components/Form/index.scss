@@ -12,6 +12,10 @@
 .edit-tenant-input-wrapper {
     margin-bottom: 20px;
 
+    .dropdown {
+        margin-bottom: 0;
+    }
+
     label {
         color: $blackShade;
     }

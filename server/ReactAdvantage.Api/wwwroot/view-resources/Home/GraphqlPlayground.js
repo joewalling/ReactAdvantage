@@ -33,6 +33,7 @@ function getOidcUserManager() {
 function initGraphqlPlayground(user) {
     GraphQLPlayground.init(document.getElementById('root'), {
         // options as 'endpoint' belong here
+        //endpoint: '/graphql',
         endpoint: 'https://localhost:44398/graphql',
         env: 'dev',
         config: {

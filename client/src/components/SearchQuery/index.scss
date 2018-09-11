@@ -4,6 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: fex-start;
+    margin-bottom: 40px;
     border-bottom: 1px solid $grayShade;
 
     @media(max-width: 640px) {

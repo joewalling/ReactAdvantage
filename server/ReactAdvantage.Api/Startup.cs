@@ -16,36 +16,34 @@ namespace ReactAdvantage.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
 
+        public IHostingEnvironment Environment { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("DefaultConnection");
-            
-            services.AddDbContext<ReactAdvantageContext>(options =>
-                options.UseSqlServer(connectionString));
+            if (Environment.IsEnvironment("Test"))
+            {
+                services.AddDbContext<ReactAdvantageContext>(options =>
+                    options.UseInMemoryDatabase(databaseName: "ReactAdvantage"));
+            }
+            else
+            {
+                string connectionString = Configuration.GetConnectionString("DefaultConnection");
+                services.AddDbContext<ReactAdvantageContext>(options =>
+                    options.UseSqlServer(connectionString));
+            }
 
             services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
-            
+
             // Add application services.
-            services.AddTransient<IDocumentExecuter, DocumentExecuter>();
-            services.AddTransient<ReactAdvantageQuery>();
-            services.AddTransient<ReactAdvantageMutation>();
-            services.AddTransient<TaskType>();
-            services.AddTransient<TaskInputType>();
-            services.AddTransient<UserType>();
-            services.AddTransient<UserInputType>();
-            services.AddTransient<ProjectType>();
-            services.AddTransient<ProjectInputType>();
-            var sp = services.BuildServiceProvider();
-            services.AddTransient<ISchema>(x => new ReactAdvantageSchema(new FuncDependencyResolver(type => sp.GetService(type))));
-            
-            services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddGraphqlServices();
 
             services.AddMvc();
             

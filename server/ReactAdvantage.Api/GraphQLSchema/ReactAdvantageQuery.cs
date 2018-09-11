@@ -25,7 +25,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     new QueryArgument<StringGraphType> { Name = "firstname" },
                     new QueryArgument<StringGraphType> { Name = "lastname" },
                     new QueryArgument<StringGraphType> { Name = "username" },
-                    new QueryArgument<StringGraphType> { Name = "email" }
+                    new QueryArgument<StringGraphType> { Name = "email" },
+                    new QueryArgument<BooleanGraphType> { Name = "isactive" }
                 ),
                 resolve: context => db.Users
                     .HandleQueryArgument(new ArgumentGetter<List<string>>("id", context), (arg, query) =>
@@ -38,6 +39,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.UserName.Contains(arg)))
                     .HandleQueryArgument(new ArgumentGetter<string>("email", context), (arg, query) =>
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Email.Contains(arg)))
+                    .HandleQueryArgument(new ArgumentGetter<bool>("isactive", context), (arg, query) =>
+                        query.Where(x => x.IsActive == arg))
             );
 
             Field<ProjectType>(

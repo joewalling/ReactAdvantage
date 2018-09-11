@@ -1,27 +1,9 @@
 @import "global-styles/common.scss";
 
 .tenant-list {
-    padding: 20px 5px 5px;
-    box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1);
-    border-radius: 3px;
-
     .ui-dialog .ui-dialog-content {
         overflow: visible;
     }
-}
-
-.tenant-table {
-    background: $white;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.tenant-table-header {
-    margin-bottom: 40px;
-}
-
-.tenant-table-select {
-    margin-bottom: 10px;
 }
 
 .tenant-actions-cell {

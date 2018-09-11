@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.Data
@@ -25,8 +26,10 @@ namespace ReactAdvantage.Data
         public void Initialize()
         {
             //_db.Database.EnsureCreated();
+            _db.Logger.LogInformation("Migrating database");
             _db.Database.Migrate();
 
+            _db.Logger.LogInformation("Seeding database");
             SeedUsers();
             SeedTasks();
         }
@@ -35,6 +38,8 @@ namespace ReactAdvantage.Data
         {
             if (!_db.Tasks.Any())
             {
+                _db.Logger.LogInformation("Seeding tasks and projects");
+
                 var project = new Project { Name = "Create a software product" };
 
                 _db.Tasks.Add(new Task
@@ -77,11 +82,14 @@ namespace ReactAdvantage.Data
         {
             if (!_db.Roles.Any(r => r.Name == "Administrator"))
             {
+                _db.Logger.LogInformation("Seeding administrator role");
                 _roleManager.CreateAsync(new IdentityRole("Administrator")).GetAwaiter().GetResult();
             }
             
             if (!_db.Users.Any())
             {
+                _db.Logger.LogInformation("Seeding users");
+
                 var users = new[]
                 {
                     new User
