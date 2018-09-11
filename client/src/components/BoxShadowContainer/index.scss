@@ -1,0 +1,9 @@
+@import "global-styles/common.scss";
+
+.box-shadow-container {
+    padding: 20px;
+    box-shadow: 0 1px 15px 1px rgba(81, 77, 92, 0.1);
+    border-radius: 3px;
+    background: $white;
+    box-sizing: border-box;
+}

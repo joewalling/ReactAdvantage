@@ -16,7 +16,7 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "host",
+    "nodeType": "function",
     "props": Object {
       "children": Array [
         <PageHeader
@@ -40,54 +40,46 @@ ShallowWrapper {
         <div
           className="tenant-table"
 >
-          <div
-                    className="tenant-table-header"
-          >
-                    <SearchQuery
-                              fields={
-                                        Array [
-                                                  Object {
-                                                    "input": Object {
-                                                      "type": "text",
-                                                    },
-                                                    "label": "Tenant Name",
-                                                    "name": "tenantName",
-                                                    "operators": "all",
-                                                  },
-                                                ]
-                              }
-                              onChange={[Function]}
-                              onSearch={[Function]}
-                    />
-          </div>
-          <div
-                    className="tenants-table-select"
-          >
-                    <Dropdown
-                              onChange={[Function]}
-                              options={
-                                        Array [
-                                                  Object {
-                                                    "label": "Show 10 entries",
-                                                    "value": 10,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 25 entries",
-                                                    "value": 25,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 50 entries",
-                                                    "value": 50,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 100 entries",
-                                                    "value": 100,
-                                                  },
-                                                ]
-                              }
-                              value={10}
-                    />
-          </div>
+          <SearchQuery
+                    fields={
+                              Array [
+                                        Object {
+                                          "input": Object {
+                                            "type": "text",
+                                          },
+                                          "label": "Tenant Name",
+                                          "name": "tenantName",
+                                          "operators": "all",
+                                        },
+                                      ]
+                    }
+                    onChange={[Function]}
+                    onSearch={[Function]}
+          />
+          <Dropdown
+                    onChange={[Function]}
+                    options={
+                              Array [
+                                        Object {
+                                          "label": "Show 10 entries",
+                                          "value": 10,
+                                        },
+                                        Object {
+                                          "label": "Show 25 entries",
+                                          "value": 25,
+                                        },
+                                        Object {
+                                          "label": "Show 50 entries",
+                                          "value": 50,
+                                        },
+                                        Object {
+                                          "label": "Show 100 entries",
+                                          "value": 100,
+                                        },
+                                      ]
+                    }
+                    value={10}
+          />
           <Table
                     paginator={true}
                     responsive={true}
@@ -332,54 +324,46 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": Array [
-            <div
-              className="tenant-table-header"
->
-              <SearchQuery
-                            fields={
-                                          Array [
-                                                        Object {
-                                                          "input": Object {
-                                                            "type": "text",
-                                                          },
-                                                          "label": "Tenant Name",
-                                                          "name": "tenantName",
-                                                          "operators": "all",
-                                                        },
-                                                      ]
-                            }
-                            onChange={[Function]}
-                            onSearch={[Function]}
-              />
-</div>,
-            <div
-              className="tenants-table-select"
->
-              <Dropdown
-                            onChange={[Function]}
-                            options={
-                                          Array [
-                                                        Object {
-                                                          "label": "Show 10 entries",
-                                                          "value": 10,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 25 entries",
-                                                          "value": 25,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 50 entries",
-                                                          "value": 50,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 100 entries",
-                                                          "value": 100,
-                                                        },
-                                                      ]
-                            }
-                            value={10}
-              />
-</div>,
+            <SearchQuery
+              fields={
+                            Array [
+                                          Object {
+                                            "input": Object {
+                                              "type": "text",
+                                            },
+                                            "label": "Tenant Name",
+                                            "name": "tenantName",
+                                            "operators": "all",
+                                          },
+                                        ]
+              }
+              onChange={[Function]}
+              onSearch={[Function]}
+/>,
+            <Dropdown
+              onChange={[Function]}
+              options={
+                            Array [
+                                          Object {
+                                            "label": "Show 10 entries",
+                                            "value": 10,
+                                          },
+                                          Object {
+                                            "label": "Show 25 entries",
+                                            "value": 25,
+                                          },
+                                          Object {
+                                            "label": "Show 50 entries",
+                                            "value": 50,
+                                          },
+                                          Object {
+                                            "label": "Show 100 entries",
+                                            "value": 100,
+                                          },
+                                        ]
+              }
+              value={10}
+/>,
             <Table
               paginator={true}
               responsive={true}
@@ -590,114 +574,54 @@ ShallowWrapper {
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": <SearchQuery
-                fields={
-                                Array [
-                                                Object {
-                                                  "input": Object {
-                                                    "type": "text",
-                                                  },
-                                                  "label": "Tenant Name",
-                                                  "name": "tenantName",
-                                                  "operators": "all",
-                                                },
-                                              ]
-                }
-                onChange={[Function]}
-                onSearch={[Function]}
-/>,
-              "className": "tenant-table-header",
+              "fields": Array [
+                Object {
+                  "input": Object {
+                    "type": "text",
+                  },
+                  "label": "Tenant Name",
+                  "name": "tenantName",
+                  "operators": "all",
+                },
+              ],
+              "onChange": [Function],
+              "onSearch": [Function],
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "fields": Array [
-                  Object {
-                    "input": Object {
-                      "type": "text",
-                    },
-                    "label": "Tenant Name",
-                    "name": "tenantName",
-                    "operators": "all",
-                  },
-                ],
-                "onChange": [Function],
-                "onSearch": [Function],
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": <Dropdown
-                onChange={[Function]}
-                options={
-                                Array [
-                                                Object {
-                                                  "label": "Show 10 entries",
-                                                  "value": 10,
-                                                },
-                                                Object {
-                                                  "label": "Show 25 entries",
-                                                  "value": 25,
-                                                },
-                                                Object {
-                                                  "label": "Show 50 entries",
-                                                  "value": 50,
-                                                },
-                                                Object {
-                                                  "label": "Show 100 entries",
-                                                  "value": 100,
-                                                },
-                                              ]
-                }
-                value={10}
-/>,
-              "className": "tenants-table-select",
+              "onChange": [Function],
+              "options": Array [
+                Object {
+                  "label": "Show 10 entries",
+                  "value": 10,
+                },
+                Object {
+                  "label": "Show 25 entries",
+                  "value": 25,
+                },
+                Object {
+                  "label": "Show 50 entries",
+                  "value": 50,
+                },
+                Object {
+                  "label": "Show 100 entries",
+                  "value": 100,
+                },
+              ],
+              "value": 10,
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "onChange": [Function],
-                "options": Array [
-                  Object {
-                    "label": "Show 10 entries",
-                    "value": 10,
-                  },
-                  Object {
-                    "label": "Show 25 entries",
-                    "value": 25,
-                  },
-                  Object {
-                    "label": "Show 50 entries",
-                    "value": 50,
-                  },
-                  Object {
-                    "label": "Show 100 entries",
-                    "value": 100,
-                  },
-                ],
-                "value": 10,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
           Object {
             "instance": null,
@@ -1070,13 +994,13 @@ ShallowWrapper {
         "type": [Function],
       },
     ],
-    "type": "section",
+    "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "host",
+      "nodeType": "function",
       "props": Object {
         "children": Array [
           <PageHeader
@@ -1100,54 +1024,46 @@ ShallowWrapper {
           <div
             className="tenant-table"
 >
-            <div
-                        className="tenant-table-header"
-            >
-                        <SearchQuery
-                                    fields={
-                                                Array [
-                                                            Object {
-                                                              "input": Object {
-                                                                "type": "text",
-                                                              },
-                                                              "label": "Tenant Name",
-                                                              "name": "tenantName",
-                                                              "operators": "all",
-                                                            },
-                                                          ]
-                                    }
-                                    onChange={[Function]}
-                                    onSearch={[Function]}
-                        />
-            </div>
-            <div
-                        className="tenants-table-select"
-            >
-                        <Dropdown
-                                    onChange={[Function]}
-                                    options={
-                                                Array [
-                                                            Object {
-                                                              "label": "Show 10 entries",
-                                                              "value": 10,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 25 entries",
-                                                              "value": 25,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 50 entries",
-                                                              "value": 50,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 100 entries",
-                                                              "value": 100,
-                                                            },
-                                                          ]
-                                    }
-                                    value={10}
-                        />
-            </div>
+            <SearchQuery
+                        fields={
+                                    Array [
+                                                Object {
+                                                  "input": Object {
+                                                    "type": "text",
+                                                  },
+                                                  "label": "Tenant Name",
+                                                  "name": "tenantName",
+                                                  "operators": "all",
+                                                },
+                                              ]
+                        }
+                        onChange={[Function]}
+                        onSearch={[Function]}
+            />
+            <Dropdown
+                        onChange={[Function]}
+                        options={
+                                    Array [
+                                                Object {
+                                                  "label": "Show 10 entries",
+                                                  "value": 10,
+                                                },
+                                                Object {
+                                                  "label": "Show 25 entries",
+                                                  "value": 25,
+                                                },
+                                                Object {
+                                                  "label": "Show 50 entries",
+                                                  "value": 50,
+                                                },
+                                                Object {
+                                                  "label": "Show 100 entries",
+                                                  "value": 100,
+                                                },
+                                              ]
+                        }
+                        value={10}
+            />
             <Table
                         paginator={true}
                         responsive={true}
@@ -1392,54 +1308,46 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              <div
-                className="tenant-table-header"
->
-                <SearchQuery
-                                fields={
-                                                Array [
-                                                                Object {
-                                                                  "input": Object {
-                                                                    "type": "text",
-                                                                  },
-                                                                  "label": "Tenant Name",
-                                                                  "name": "tenantName",
-                                                                  "operators": "all",
-                                                                },
-                                                              ]
-                                }
-                                onChange={[Function]}
-                                onSearch={[Function]}
-                />
-</div>,
-              <div
-                className="tenants-table-select"
->
-                <Dropdown
-                                onChange={[Function]}
-                                options={
-                                                Array [
-                                                                Object {
-                                                                  "label": "Show 10 entries",
-                                                                  "value": 10,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 25 entries",
-                                                                  "value": 25,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 50 entries",
-                                                                  "value": 50,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 100 entries",
-                                                                  "value": 100,
-                                                                },
-                                                              ]
-                                }
-                                value={10}
-                />
-</div>,
+              <SearchQuery
+                fields={
+                                Array [
+                                                Object {
+                                                  "input": Object {
+                                                    "type": "text",
+                                                  },
+                                                  "label": "Tenant Name",
+                                                  "name": "tenantName",
+                                                  "operators": "all",
+                                                },
+                                              ]
+                }
+                onChange={[Function]}
+                onSearch={[Function]}
+/>,
+              <Dropdown
+                onChange={[Function]}
+                options={
+                                Array [
+                                                Object {
+                                                  "label": "Show 10 entries",
+                                                  "value": 10,
+                                                },
+                                                Object {
+                                                  "label": "Show 25 entries",
+                                                  "value": 25,
+                                                },
+                                                Object {
+                                                  "label": "Show 50 entries",
+                                                  "value": 50,
+                                                },
+                                                Object {
+                                                  "label": "Show 100 entries",
+                                                  "value": 100,
+                                                },
+                                              ]
+                }
+                value={10}
+/>,
               <Table
                 paginator={true}
                 responsive={true}
@@ -1650,114 +1558,54 @@ ShallowWrapper {
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": <SearchQuery
-                  fields={
-                                    Array [
-                                                      Object {
-                                                        "input": Object {
-                                                          "type": "text",
-                                                        },
-                                                        "label": "Tenant Name",
-                                                        "name": "tenantName",
-                                                        "operators": "all",
-                                                      },
-                                                    ]
-                  }
-                  onChange={[Function]}
-                  onSearch={[Function]}
-/>,
-                "className": "tenant-table-header",
+                "fields": Array [
+                  Object {
+                    "input": Object {
+                      "type": "text",
+                    },
+                    "label": "Tenant Name",
+                    "name": "tenantName",
+                    "operators": "all",
+                  },
+                ],
+                "onChange": [Function],
+                "onSearch": [Function],
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "fields": Array [
-                    Object {
-                      "input": Object {
-                        "type": "text",
-                      },
-                      "label": "Tenant Name",
-                      "name": "tenantName",
-                      "operators": "all",
-                    },
-                  ],
-                  "onChange": [Function],
-                  "onSearch": [Function],
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": <Dropdown
-                  onChange={[Function]}
-                  options={
-                                    Array [
-                                                      Object {
-                                                        "label": "Show 10 entries",
-                                                        "value": 10,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 25 entries",
-                                                        "value": 25,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 50 entries",
-                                                        "value": 50,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 100 entries",
-                                                        "value": 100,
-                                                      },
-                                                    ]
-                  }
-                  value={10}
-/>,
-                "className": "tenants-table-select",
+                "onChange": [Function],
+                "options": Array [
+                  Object {
+                    "label": "Show 10 entries",
+                    "value": 10,
+                  },
+                  Object {
+                    "label": "Show 25 entries",
+                    "value": 25,
+                  },
+                  Object {
+                    "label": "Show 50 entries",
+                    "value": 50,
+                  },
+                  Object {
+                    "label": "Show 100 entries",
+                    "value": 100,
+                  },
+                ],
+                "value": 10,
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "onChange": [Function],
-                  "options": Array [
-                    Object {
-                      "label": "Show 10 entries",
-                      "value": 10,
-                    },
-                    Object {
-                      "label": "Show 25 entries",
-                      "value": 25,
-                    },
-                    Object {
-                      "label": "Show 50 entries",
-                      "value": 50,
-                    },
-                    Object {
-                      "label": "Show 100 entries",
-                      "value": 100,
-                    },
-                  ],
-                  "value": 10,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
@@ -2130,7 +1978,7 @@ ShallowWrapper {
           "type": [Function],
         },
       ],
-      "type": "section",
+      "type": [Function],
     },
   ],
   Symbol(enzyme.__options__): Object {
@@ -2158,7 +2006,7 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "host",
+    "nodeType": "function",
     "props": Object {
       "children": Array [
         <PageHeader
@@ -2182,54 +2030,46 @@ ShallowWrapper {
         <div
           className="tenant-table"
 >
-          <div
-                    className="tenant-table-header"
-          >
-                    <SearchQuery
-                              fields={
-                                        Array [
-                                                  Object {
-                                                    "input": Object {
-                                                      "type": "text",
-                                                    },
-                                                    "label": "Tenant Name",
-                                                    "name": "tenantName",
-                                                    "operators": "all",
-                                                  },
-                                                ]
-                              }
-                              onChange={[Function]}
-                              onSearch={[Function]}
-                    />
-          </div>
-          <div
-                    className="tenants-table-select"
-          >
-                    <Dropdown
-                              onChange={[Function]}
-                              options={
-                                        Array [
-                                                  Object {
-                                                    "label": "Show 10 entries",
-                                                    "value": 10,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 25 entries",
-                                                    "value": 25,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 50 entries",
-                                                    "value": 50,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 100 entries",
-                                                    "value": 100,
-                                                  },
-                                                ]
-                              }
-                              value={10}
-                    />
-          </div>
+          <SearchQuery
+                    fields={
+                              Array [
+                                        Object {
+                                          "input": Object {
+                                            "type": "text",
+                                          },
+                                          "label": "Tenant Name",
+                                          "name": "tenantName",
+                                          "operators": "all",
+                                        },
+                                      ]
+                    }
+                    onChange={[Function]}
+                    onSearch={[Function]}
+          />
+          <Dropdown
+                    onChange={[Function]}
+                    options={
+                              Array [
+                                        Object {
+                                          "label": "Show 10 entries",
+                                          "value": 10,
+                                        },
+                                        Object {
+                                          "label": "Show 25 entries",
+                                          "value": 25,
+                                        },
+                                        Object {
+                                          "label": "Show 50 entries",
+                                          "value": 50,
+                                        },
+                                        Object {
+                                          "label": "Show 100 entries",
+                                          "value": 100,
+                                        },
+                                      ]
+                    }
+                    value={10}
+          />
           <Table
                     paginator={true}
                     responsive={true}
@@ -2474,54 +2314,46 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": Array [
-            <div
-              className="tenant-table-header"
->
-              <SearchQuery
-                            fields={
-                                          Array [
-                                                        Object {
-                                                          "input": Object {
-                                                            "type": "text",
-                                                          },
-                                                          "label": "Tenant Name",
-                                                          "name": "tenantName",
-                                                          "operators": "all",
-                                                        },
-                                                      ]
-                            }
-                            onChange={[Function]}
-                            onSearch={[Function]}
-              />
-</div>,
-            <div
-              className="tenants-table-select"
->
-              <Dropdown
-                            onChange={[Function]}
-                            options={
-                                          Array [
-                                                        Object {
-                                                          "label": "Show 10 entries",
-                                                          "value": 10,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 25 entries",
-                                                          "value": 25,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 50 entries",
-                                                          "value": 50,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 100 entries",
-                                                          "value": 100,
-                                                        },
-                                                      ]
-                            }
-                            value={10}
-              />
-</div>,
+            <SearchQuery
+              fields={
+                            Array [
+                                          Object {
+                                            "input": Object {
+                                              "type": "text",
+                                            },
+                                            "label": "Tenant Name",
+                                            "name": "tenantName",
+                                            "operators": "all",
+                                          },
+                                        ]
+              }
+              onChange={[Function]}
+              onSearch={[Function]}
+/>,
+            <Dropdown
+              onChange={[Function]}
+              options={
+                            Array [
+                                          Object {
+                                            "label": "Show 10 entries",
+                                            "value": 10,
+                                          },
+                                          Object {
+                                            "label": "Show 25 entries",
+                                            "value": 25,
+                                          },
+                                          Object {
+                                            "label": "Show 50 entries",
+                                            "value": 50,
+                                          },
+                                          Object {
+                                            "label": "Show 100 entries",
+                                            "value": 100,
+                                          },
+                                        ]
+              }
+              value={10}
+/>,
             <Table
               paginator={true}
               responsive={true}
@@ -2732,114 +2564,54 @@ ShallowWrapper {
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": <SearchQuery
-                fields={
-                                Array [
-                                                Object {
-                                                  "input": Object {
-                                                    "type": "text",
-                                                  },
-                                                  "label": "Tenant Name",
-                                                  "name": "tenantName",
-                                                  "operators": "all",
-                                                },
-                                              ]
-                }
-                onChange={[Function]}
-                onSearch={[Function]}
-/>,
-              "className": "tenant-table-header",
+              "fields": Array [
+                Object {
+                  "input": Object {
+                    "type": "text",
+                  },
+                  "label": "Tenant Name",
+                  "name": "tenantName",
+                  "operators": "all",
+                },
+              ],
+              "onChange": [Function],
+              "onSearch": [Function],
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "fields": Array [
-                  Object {
-                    "input": Object {
-                      "type": "text",
-                    },
-                    "label": "Tenant Name",
-                    "name": "tenantName",
-                    "operators": "all",
-                  },
-                ],
-                "onChange": [Function],
-                "onSearch": [Function],
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": <Dropdown
-                onChange={[Function]}
-                options={
-                                Array [
-                                                Object {
-                                                  "label": "Show 10 entries",
-                                                  "value": 10,
-                                                },
-                                                Object {
-                                                  "label": "Show 25 entries",
-                                                  "value": 25,
-                                                },
-                                                Object {
-                                                  "label": "Show 50 entries",
-                                                  "value": 50,
-                                                },
-                                                Object {
-                                                  "label": "Show 100 entries",
-                                                  "value": 100,
-                                                },
-                                              ]
-                }
-                value={10}
-/>,
-              "className": "tenants-table-select",
+              "onChange": [Function],
+              "options": Array [
+                Object {
+                  "label": "Show 10 entries",
+                  "value": 10,
+                },
+                Object {
+                  "label": "Show 25 entries",
+                  "value": 25,
+                },
+                Object {
+                  "label": "Show 50 entries",
+                  "value": 50,
+                },
+                Object {
+                  "label": "Show 100 entries",
+                  "value": 100,
+                },
+              ],
+              "value": 10,
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "onChange": [Function],
-                "options": Array [
-                  Object {
-                    "label": "Show 10 entries",
-                    "value": 10,
-                  },
-                  Object {
-                    "label": "Show 25 entries",
-                    "value": 25,
-                  },
-                  Object {
-                    "label": "Show 50 entries",
-                    "value": 50,
-                  },
-                  Object {
-                    "label": "Show 100 entries",
-                    "value": 100,
-                  },
-                ],
-                "value": 10,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
           Object {
             "instance": null,
@@ -3212,13 +2984,13 @@ ShallowWrapper {
         "type": [Function],
       },
     ],
-    "type": "section",
+    "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "host",
+      "nodeType": "function",
       "props": Object {
         "children": Array [
           <PageHeader
@@ -3242,54 +3014,46 @@ ShallowWrapper {
           <div
             className="tenant-table"
 >
-            <div
-                        className="tenant-table-header"
-            >
-                        <SearchQuery
-                                    fields={
-                                                Array [
-                                                            Object {
-                                                              "input": Object {
-                                                                "type": "text",
-                                                              },
-                                                              "label": "Tenant Name",
-                                                              "name": "tenantName",
-                                                              "operators": "all",
-                                                            },
-                                                          ]
-                                    }
-                                    onChange={[Function]}
-                                    onSearch={[Function]}
-                        />
-            </div>
-            <div
-                        className="tenants-table-select"
-            >
-                        <Dropdown
-                                    onChange={[Function]}
-                                    options={
-                                                Array [
-                                                            Object {
-                                                              "label": "Show 10 entries",
-                                                              "value": 10,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 25 entries",
-                                                              "value": 25,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 50 entries",
-                                                              "value": 50,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 100 entries",
-                                                              "value": 100,
-                                                            },
-                                                          ]
-                                    }
-                                    value={10}
-                        />
-            </div>
+            <SearchQuery
+                        fields={
+                                    Array [
+                                                Object {
+                                                  "input": Object {
+                                                    "type": "text",
+                                                  },
+                                                  "label": "Tenant Name",
+                                                  "name": "tenantName",
+                                                  "operators": "all",
+                                                },
+                                              ]
+                        }
+                        onChange={[Function]}
+                        onSearch={[Function]}
+            />
+            <Dropdown
+                        onChange={[Function]}
+                        options={
+                                    Array [
+                                                Object {
+                                                  "label": "Show 10 entries",
+                                                  "value": 10,
+                                                },
+                                                Object {
+                                                  "label": "Show 25 entries",
+                                                  "value": 25,
+                                                },
+                                                Object {
+                                                  "label": "Show 50 entries",
+                                                  "value": 50,
+                                                },
+                                                Object {
+                                                  "label": "Show 100 entries",
+                                                  "value": 100,
+                                                },
+                                              ]
+                        }
+                        value={10}
+            />
             <Table
                         paginator={true}
                         responsive={true}
@@ -3534,54 +3298,46 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              <div
-                className="tenant-table-header"
->
-                <SearchQuery
-                                fields={
-                                                Array [
-                                                                Object {
-                                                                  "input": Object {
-                                                                    "type": "text",
-                                                                  },
-                                                                  "label": "Tenant Name",
-                                                                  "name": "tenantName",
-                                                                  "operators": "all",
-                                                                },
-                                                              ]
-                                }
-                                onChange={[Function]}
-                                onSearch={[Function]}
-                />
-</div>,
-              <div
-                className="tenants-table-select"
->
-                <Dropdown
-                                onChange={[Function]}
-                                options={
-                                                Array [
-                                                                Object {
-                                                                  "label": "Show 10 entries",
-                                                                  "value": 10,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 25 entries",
-                                                                  "value": 25,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 50 entries",
-                                                                  "value": 50,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 100 entries",
-                                                                  "value": 100,
-                                                                },
-                                                              ]
-                                }
-                                value={10}
-                />
-</div>,
+              <SearchQuery
+                fields={
+                                Array [
+                                                Object {
+                                                  "input": Object {
+                                                    "type": "text",
+                                                  },
+                                                  "label": "Tenant Name",
+                                                  "name": "tenantName",
+                                                  "operators": "all",
+                                                },
+                                              ]
+                }
+                onChange={[Function]}
+                onSearch={[Function]}
+/>,
+              <Dropdown
+                onChange={[Function]}
+                options={
+                                Array [
+                                                Object {
+                                                  "label": "Show 10 entries",
+                                                  "value": 10,
+                                                },
+                                                Object {
+                                                  "label": "Show 25 entries",
+                                                  "value": 25,
+                                                },
+                                                Object {
+                                                  "label": "Show 50 entries",
+                                                  "value": 50,
+                                                },
+                                                Object {
+                                                  "label": "Show 100 entries",
+                                                  "value": 100,
+                                                },
+                                              ]
+                }
+                value={10}
+/>,
               <Table
                 paginator={true}
                 responsive={true}
@@ -3792,114 +3548,54 @@ ShallowWrapper {
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": <SearchQuery
-                  fields={
-                                    Array [
-                                                      Object {
-                                                        "input": Object {
-                                                          "type": "text",
-                                                        },
-                                                        "label": "Tenant Name",
-                                                        "name": "tenantName",
-                                                        "operators": "all",
-                                                      },
-                                                    ]
-                  }
-                  onChange={[Function]}
-                  onSearch={[Function]}
-/>,
-                "className": "tenant-table-header",
+                "fields": Array [
+                  Object {
+                    "input": Object {
+                      "type": "text",
+                    },
+                    "label": "Tenant Name",
+                    "name": "tenantName",
+                    "operators": "all",
+                  },
+                ],
+                "onChange": [Function],
+                "onSearch": [Function],
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "fields": Array [
-                    Object {
-                      "input": Object {
-                        "type": "text",
-                      },
-                      "label": "Tenant Name",
-                      "name": "tenantName",
-                      "operators": "all",
-                    },
-                  ],
-                  "onChange": [Function],
-                  "onSearch": [Function],
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": <Dropdown
-                  onChange={[Function]}
-                  options={
-                                    Array [
-                                                      Object {
-                                                        "label": "Show 10 entries",
-                                                        "value": 10,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 25 entries",
-                                                        "value": 25,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 50 entries",
-                                                        "value": 50,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 100 entries",
-                                                        "value": 100,
-                                                      },
-                                                    ]
-                  }
-                  value={10}
-/>,
-                "className": "tenants-table-select",
+                "onChange": [Function],
+                "options": Array [
+                  Object {
+                    "label": "Show 10 entries",
+                    "value": 10,
+                  },
+                  Object {
+                    "label": "Show 25 entries",
+                    "value": 25,
+                  },
+                  Object {
+                    "label": "Show 50 entries",
+                    "value": 50,
+                  },
+                  Object {
+                    "label": "Show 100 entries",
+                    "value": 100,
+                  },
+                ],
+                "value": 10,
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "onChange": [Function],
-                  "options": Array [
-                    Object {
-                      "label": "Show 10 entries",
-                      "value": 10,
-                    },
-                    Object {
-                      "label": "Show 25 entries",
-                      "value": 25,
-                    },
-                    Object {
-                      "label": "Show 50 entries",
-                      "value": 50,
-                    },
-                    Object {
-                      "label": "Show 100 entries",
-                      "value": 100,
-                    },
-                  ],
-                  "value": 10,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
@@ -4272,7 +3968,7 @@ ShallowWrapper {
           "type": [Function],
         },
       ],
-      "type": "section",
+      "type": [Function],
     },
   ],
   Symbol(enzyme.__options__): Object {
@@ -4300,7 +3996,7 @@ ShallowWrapper {
   Symbol(enzyme.__node__): Object {
     "instance": null,
     "key": undefined,
-    "nodeType": "host",
+    "nodeType": "function",
     "props": Object {
       "children": Array [
         <PageHeader
@@ -4324,54 +4020,46 @@ ShallowWrapper {
         <div
           className="tenant-table"
 >
-          <div
-                    className="tenant-table-header"
-          >
-                    <SearchQuery
-                              fields={
-                                        Array [
-                                                  Object {
-                                                    "input": Object {
-                                                      "type": "text",
-                                                    },
-                                                    "label": "Tenant Name",
-                                                    "name": "tenantName",
-                                                    "operators": "all",
-                                                  },
-                                                ]
-                              }
-                              onChange={[Function]}
-                              onSearch={[Function]}
-                    />
-          </div>
-          <div
-                    className="tenants-table-select"
-          >
-                    <Dropdown
-                              onChange={[Function]}
-                              options={
-                                        Array [
-                                                  Object {
-                                                    "label": "Show 10 entries",
-                                                    "value": 10,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 25 entries",
-                                                    "value": 25,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 50 entries",
-                                                    "value": 50,
-                                                  },
-                                                  Object {
-                                                    "label": "Show 100 entries",
-                                                    "value": 100,
-                                                  },
-                                                ]
-                              }
-                              value={10}
-                    />
-          </div>
+          <SearchQuery
+                    fields={
+                              Array [
+                                        Object {
+                                          "input": Object {
+                                            "type": "text",
+                                          },
+                                          "label": "Tenant Name",
+                                          "name": "tenantName",
+                                          "operators": "all",
+                                        },
+                                      ]
+                    }
+                    onChange={[Function]}
+                    onSearch={[Function]}
+          />
+          <Dropdown
+                    onChange={[Function]}
+                    options={
+                              Array [
+                                        Object {
+                                          "label": "Show 10 entries",
+                                          "value": 10,
+                                        },
+                                        Object {
+                                          "label": "Show 25 entries",
+                                          "value": 25,
+                                        },
+                                        Object {
+                                          "label": "Show 50 entries",
+                                          "value": 50,
+                                        },
+                                        Object {
+                                          "label": "Show 100 entries",
+                                          "value": 100,
+                                        },
+                                      ]
+                    }
+                    value={10}
+          />
           <Table
                     paginator={true}
                     responsive={true}
@@ -4611,54 +4299,46 @@ ShallowWrapper {
         "nodeType": "host",
         "props": Object {
           "children": Array [
-            <div
-              className="tenant-table-header"
->
-              <SearchQuery
-                            fields={
-                                          Array [
-                                                        Object {
-                                                          "input": Object {
-                                                            "type": "text",
-                                                          },
-                                                          "label": "Tenant Name",
-                                                          "name": "tenantName",
-                                                          "operators": "all",
-                                                        },
-                                                      ]
-                            }
-                            onChange={[Function]}
-                            onSearch={[Function]}
-              />
-</div>,
-            <div
-              className="tenants-table-select"
->
-              <Dropdown
-                            onChange={[Function]}
-                            options={
-                                          Array [
-                                                        Object {
-                                                          "label": "Show 10 entries",
-                                                          "value": 10,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 25 entries",
-                                                          "value": 25,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 50 entries",
-                                                          "value": 50,
-                                                        },
-                                                        Object {
-                                                          "label": "Show 100 entries",
-                                                          "value": 100,
-                                                        },
-                                                      ]
-                            }
-                            value={10}
-              />
-</div>,
+            <SearchQuery
+              fields={
+                            Array [
+                                          Object {
+                                            "input": Object {
+                                              "type": "text",
+                                            },
+                                            "label": "Tenant Name",
+                                            "name": "tenantName",
+                                            "operators": "all",
+                                          },
+                                        ]
+              }
+              onChange={[Function]}
+              onSearch={[Function]}
+/>,
+            <Dropdown
+              onChange={[Function]}
+              options={
+                            Array [
+                                          Object {
+                                            "label": "Show 10 entries",
+                                            "value": 10,
+                                          },
+                                          Object {
+                                            "label": "Show 25 entries",
+                                            "value": 25,
+                                          },
+                                          Object {
+                                            "label": "Show 50 entries",
+                                            "value": 50,
+                                          },
+                                          Object {
+                                            "label": "Show 100 entries",
+                                            "value": 100,
+                                          },
+                                        ]
+              }
+              value={10}
+/>,
             <Table
               paginator={true}
               responsive={true}
@@ -4869,114 +4549,54 @@ ShallowWrapper {
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": <SearchQuery
-                fields={
-                                Array [
-                                                Object {
-                                                  "input": Object {
-                                                    "type": "text",
-                                                  },
-                                                  "label": "Tenant Name",
-                                                  "name": "tenantName",
-                                                  "operators": "all",
-                                                },
-                                              ]
-                }
-                onChange={[Function]}
-                onSearch={[Function]}
-/>,
-              "className": "tenant-table-header",
+              "fields": Array [
+                Object {
+                  "input": Object {
+                    "type": "text",
+                  },
+                  "label": "Tenant Name",
+                  "name": "tenantName",
+                  "operators": "all",
+                },
+              ],
+              "onChange": [Function],
+              "onSearch": [Function],
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "fields": Array [
-                  Object {
-                    "input": Object {
-                      "type": "text",
-                    },
-                    "label": "Tenant Name",
-                    "name": "tenantName",
-                    "operators": "all",
-                  },
-                ],
-                "onChange": [Function],
-                "onSearch": [Function],
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
           Object {
             "instance": null,
             "key": undefined,
-            "nodeType": "host",
+            "nodeType": "class",
             "props": Object {
-              "children": <Dropdown
-                onChange={[Function]}
-                options={
-                                Array [
-                                                Object {
-                                                  "label": "Show 10 entries",
-                                                  "value": 10,
-                                                },
-                                                Object {
-                                                  "label": "Show 25 entries",
-                                                  "value": 25,
-                                                },
-                                                Object {
-                                                  "label": "Show 50 entries",
-                                                  "value": 50,
-                                                },
-                                                Object {
-                                                  "label": "Show 100 entries",
-                                                  "value": 100,
-                                                },
-                                              ]
-                }
-                value={10}
-/>,
-              "className": "tenants-table-select",
+              "onChange": [Function],
+              "options": Array [
+                Object {
+                  "label": "Show 10 entries",
+                  "value": 10,
+                },
+                Object {
+                  "label": "Show 25 entries",
+                  "value": 25,
+                },
+                Object {
+                  "label": "Show 50 entries",
+                  "value": 50,
+                },
+                Object {
+                  "label": "Show 100 entries",
+                  "value": 100,
+                },
+              ],
+              "value": 10,
             },
             "ref": null,
-            "rendered": Object {
-              "instance": null,
-              "key": undefined,
-              "nodeType": "class",
-              "props": Object {
-                "onChange": [Function],
-                "options": Array [
-                  Object {
-                    "label": "Show 10 entries",
-                    "value": 10,
-                  },
-                  Object {
-                    "label": "Show 25 entries",
-                    "value": 25,
-                  },
-                  Object {
-                    "label": "Show 50 entries",
-                    "value": 50,
-                  },
-                  Object {
-                    "label": "Show 100 entries",
-                    "value": 100,
-                  },
-                ],
-                "value": 10,
-              },
-              "ref": null,
-              "rendered": null,
-              "type": [Function],
-            },
-            "type": "div",
+            "rendered": null,
+            "type": [Function],
           },
           Object {
             "instance": null,
@@ -5336,13 +4956,13 @@ ShallowWrapper {
       },
       false,
     ],
-    "type": "section",
+    "type": [Function],
   },
   Symbol(enzyme.__nodes__): Array [
     Object {
       "instance": null,
       "key": undefined,
-      "nodeType": "host",
+      "nodeType": "function",
       "props": Object {
         "children": Array [
           <PageHeader
@@ -5366,54 +4986,46 @@ ShallowWrapper {
           <div
             className="tenant-table"
 >
-            <div
-                        className="tenant-table-header"
-            >
-                        <SearchQuery
-                                    fields={
-                                                Array [
-                                                            Object {
-                                                              "input": Object {
-                                                                "type": "text",
-                                                              },
-                                                              "label": "Tenant Name",
-                                                              "name": "tenantName",
-                                                              "operators": "all",
-                                                            },
-                                                          ]
-                                    }
-                                    onChange={[Function]}
-                                    onSearch={[Function]}
-                        />
-            </div>
-            <div
-                        className="tenants-table-select"
-            >
-                        <Dropdown
-                                    onChange={[Function]}
-                                    options={
-                                                Array [
-                                                            Object {
-                                                              "label": "Show 10 entries",
-                                                              "value": 10,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 25 entries",
-                                                              "value": 25,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 50 entries",
-                                                              "value": 50,
-                                                            },
-                                                            Object {
-                                                              "label": "Show 100 entries",
-                                                              "value": 100,
-                                                            },
-                                                          ]
-                                    }
-                                    value={10}
-                        />
-            </div>
+            <SearchQuery
+                        fields={
+                                    Array [
+                                                Object {
+                                                  "input": Object {
+                                                    "type": "text",
+                                                  },
+                                                  "label": "Tenant Name",
+                                                  "name": "tenantName",
+                                                  "operators": "all",
+                                                },
+                                              ]
+                        }
+                        onChange={[Function]}
+                        onSearch={[Function]}
+            />
+            <Dropdown
+                        onChange={[Function]}
+                        options={
+                                    Array [
+                                                Object {
+                                                  "label": "Show 10 entries",
+                                                  "value": 10,
+                                                },
+                                                Object {
+                                                  "label": "Show 25 entries",
+                                                  "value": 25,
+                                                },
+                                                Object {
+                                                  "label": "Show 50 entries",
+                                                  "value": 50,
+                                                },
+                                                Object {
+                                                  "label": "Show 100 entries",
+                                                  "value": 100,
+                                                },
+                                              ]
+                        }
+                        value={10}
+            />
             <Table
                         paginator={true}
                         responsive={true}
@@ -5653,54 +5265,46 @@ ShallowWrapper {
           "nodeType": "host",
           "props": Object {
             "children": Array [
-              <div
-                className="tenant-table-header"
->
-                <SearchQuery
-                                fields={
-                                                Array [
-                                                                Object {
-                                                                  "input": Object {
-                                                                    "type": "text",
-                                                                  },
-                                                                  "label": "Tenant Name",
-                                                                  "name": "tenantName",
-                                                                  "operators": "all",
-                                                                },
-                                                              ]
-                                }
-                                onChange={[Function]}
-                                onSearch={[Function]}
-                />
-</div>,
-              <div
-                className="tenants-table-select"
->
-                <Dropdown
-                                onChange={[Function]}
-                                options={
-                                                Array [
-                                                                Object {
-                                                                  "label": "Show 10 entries",
-                                                                  "value": 10,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 25 entries",
-                                                                  "value": 25,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 50 entries",
-                                                                  "value": 50,
-                                                                },
-                                                                Object {
-                                                                  "label": "Show 100 entries",
-                                                                  "value": 100,
-                                                                },
-                                                              ]
-                                }
-                                value={10}
-                />
-</div>,
+              <SearchQuery
+                fields={
+                                Array [
+                                                Object {
+                                                  "input": Object {
+                                                    "type": "text",
+                                                  },
+                                                  "label": "Tenant Name",
+                                                  "name": "tenantName",
+                                                  "operators": "all",
+                                                },
+                                              ]
+                }
+                onChange={[Function]}
+                onSearch={[Function]}
+/>,
+              <Dropdown
+                onChange={[Function]}
+                options={
+                                Array [
+                                                Object {
+                                                  "label": "Show 10 entries",
+                                                  "value": 10,
+                                                },
+                                                Object {
+                                                  "label": "Show 25 entries",
+                                                  "value": 25,
+                                                },
+                                                Object {
+                                                  "label": "Show 50 entries",
+                                                  "value": 50,
+                                                },
+                                                Object {
+                                                  "label": "Show 100 entries",
+                                                  "value": 100,
+                                                },
+                                              ]
+                }
+                value={10}
+/>,
               <Table
                 paginator={true}
                 responsive={true}
@@ -5911,114 +5515,54 @@ ShallowWrapper {
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": <SearchQuery
-                  fields={
-                                    Array [
-                                                      Object {
-                                                        "input": Object {
-                                                          "type": "text",
-                                                        },
-                                                        "label": "Tenant Name",
-                                                        "name": "tenantName",
-                                                        "operators": "all",
-                                                      },
-                                                    ]
-                  }
-                  onChange={[Function]}
-                  onSearch={[Function]}
-/>,
-                "className": "tenant-table-header",
+                "fields": Array [
+                  Object {
+                    "input": Object {
+                      "type": "text",
+                    },
+                    "label": "Tenant Name",
+                    "name": "tenantName",
+                    "operators": "all",
+                  },
+                ],
+                "onChange": [Function],
+                "onSearch": [Function],
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "fields": Array [
-                    Object {
-                      "input": Object {
-                        "type": "text",
-                      },
-                      "label": "Tenant Name",
-                      "name": "tenantName",
-                      "operators": "all",
-                    },
-                  ],
-                  "onChange": [Function],
-                  "onSearch": [Function],
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
               "key": undefined,
-              "nodeType": "host",
+              "nodeType": "class",
               "props": Object {
-                "children": <Dropdown
-                  onChange={[Function]}
-                  options={
-                                    Array [
-                                                      Object {
-                                                        "label": "Show 10 entries",
-                                                        "value": 10,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 25 entries",
-                                                        "value": 25,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 50 entries",
-                                                        "value": 50,
-                                                      },
-                                                      Object {
-                                                        "label": "Show 100 entries",
-                                                        "value": 100,
-                                                      },
-                                                    ]
-                  }
-                  value={10}
-/>,
-                "className": "tenants-table-select",
+                "onChange": [Function],
+                "options": Array [
+                  Object {
+                    "label": "Show 10 entries",
+                    "value": 10,
+                  },
+                  Object {
+                    "label": "Show 25 entries",
+                    "value": 25,
+                  },
+                  Object {
+                    "label": "Show 50 entries",
+                    "value": 50,
+                  },
+                  Object {
+                    "label": "Show 100 entries",
+                    "value": 100,
+                  },
+                ],
+                "value": 10,
               },
               "ref": null,
-              "rendered": Object {
-                "instance": null,
-                "key": undefined,
-                "nodeType": "class",
-                "props": Object {
-                  "onChange": [Function],
-                  "options": Array [
-                    Object {
-                      "label": "Show 10 entries",
-                      "value": 10,
-                    },
-                    Object {
-                      "label": "Show 25 entries",
-                      "value": 25,
-                    },
-                    Object {
-                      "label": "Show 50 entries",
-                      "value": 50,
-                    },
-                    Object {
-                      "label": "Show 100 entries",
-                      "value": 100,
-                    },
-                  ],
-                  "value": 10,
-                },
-                "ref": null,
-                "rendered": null,
-                "type": [Function],
-              },
-              "type": "div",
+              "rendered": null,
+              "type": [Function],
             },
             Object {
               "instance": null,
@@ -6378,7 +5922,7 @@ ShallowWrapper {
         },
         false,
       ],
-      "type": "section",
+      "type": [Function],
     },
   ],
   Symbol(enzyme.__options__): Object {
