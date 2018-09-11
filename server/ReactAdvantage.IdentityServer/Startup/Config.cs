@@ -54,10 +54,5 @@ namespace ReactAdvantage.IdentityServer
                 }
             };
         }
-
-        public static List<TestUser> GetUsers()
-        {
-            return TestUsers.Users;
-        }
     }
 }

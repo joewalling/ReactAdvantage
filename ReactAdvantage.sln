@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.Domain", "se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.Data", "server\ReactAdvantageData\ReactAdvantage.Data.csproj", "{3BB2736D-D4D9-4F4F-A259-DA7F5DE0DF00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactAdvantage.IdentityServer", "server\ReactAdvantage.IdentityServer\ReactAdvantage.IdentityServer.csproj", "{D6CF37CA-CE87-4B9F-A756-340F51E124EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReactAdvantage.IdentityServer", "server\ReactAdvantage.IdentityServer\ReactAdvantage.IdentityServer.csproj", "{D6CF37CA-CE87-4B9F-A756-340F51E124EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

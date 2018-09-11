@@ -6,7 +6,10 @@ namespace ReactAdvantage.Api.GraphQLSchema
 {
     public class ReactAdvantageMutation : ObjectGraphType
     {
-        public ReactAdvantageMutation(ReactAdvantageContext db)
+        public ReactAdvantageMutation(
+            ReactAdvantageContext db
+            //UserManager<User> userManager //todo
+            )
         {
             Field<UserType>(
                 "addUser",
@@ -16,7 +19,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 resolve: context =>
                 {
                     var user = context.GetArgument<User>("user");
-                    user.Id = 0;
+                    user.Id = null;
                     db.Add(user);
                     db.SaveChanges();
                     return user;

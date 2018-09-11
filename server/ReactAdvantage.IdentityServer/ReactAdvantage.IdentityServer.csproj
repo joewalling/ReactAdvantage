@@ -2,11 +2,19 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>aspnet-ReactAdvantage.IdentityServer-A3DD0E6E-78C5-414A-8221-C568737C843F</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="2.2.0" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ReactAdvantage.Core\ReactAdvantage.Domain.csproj" />
+    <ProjectReference Include="..\ReactAdvantageData\ReactAdvantage.Data.csproj" />
   </ItemGroup>
 
 </Project>

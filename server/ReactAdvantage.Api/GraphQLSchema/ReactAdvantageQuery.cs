@@ -14,28 +14,28 @@ namespace ReactAdvantage.Api.GraphQLSchema
 
             Field<UserType>(
                 "user",
-                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
-                resolve: context => db.Users.FindAsync(context.GetArgument<int>("id"))
+                arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "id" }),
+                resolve: context => db.Users.FindAsync(context.GetArgument<string>("id"))
             );
 
             Field<ListGraphType<UserType>>(
                 "users",
                 arguments: new QueryArguments(
-                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
+                    new QueryArgument<ListGraphType<StringGraphType>> { Name = "id" },
                     new QueryArgument<StringGraphType> { Name = "firstname" },
                     new QueryArgument<StringGraphType> { Name = "lastname" },
-                    new QueryArgument<StringGraphType> { Name = "name" },
+                    new QueryArgument<StringGraphType> { Name = "username" },
                     new QueryArgument<StringGraphType> { Name = "email" }
                 ),
                 resolve: context => db.Users
-                    .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                    .HandleQueryArgument(new ArgumentGetter<List<string>>("id", context), (arg, query) =>
                         query.Where(x => arg.Contains(x.Id)))
                     .HandleQueryArgument(new ArgumentGetter<string>("firstname", context), (arg, query) => 
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.FirstName.Contains(arg)))
                     .HandleQueryArgument(new ArgumentGetter<string>("lastname", context), (arg, query) =>
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.LastName.Contains(arg)))
-                    .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
-                        string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Name.Contains(arg)))
+                    .HandleQueryArgument(new ArgumentGetter<string>("username", context), (arg, query) =>
+                        string.IsNullOrEmpty(arg) ? query : query.Where(x => x.UserName.Contains(arg)))
                     .HandleQueryArgument(new ArgumentGetter<string>("email", context), (arg, query) =>
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Email.Contains(arg)))
             );
