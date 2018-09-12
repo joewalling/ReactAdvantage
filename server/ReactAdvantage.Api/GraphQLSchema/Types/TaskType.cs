@@ -2,7 +2,7 @@
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Models;
 
-namespace ReactAdvantage.Api.GraphQLSchema
+namespace ReactAdvantage.Api.GraphQLSchema.Types
 {
     public class TaskType : ObjectGraphType<Task>
     {

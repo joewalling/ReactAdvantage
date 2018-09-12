@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GraphQL.Types;
 using ReactAdvantage.Data;
 using System.Linq;
+using ReactAdvantage.Api.GraphQLSchema.Types;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {

@@ -1,4 +1,8 @@
 ﻿using GraphQL.Types;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using ReactAdvantage.Api.GraphQLSchema.Models;
+using ReactAdvantage.Api.GraphQLSchema.Types;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Models;
 
@@ -7,8 +11,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
     public class ReactAdvantageMutation : ObjectGraphType
     {
         public ReactAdvantageMutation(
-            ReactAdvantageContext db
-            //UserManager<User> userManager //todo
+            ReactAdvantageContext db,
+            UserManager<User> userManager
             )
         {
             Field<UserType>(
@@ -18,11 +22,17 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 ),
                 resolve: context =>
                 {
-                    var user = context.GetArgument<User>("user");
-                    user.Id = null;
-                    db.Add(user);
-                    db.SaveChanges();
-                    return user;
+                    var userInput = context.GetArgument<UserInput>("user");
+                    userInput.Id = null;
+                    if (string.IsNullOrEmpty(userInput.Password))
+                    {
+                        userManager.CreateAsync(userInput).GetAwaiter().GetResult().ThrowOnError();
+                    }
+                    else
+                    {
+                        userManager.CreateAsync(userInput, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
+                    }
+                    return userInput;
                 });
 
             Field<UserType>(
@@ -32,11 +42,18 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 ),
                 resolve: context =>
                 {
-                    var user = context.GetArgument<User>("user");
-                    var entity = db.Users.Find(user.Id);
-                    db.Entry(entity).CurrentValues.SetValues(user);
-                    db.SaveChanges();
-                    return user;
+                    var userInput = context.GetArgument<UserInput>("user");
+                    var user = userManager.FindByIdAsync(userInput.Id).GetAwaiter().GetResult();
+                    user.UpdateValuesFrom(userInput);
+                    userManager.UpdateAsync(user).GetAwaiter().GetResult().ThrowOnError();
+
+                    if (!string.IsNullOrEmpty(userInput.Password))
+                    {
+                        userManager.RemovePasswordAsync(user).GetAwaiter().GetResult().ThrowOnError();
+                        userManager.AddPasswordAsync(user, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
+                    }
+
+                    return userInput;
                 });
 
             Field<ProjectType>(

@@ -3,6 +3,8 @@ using ReactAdvantage.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace ReactAdvantage.Tests.Unit.Api.Graphql
@@ -19,7 +21,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                     mutation 
                     { 
                         addUser(user: { 
-                            userName: ""Test User""
+                            userName: ""TestUser""
                             firstName: ""Tom""
                             lastName: ""Smith""
                             email: ""test@test.com""
@@ -50,7 +52,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             Assert.False(string.IsNullOrEmpty(id));
                             userId = id;
                         }),
-                        field => AssertPairEqual(field, "userName", "Test User"),
+                        field => AssertPairEqual(field, "userName", "TestUser"),
                         field => AssertPairEqual(field, "firstName", "Tom"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "test@test.com"),
@@ -64,7 +66,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             using (var db = GetInMemoryDbContext())
             {
                 var user = db.Users.Find(userId);
-                Assert.Equal("Test User", user.UserName);
+                Assert.Equal("TestUser", user.UserName);
                 Assert.Equal("Tom", user.FirstName);
                 Assert.Equal("Smith", user.LastName);
                 Assert.Equal("test@test.com", user.Email);
@@ -76,11 +78,9 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         public async void EditUser()
         {
             // Given
-            using (var db = GetInMemoryDbContext())
-            {
-                db.Users.Add(new User { Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false });
-                db.SaveChanges();
-            }
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+            userManager.CreateAsync(new User { Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false })
+                .GetAwaiter().GetResult().ThrowOnError();
 
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery

@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using ReactAdvantage.Domain.Models;
 
-namespace ReactAdvantage.Api.GraphQLSchema
+namespace ReactAdvantage.Api.GraphQLSchema.Types
 {
     public class ProjectInputType : InputObjectGraphType<Project>
     {

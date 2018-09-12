@@ -1,7 +1,7 @@
 ﻿using GraphQL.Types;
 using ReactAdvantage.Domain.Models;
 
-namespace ReactAdvantage.Api.GraphQLSchema
+namespace ReactAdvantage.Api.GraphQLSchema.Types
 {
     public class UserType : ObjectGraphType<User>
     {
@@ -13,8 +13,6 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field(x => x.UserName, nullable: true).Description("The system username of the User.");
             Field(x => x.Email, nullable: true).Description("The email address of the User.");
             Field(x => x.IsActive, nullable: false).Description("True if the user is active.");
-
-
         }
     }
 }

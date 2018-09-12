@@ -1,9 +1,10 @@
 ﻿using GraphQL.Types;
+using ReactAdvantage.Api.GraphQLSchema.Models;
 using ReactAdvantage.Domain.Models;
 
-namespace ReactAdvantage.Api.GraphQLSchema
+namespace ReactAdvantage.Api.GraphQLSchema.Types
 {
-    public class UserInputType : InputObjectGraphType<User>
+    public class UserInputType : InputObjectGraphType<UserInput>
     {
         public UserInputType()
         {
@@ -11,10 +12,10 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field(x => x.Id, nullable: true);
             Field(x => x.FirstName, nullable: true);
             Field(x => x.LastName, nullable: true);
-            Field(x => x.UserName, nullable: true);
+            Field(x => x.UserName, nullable: false);
             Field(x => x.Email, nullable: true);
             Field(x => x.IsActive, nullable: true);
-            Field(typeof(StringGraphType), "password");
+            Field(x => x.Password, nullable: true);
         }
     }
 }
