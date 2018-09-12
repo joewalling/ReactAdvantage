@@ -19,7 +19,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                     mutation 
                     { 
                         addUser(user: { 
-                            name: ""Test User""
+                            userName: ""Test User""
                             firstName: ""Tom""
                             lastName: ""Smith""
                             email: ""test@test.com""
@@ -27,7 +27,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                         })
                         { 
                             id
-                            name
+                            userName
                             firstName
                             lastName
                             email
@@ -39,18 +39,18 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Then
             AssertValidGraphqlExecutionResult(result);
 
-            var userId = 0;
+            string userId = null;
 
             AssertGraphqlResultDictionary(result.Data,
                 addUserResult => AssertPairEqual(addUserResult,
                     "addUser", user => AssertGraphqlResultDictionary(user,
                         field => AssertPairEqual(field, "id", idObject =>
                         {
-                            var id = Assert.IsType<int>(idObject);
-                            Assert.True(id > 0);
+                            var id = Assert.IsType<string>(idObject);
+                            Assert.False(string.IsNullOrEmpty(id));
                             userId = id;
                         }),
-                        field => AssertPairEqual(field, "name", "Test User"),
+                        field => AssertPairEqual(field, "userName", "Test User"),
                         field => AssertPairEqual(field, "firstName", "Tom"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "test@test.com"),
@@ -59,12 +59,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 )
             );
 
-            Assert.True(userId > 0);
+            Assert.NotNull(userId);
 
             using (var db = GetInMemoryDbContext())
             {
                 var user = db.Users.Find(userId);
-                Assert.Equal("Test User", user.Name);
+                Assert.Equal("Test User", user.UserName);
                 Assert.Equal("Tom", user.FirstName);
                 Assert.Equal("Smith", user.LastName);
                 Assert.Equal("test@test.com", user.Email);
@@ -78,7 +78,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             using (var db = GetInMemoryDbContext())
             {
-                db.Users.Add(new User { Id = 1, Name = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false });
+                db.Users.Add(new User { Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false });
                 db.SaveChanges();
             }
 
@@ -89,8 +89,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                     mutation 
                     { 
                         editUser(user: { 
-                            id: 1
-                            name: ""Test User""
+                            id: ""1""
+                            userName: ""TestUser""
                             firstName: ""Tom""
                             lastName: ""Smith""
                             email: ""test@test.com""
@@ -98,7 +98,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                         })
                         { 
                             id
-                            name
+                            userName
                             firstName
                             lastName
                             email
@@ -113,8 +113,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             AssertGraphqlResultDictionary(result.Data,
                 editUserResult => AssertPairEqual(editUserResult,
                     "editUser", user => AssertGraphqlResultDictionary(user,
-                        field => AssertPairEqual(field, "id", 1),
-                        field => AssertPairEqual(field, "name", "Test User"),
+                        field => AssertPairEqual(field, "id", "1"),
+                        field => AssertPairEqual(field, "userName", "TestUser"),
                         field => AssertPairEqual(field, "firstName", "Tom"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "test@test.com"),
@@ -125,8 +125,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
 
             using (var db = GetInMemoryDbContext())
             {
-                var user = db.Users.Find(1);
-                Assert.Equal("Test User", user.Name);
+                var user = db.Users.Find("1");
+                Assert.Equal("TestUser", user.UserName);
                 Assert.Equal("Tom", user.FirstName);
                 Assert.Equal("Smith", user.LastName);
                 Assert.Equal("test@test.com", user.Email);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -10,24 +11,34 @@ namespace ReactAdvantage.Data
     public class DbInitializer : IDbInitializer
     {
         private readonly ReactAdvantageContext _db;
+        private readonly IHostingEnvironment _environment;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
         public DbInitializer(
             ReactAdvantageContext db,
+            IHostingEnvironment environment,
             UserManager<User> userManager,
             RoleManager<IdentityRole> roleManager)
         {
             _db = db;
+            _environment = environment;
             _userManager = userManager;
             _roleManager = roleManager;
         }
 
         public void Initialize()
         {
-            //_db.Database.EnsureCreated();
-            _db.Logger.LogInformation("Migrating database");
-            _db.Database.Migrate();
+            if (_environment.IsEnvironment("Test"))
+            {
+                _db.Logger.LogInformation("Creating database if doesn't exist");
+                _db.Database.EnsureCreated();
+            }
+            else
+            {
+                _db.Logger.LogInformation("Migrating database");
+                _db.Database.Migrate();
+            }
 
             _db.Logger.LogInformation("Seeding database");
             SeedUsers();

@@ -44,6 +44,7 @@ namespace ReactAdvantage.Api
 
             // Add application services.
             services.AddGraphqlServices();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddMvc();
             
@@ -67,10 +68,10 @@ namespace ReactAdvantage.Api
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+        public void Configure(IApplicationBuilder app,
                                 ILoggerFactory loggerFactory, IDbInitializer dbInitializer)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
