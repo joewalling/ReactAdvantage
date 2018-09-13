@@ -17,12 +17,12 @@
 
 function getOidcUserManager() {
     var config = {
-        authority: "https://localhost:44338",
+        authority: baseUrls.identityServer,
         client_id: "graphqlPlaygroundJs",
-        redirect_uri: "https://localhost:44398/Home/GraphqlPlaygroundAuthCallback",
+        redirect_uri: baseUrls.graphqlPlaygroundJsClient + "/Home/GraphqlPlaygroundAuthCallback",
         response_type: "id_token token",
         scope: "openid profile ReactAdvantageApi",
-        post_logout_redirect_uri: "https://localhost:44398/Home/GraphqlPlayground"
+        post_logout_redirect_uri: baseUrls.graphqlPlaygroundJsClient + "/Home/GraphqlPlayground"
     };
 
     var mgr = new Oidc.UserManager(config);
@@ -34,13 +34,13 @@ function initGraphqlPlayground(user) {
     GraphQLPlayground.init(document.getElementById('root'), {
         // options as 'endpoint' belong here
         //endpoint: '/graphql',
-        endpoint: 'https://localhost:44398/graphql',
+        endpoint: baseUrls.api + '/graphql',
         env: 'dev',
         config: {
             "extensions": {
                 "endpoints": {
                     "dev": {
-                        "url": "https://localhost:44398/graphql",
+                        "url": baseUrls.api + "/graphql",
                         "headers": {
                             "Authorization": "Bearer " + user.access_token
                         }

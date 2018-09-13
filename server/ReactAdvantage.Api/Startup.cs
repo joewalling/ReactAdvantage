@@ -11,6 +11,7 @@ using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Models;
 using ReactAdvantage.Api.Extensions;
+using ReactAdvantage.Domain.Configuration;
 
 namespace ReactAdvantage.Api
 {
@@ -47,11 +48,13 @@ namespace ReactAdvantage.Api
             services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddMvc();
-            
+
+            var baseUrls = Configuration.GetBaseUrls();
+
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "https://localhost:44338";
+                    options.Authority = baseUrls.IdentityServer;
                     options.RequireHttpsMetadata = true;
 
                     options.ApiName = "ReactAdvantageApi";
@@ -61,7 +64,7 @@ namespace ReactAdvantage.Api
             {
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins("https://localhost:44398")
+                    policy.WithOrigins(baseUrls.GraphqlPlaygroundJsClient)
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

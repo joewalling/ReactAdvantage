@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
-using IdentityServer4.Test;
-using ReactAdvantage.IdentityServer.Startup;
+using ReactAdvantage.Domain.Configuration;
 
-namespace ReactAdvantage.IdentityServer
+namespace ReactAdvantage.IdentityServer.Startup
 {
     public class Config
     {
@@ -27,9 +26,9 @@ namespace ReactAdvantage.IdentityServer
         }
 
         // clients want to access resources (aka scopes)
-        public static IEnumerable<Client> GetClients()
+        public static IEnumerable<Client> GetClients(BaseUrls baseUrls)
         {
-            // client credentials client
+            
             return new List<Client>
             {
                 // GraphQL Playground Client
@@ -41,9 +40,9 @@ namespace ReactAdvantage.IdentityServer
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
 
-                    RedirectUris =           { "https://localhost:44398/Home/GraphqlPlaygroundAuthCallback" },
-                    PostLogoutRedirectUris = { "https://localhost:44398/Home/GraphqlPlayground" },
-                    AllowedCorsOrigins =     { "https://localhost:44398" },
+                    RedirectUris =           { $"{baseUrls.GraphqlPlaygroundJsClient}/Home/GraphqlPlaygroundAuthCallback" },
+                    PostLogoutRedirectUris = { $"{baseUrls.GraphqlPlaygroundJsClient}/Home/GraphqlPlayground" },
+                    AllowedCorsOrigins =     { baseUrls.GraphqlPlaygroundJsClient },
 
                     AllowedScopes =
                     {

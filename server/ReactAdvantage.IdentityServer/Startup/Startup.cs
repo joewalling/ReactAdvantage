@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.IdentityServer.Startup
@@ -35,6 +36,8 @@ namespace ReactAdvantage.IdentityServer.Startup
                 .AddEntityFrameworkStores<ReactAdvantageContext>()
                 .AddDefaultTokenProviders();
 
+            //services.AddSingleton<BaseUrls>();
+
             services.AddMvc();
 
             var identityServerBuilder = services.AddIdentityServer(options =>
@@ -46,7 +49,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                 })
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients())
+                .AddInMemoryClients(Config.GetClients(Configuration.GetBaseUrls()))
                 .AddAspNetIdentity<User>()
                 .AddOperationalStore(options =>
                 {

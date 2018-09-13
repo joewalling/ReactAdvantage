@@ -1,5 +1,9 @@
-﻿@{
+﻿@using Microsoft.Extensions.Configuration
+@using ReactAdvantage.Domain.Configuration
+@inject IConfiguration Configuration
+@{
     Layout = null;
+    var baseUrls = Configuration.GetBaseUrls();
 }
 <!DOCTYPE html>
 <html>
@@ -51,6 +55,12 @@
         </div>
     </div>
     <script src="~/lib/oidc-client/oidc-client.js"></script>
+    <script>
+        window.baseUrls = window.baseUrls || {};
+        baseUrls.api = '@(baseUrls.Api)';
+        baseUrls.identityServer = '@(baseUrls.IdentityServer)';
+        baseUrls.graphqlPlaygroundJsClient = '@(baseUrls.GraphqlPlaygroundJsClient)';
+    </script>
     <script src="~/view-resources/Home/GraphqlPlayground.js" asp-append-version="true"></script>
 </body>
 </html>
