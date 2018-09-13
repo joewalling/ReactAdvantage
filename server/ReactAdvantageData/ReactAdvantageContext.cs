@@ -9,7 +9,7 @@ namespace ReactAdvantage.Data
     {
         public ILogger Logger { get; }
         
-        public ReactAdvantageContext(DbContextOptions options, ILogger<ReactAdvantageContext> logger)
+        public ReactAdvantageContext(DbContextOptions<ReactAdvantageContext> options, ILogger<ReactAdvantageContext> logger)
             : base(options)
         {
             Logger = logger;

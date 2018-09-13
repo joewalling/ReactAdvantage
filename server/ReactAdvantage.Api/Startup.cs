@@ -92,8 +92,6 @@ namespace ReactAdvantage.Api
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
-
             dbInitializer.Initialize();
 
             app.UseMvc(routes =>
