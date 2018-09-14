@@ -61,7 +61,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
 
-                    RedirectUris =           { $"{baseUrls.ReactClient}/authentication/callback" },
+                    RedirectUris =           { $"{baseUrls.ReactClient}/authentication/callback", $"{baseUrls.ReactClient}/authentication/silentCallback" },
                     PostLogoutRedirectUris = { $"{baseUrls.ReactClient}/" },
                     AllowedCorsOrigins =     { baseUrls.ReactClient },
 

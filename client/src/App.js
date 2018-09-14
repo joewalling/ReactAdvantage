@@ -11,6 +11,9 @@ import UsersList from 'pages/UsersList';
 import RolesList from 'pages/RolesList';
 import TenantsList from 'pages/TenantsList';
 import Login from 'pages/Login';
+import AuthenticationCallback from 'pages/AuthenticationCallback';
+import AuthenticationSilentCallback from "./pages/AuthenticationSilentCallback";
+import Logout from "./pages/Logout";
 import './App.css';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
@@ -30,6 +33,9 @@ class App extends Component {
                 <Route exact path="/users" component={UsersList} />
                 <Route exact path="/roles" component={RolesList} />
                 <Route exact path="/tenants" component={TenantsList} />
+                <Route exact path="/authentication/callback" component={AuthenticationCallback}/>
+                <Route exact path="/authentication/silentCallback" component={AuthenticationSilentCallback}/>
+                <Route exact path="/logout" component={Logout}/>
               </Switch>
             </Container>
           </div>
