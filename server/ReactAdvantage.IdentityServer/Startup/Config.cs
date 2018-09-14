@@ -21,7 +21,7 @@ namespace ReactAdvantage.IdentityServer.Startup
         {
             return new List<ApiResource>
             {
-                new ApiResource("ReactAdvantageApi", "ReactAdvantage API")
+                new ApiResource(ApiResources.ReactAdvantageApi, "ReactAdvantage API")
             };
         }
 
@@ -48,7 +48,28 @@ namespace ReactAdvantage.IdentityServer.Startup
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "ReactAdvantageApi"
+                        ApiResources.ReactAdvantageApi
+                    }
+                },
+
+                // React Client
+                new Client
+                {
+                    ClientId = "react",
+                    ClientName = "React Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
+
+                    RedirectUris =           { $"{baseUrls.ReactClient}/authentication/callback" },
+                    PostLogoutRedirectUris = { $"{baseUrls.ReactClient}/" },
+                    AllowedCorsOrigins =     { baseUrls.ReactClient },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        ApiResources.ReactAdvantageApi
                     }
                 }
             };

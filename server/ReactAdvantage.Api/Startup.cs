@@ -64,7 +64,7 @@ namespace ReactAdvantage.Api
             {
                 options.AddPolicy("default", policy =>
                 {
-                    policy.WithOrigins(baseUrls.GraphqlPlaygroundJsClient)
+                    policy.WithOrigins(baseUrls.GraphqlPlaygroundJsClient, baseUrls.ReactClient)
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });

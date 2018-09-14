@@ -20,6 +20,8 @@ namespace ReactAdvantage.Domain.Configuration
 
         public string GraphqlPlaygroundJsClient => _configuration["BaseUrls:GraphqlPlaygroundJsClient"];
 
+        public string ReactClient => _configuration["BaseUrls:ReactClient"];
+
     }
 
     public static class BaseUrlExtensions
