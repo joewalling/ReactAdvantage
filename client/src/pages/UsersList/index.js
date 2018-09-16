@@ -12,7 +12,6 @@ import Form from './components/Form';
 import { ApolloClient } from 'apollo-client';
 import gql from 'graphql-tag';
 import './index.css';
-import users from './users';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { AuthService } from '../../services/AuthService';
@@ -84,39 +83,43 @@ export default class UsersList extends Component {
         }];
     }
     componentWillMount() {
-        this.authService.ensureAuthorized().then(user => {
-            const link = new HttpLink({
-                uri: `${process.env.REACT_APP_API_URI}/graphql`,
-                headers:
-                    {
-                        'content-type': 'application/json',
-                        'Authorization': `Bearer ${user.access_token}`
-                    }
-            });
-            const client = new ApolloClient({
-                link: link,
-                networkInterface: mockNetworkInterface,
-                cache: new InMemoryCache(),
-            });
-            console.log(client);
-            // Requesting data
+        this.authService.ensureAuthorized().then(authUser => {
+            this.reloadUsersList(authUser);
+        });
+    }
 
-            //client.query({ query: gql`query Query {hero {name  firstName}}`, headers: { 'content-type': 'application/json' } }).then(console.log);
-            client.query({
-                query: gql`
+    reloadUsersList(authUser) {
+        const link = new HttpLink({
+            uri: `${process.env.REACT_APP_API_URI}/graphql`,
+            headers:
+                {
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${authUser.access_token}`
+                }
+        });
+        const client = new ApolloClient({
+            link: link,
+            networkInterface: mockNetworkInterface,
+            cache: new InMemoryCache(),
+        });
+        console.log(client);
+        // Requesting data
+
+        //client.query({ query: gql`query Query {hero {name  firstName}}`, headers: { 'content-type': 'application/json' } }).then(console.log);
+        client.query({
+            query: gql`
                   query FeedQuery {
                     users {
                         userName  firstName lastName  email isActive
                     }
                   }
                 `
-            }).then(response => {
-                console.log(response.data.users)
-                var userlist=response.data.users;
+        }).then(response => {
+            console.log(response.data.users)
+            var userlist=response.data.users;
 
-                this.setState({UsersList: userlist,entries:response.data.users.length})
-            })
-        });
+            this.setState({UsersList: userlist,entries:response.data.users.length})
+        })
     }
 
     onDropdownChange = ({ value }) => {
@@ -142,7 +145,7 @@ export default class UsersList extends Component {
     onEdit = selectedId => {
         this.setState({
             popupVisible: true,
-            selectedUser: users.find(({ id }) => id === selectedId),
+            selectedUser: this.state.UsersList.find(({ id }) => id === selectedId),
         });
     }
 
