@@ -24,7 +24,7 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.5",
     "react-transition-group": "^2.3.1",
-    "react-two-way-querybuilder-custom-select-fork": "^1.0.10"
+    "react-two-way-querybuilder-ra": "^1.0.13"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
