@@ -82,7 +82,7 @@ export default class Dashboard extends Component {
                 Text for scrolling test:
                 <br/><br/><br/>
 
-                Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Duis eu mi et eros tincidunt condimentum. Nullam consequat nunc urna, at eleifend orci posuere vel. Nam vitae volutpat metus, at luctus mi. Quisque id elit quis ipsum tincidunt pharetra. In a mattis ante. Proin leo justo, porta nec ligula eu, viverra elementum libero. Sed maximus venenatis ultricies. Etiam quam risus, fermentum vel placerat vitae, porttitor at dolor. Donec ac sodales est.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis eu mi et eros tincidunt condimentum. Nullam consequat nunc urna, at eleifend orci posuere vel. Nam vitae volutpat metus, at luctus mi. Quisque id elit quis ipsum tincidunt pharetra. In a mattis ante. Proin leo justo, porta nec ligula eu, viverra elementum libero. Sed maximus venenatis ultricies. Etiam quam risus, fermentum vel placerat vitae, porttitor at dolor. Donec ac sodales est.
 
 Aliquam consectetur ornare rhoncus. Proin maximus massa purus, a pretium quam laoreet et. Sed bibendum libero urna, vel placerat metus rutrum at. Nam quis finibus nisl. Nullam molestie et sapien non sodales. Donec dapibus quis tortor sit amet pretium. Nulla commodo lobortis auctor. Nullam dolor enim, ultricies non rutrum at, tristique vel nunc. Morbi et arcu at lorem interdum sagittis vitae eget quam. Nam turpis risus, congue vel dolor vestibulum, aliquet lacinia orci. Maecenas mattis quam quis justo suscipit laoreet. Nulla facilisi. Ut maximus tincidunt mi, sed mollis sapien mattis eget.
 
