@@ -6504,9 +6504,9 @@ react-transition-group@^2.3.1:
     loose-envify "^1.3.1"
     prop-types "^15.6.1"
 
-react-two-way-querybuilder-ra@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/react-two-way-querybuilder-ra/-/react-two-way-querybuilder-ra-1.0.13.tgz#4c4df2344d0d862c09505553a88378efc3f7b858"
+react-two-way-querybuilder-ra@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/react-two-way-querybuilder-ra/-/react-two-way-querybuilder-ra-1.0.14.tgz#de39b7c0786a8a62a900e69109cb8e9ec19defd7"
   dependencies:
     babel-runtime "^6.11.6"
     prop-types "^15.5.8"
