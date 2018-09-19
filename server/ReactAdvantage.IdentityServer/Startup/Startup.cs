@@ -62,15 +62,27 @@ namespace ReactAdvantage.IdentityServer.Startup
                     options.TokenCleanupInterval = 30;
                 });
 
-            if (Environment.IsDevelopment())
+            var signingCertificateThumbprint = Configuration["IdentityServer:SigningCertificateThumbprint"];
+
+            if (string.IsNullOrEmpty(signingCertificateThumbprint) && Environment.IsDevelopment())
             {
                 identityServerBuilder.AddDeveloperSigningCredential();
             }
             else
             {
-                throw new NotImplementedException("Need to configure key material");
-            }
+                if (string.IsNullOrEmpty(signingCertificateThumbprint))
+                {
+                    throw new Exception("Signing certificate wasn't specified. Please add the certificate to the store and provide its thumbprint in the 'IdentityServer:SigningCertificateThumbprint' setting");
+                }
 
+                var certificate = CertificateHelper.GetCertificateFromStore(signingCertificateThumbprint);
+                if (certificate == null)
+                {
+                    throw new Exception("Signing certificate with the specified thumbprint wasn't found in the store");
+                }
+
+                identityServerBuilder.AddSigningCredential(certificate);
+            }
 
         }
 
