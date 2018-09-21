@@ -1,6 +1,7 @@
 ﻿using GraphQL;
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
+using ReactAdvantage.Api.GraphQLSchema.Types;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {

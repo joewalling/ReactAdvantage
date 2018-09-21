@@ -3,11 +3,15 @@ using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Models;
+using ReactAdvantage.Api.Extensions;
+using ReactAdvantage.Domain.Configuration;
 
 namespace ReactAdvantage.Api
 {
@@ -23,7 +27,6 @@ namespace ReactAdvantage.Api
 
         public IHostingEnvironment Environment { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             if (Environment.IsEnvironment("Test"))
@@ -38,22 +41,40 @@ namespace ReactAdvantage.Api
                     options.UseSqlServer(connectionString));
             }
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
 
             // Add application services.
             services.AddGraphqlServices();
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.AddMvc();
 
+            var baseUrls = Configuration.GetBaseUrls();
+
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = baseUrls.IdentityServer;
+                    options.RequireHttpsMetadata = true;
+
+                    options.ApiName = "ReactAdvantageApi";
+                });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("default", policy =>
+                {
+                    policy.WithOrigins(baseUrls.GraphqlPlaygroundJsClient, baseUrls.ReactClient)
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
-                                ILoggerFactory loggerFactory, ReactAdvantageContext db)
+        public void Configure(IApplicationBuilder app,
+                                ILoggerFactory loggerFactory, IDbInitializer dbInitializer)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
@@ -66,15 +87,16 @@ namespace ReactAdvantage.Api
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
+
+            app.UseCors("default");
 
             app.UseAuthentication();
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            app.UseMvc();
-
-            db.EnsureSeedData();
+            dbInitializer.Initialize();
 
             app.UseMvc(routes =>
             {

@@ -1,21 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.Data
 {
-    public class ReactAdvantageContext : DbContext
+    public class ReactAdvantageContext : IdentityDbContext<User>
     {
         public ILogger Logger { get; }
         
-        public ReactAdvantageContext(DbContextOptions options, ILogger<ReactAdvantageContext> logger)
+        public ReactAdvantageContext(DbContextOptions<ReactAdvantageContext> options, ILogger<ReactAdvantageContext> logger)
             : base(options)
         {
             Logger = logger;
-            Database.EnsureCreated();
         }
-
-        public DbSet<User> Users { get; set; }
 
         public DbSet<Project> Projects { get; set; }
 

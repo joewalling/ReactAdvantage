@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphQL;
+using Microsoft.AspNetCore.Identity;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {
@@ -22,6 +23,18 @@ namespace ReactAdvantage.Api.GraphQLSchema
         public static Inputs ToInputs(this Dictionary<string, object> dictionary)
         {
             return new Inputs(dictionary ?? new Dictionary<string, object>());
+        }
+
+        public static void ThrowOnError(this IdentityResult identityResult)
+        {
+            if (identityResult.Succeeded)
+            {
+                return;
+            }
+
+            var error = identityResult.Errors.FirstOrDefault();
+            var errorMessage = error != null ? error.Code + ": " + error.Description : "Identity error";
+            throw new ExecutionError(errorMessage);
         }
     }
 }

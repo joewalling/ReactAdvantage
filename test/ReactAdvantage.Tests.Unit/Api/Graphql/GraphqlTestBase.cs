@@ -4,20 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
+using ReactAdvantage.Api.Extensions;
 using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Models;
 using Xunit;
 
 namespace ReactAdvantage.Tests.Unit.Api.Graphql
 {
     public class GraphqlTestBase
     {
-        private readonly ServiceProvider _serviceProvider;
         private readonly string _databaseName;
+        protected ServiceProvider ServiceProvider { get; }
 
         public GraphqlTestBase()
         {
@@ -26,15 +29,16 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             var services = new ServiceCollection();
 
             services.AddTransient<ReactAdvantageContext>(x => GetInMemoryDbContext());
+            services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
             services.AddGraphqlServices();
 
-            _serviceProvider = services.BuildServiceProvider();
+            ServiceProvider = services.BuildServiceProvider();
         }
 
         protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query)
         {
-            var schema = _serviceProvider.GetService<ISchema>();
-            var documentExecuter = _serviceProvider.GetService<IDocumentExecuter>();
+            var schema = ServiceProvider.GetService<ISchema>();
+            var documentExecuter = ServiceProvider.GetService<IDocumentExecuter>();
 
             var executionOptions = new ExecutionOptions
             {
