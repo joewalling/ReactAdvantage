@@ -12,9 +12,9 @@ import Form from './components/Form';
 import { ApolloClient } from 'apollo-client';
 import gql from 'graphql-tag';
 import './index.css';
-import users from './users';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { AuthService } from '../../services/AuthService';
 
 import {
     makeExecutableSchema,
@@ -31,8 +31,10 @@ addMockFunctionsToSchema({ schema });
 const mockNetworkInterface = mockNetworkInterfaceWithSchema({ schema });
 
 export default class UsersList extends Component {
+    authService;
     constructor(props) {
         super(props);
+        this.authService = new AuthService();
         this.columns = [{
             header: 'First Name',
             field: 'firstName',
@@ -40,7 +42,7 @@ export default class UsersList extends Component {
             body: this.renderCellTemplate,
         }, {
             header: 'Name',
-            field: 'name',
+            field: 'userName',
             sortable: true,
             body: this.renderCellTemplate,
         }, {
@@ -81,38 +83,43 @@ export default class UsersList extends Component {
         }];
     }
     componentWillMount() {
+        this.authService.ensureAuthorized().then(authUser => {
+            this.reloadUsersList(authUser);
+        });
+    }
+
+    reloadUsersList(authUser) {
         const link = new HttpLink({
             uri: `${process.env.REACT_APP_API_URI}/graphql`,
             headers:
                 {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    'Authorization': `Bearer ${authUser.access_token}`
                 }
-
         });
         const client = new ApolloClient({
             link: link,
             networkInterface: mockNetworkInterface,
             cache: new InMemoryCache(),
         });
-        console.log(client)
+        console.log(client);
         // Requesting data
 
-        //client.query({ query: gql`query Query {hero {name  fistNrame}}`, headers: { 'content-type': 'application/json' } }).then(console.log);
+        //client.query({ query: gql`query Query {hero {name  firstName}}`, headers: { 'content-type': 'application/json' } }).then(console.log);
         client.query({
             query: gql`
-              query FeedQuery {
-                allusers {
-                    name  firstName lastName  email isactive
-                }
-              }
-            `
-          }).then(response => {
-              console.log(response.data.users)
-             var userlist=response.data.users;
+                  query FeedQuery {
+                    users {
+                        userName  firstName lastName  email isActive
+                    }
+                  }
+                `
+        }).then(response => {
+            console.log(response.data.users)
+            var userlist=response.data.users;
 
-               this.setState({UsersList: userlist,entries:response.data.users.length})
+            this.setState({UsersList: userlist,entries:response.data.users.length})
         })
-
     }
 
     onDropdownChange = ({ value }) => {
@@ -138,7 +145,7 @@ export default class UsersList extends Component {
     onEdit = selectedId => {
         this.setState({
             popupVisible: true,
-            selectedUser: users.find(({ id }) => id === selectedId),
+            selectedUser: this.state.UsersList.find(({ id }) => id === selectedId),
         });
     }
 
