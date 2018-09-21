@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TwoWayQuerybuilder from 'react-two-way-querybuilder-custom-select-fork';
+import TwoWayQuerybuilder from 'react-two-way-querybuilder-ra';
 
 import Button from 'components/Button';
 import Dropdown from 'components/Dropdown';
