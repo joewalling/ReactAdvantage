@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
@@ -15,13 +16,15 @@ namespace ReactAdvantage.IdentityServer.Startup
 {
     public class Startup
     {
+        private readonly ILogger _logger;
         public IConfiguration Configuration { get; }
         public IHostingEnvironment Environment { get; }
 
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration, IHostingEnvironment environment, ILogger<Startup> logger)
         {
             Configuration = configuration;
             Environment = environment;
+            _logger = logger;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -63,9 +66,11 @@ namespace ReactAdvantage.IdentityServer.Startup
                 });
 
             var signingCertificateThumbprint = Configuration["IdentityServer:SigningCertificateThumbprint"];
+            _logger.LogInformation($"IdentityServer:SigningCertificateThumbprint is '{signingCertificateThumbprint}'");
 
             if (string.IsNullOrEmpty(signingCertificateThumbprint) && Environment.IsDevelopment())
             {
+                _logger.LogInformation("Using developer signing credential for Identity Server");
                 identityServerBuilder.AddDeveloperSigningCredential();
             }
             else
@@ -81,6 +86,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                     throw new Exception("Signing certificate with the specified thumbprint wasn't found in the store");
                 }
 
+                _logger.LogInformation("Using a certificate for signing");
                 identityServerBuilder.AddSigningCredential(certificate);
             }
 
@@ -111,6 +117,7 @@ namespace ReactAdvantage.IdentityServer.Startup
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+                _logger.LogInformation("Migrating database");
                 serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
             }
         }

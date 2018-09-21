@@ -7,6 +7,7 @@ using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ReactAdvantage.IdentityServer.Models.Home;
 
 namespace ReactAdvantage.IdentityServer.Controllers
@@ -17,11 +18,13 @@ namespace ReactAdvantage.IdentityServer.Controllers
     {
         private readonly IIdentityServerInteractionService _interaction;
         private readonly IHostingEnvironment _environment;
+        private readonly ILogger _logger;
 
-        public HomeController(IIdentityServerInteractionService interaction, IHostingEnvironment environment)
+        public HomeController(IIdentityServerInteractionService interaction, IHostingEnvironment environment, ILogger<HomeController> logger)
         {
             _interaction = interaction;
             _environment = environment;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -46,6 +49,7 @@ namespace ReactAdvantage.IdentityServer.Controllers
             var message = await _interaction.GetErrorContextAsync(errorId);
             if (message != null)
             {
+                _logger.LogError("Identity Server error: {0}", message);
                 vm.Error = message;
 
                 if (!_environment.IsDevelopment())
