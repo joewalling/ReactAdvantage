@@ -1,5 +1,5 @@
-﻿using GraphQL;
-using GraphQL.Types;
+﻿using System;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -51,14 +51,18 @@ namespace ReactAdvantage.Api
 
             var baseUrls = Configuration.GetBaseUrls();
 
-            services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = baseUrls.IdentityServer;
-                    options.RequireHttpsMetadata = true;
+            //Try to get an existing implementation from IServiceCollection in case it is already added by TestServer
+            var authenticationOptionsSetter = services
+                .FindSingletonImplementationInstance<Action<IdentityServerAuthenticationOptions>>()
+                ?? (options =>
+                   {
+                       options.Authority = baseUrls.IdentityServer;
+                       options.RequireHttpsMetadata = true;
+                       options.ApiName = "ReactAdvantageApi";
+                   });
 
-                    options.ApiName = "ReactAdvantageApi";
-                });
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(authenticationOptionsSetter);
 
             services.AddCors(options =>
             {

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\server\ReactAdvantage.Api\ReactAdvantage.Api.csproj" />
+    <ProjectReference Include="..\..\server\ReactAdvantage.IdentityServer\ReactAdvantage.IdentityServer.csproj" />
   </ItemGroup>
 
 </Project>
