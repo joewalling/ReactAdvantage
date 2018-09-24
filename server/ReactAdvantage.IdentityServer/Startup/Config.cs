@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +23,7 @@ namespace ReactAdvantage.IdentityServer.Startup
         {
             return new List<ApiResource>
             {
-                new ApiResource(ApiResources.ReactAdvantageApi, "ReactAdvantage API")
+                new ApiResource(ApiResources.ReactAdvantageApi, "ReactAdvantage API", new[] { JwtClaimTypes.Subject, JwtClaimTypes.Email, JwtClaimTypes.Role })
             };
         }
 

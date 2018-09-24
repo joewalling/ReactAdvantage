@@ -39,7 +39,8 @@ namespace ReactAdvantage.Api.Controllers
             {
                 Schema = _schema,
                 Query = query.Query,
-                Inputs = query.Variables.ToInputs()
+                Inputs = query.Variables.ToInputs(),
+                UserContext = new GraphQLUserContext(User)
             };
 
             var result = await _documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);

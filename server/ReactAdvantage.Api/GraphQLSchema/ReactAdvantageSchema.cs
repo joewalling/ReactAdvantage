@@ -5,7 +5,6 @@ namespace ReactAdvantage.Api.GraphQLSchema
 {
     public class ReactAdvantageSchema : GraphQL.Types.Schema
     {
-
         public ReactAdvantageSchema(IServiceProvider serviceProvider)
             : base(new FuncDependencyResolver(serviceProvider.GetService))
         {
