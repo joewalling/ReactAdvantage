@@ -6,7 +6,7 @@ export class AuthService {
     constructor() {
         const settings = {
             authority: `${process.env.REACT_APP_IDENTITY_SERVER_URI}`,
-            client_id: 'react',
+            client_id: `${process.env.REACT_APP_CLIENT_ID}`,
             redirect_uri: `${process.env.REACT_APP_URI}/authentication/callback`,
             silent_redirect_uri: `${process.env.REACT_APP_URI}/authentication/silentCallback`,
             post_logout_redirect_uri: `${process.env.REACT_APP_URI}/`,

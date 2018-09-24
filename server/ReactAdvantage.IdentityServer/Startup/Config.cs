@@ -15,7 +15,7 @@ namespace ReactAdvantage.IdentityServer.Startup
             return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                new IdentityResources.Profile()
             };
         }
 
@@ -76,8 +76,33 @@ namespace ReactAdvantage.IdentityServer.Startup
                 }
             };
 
+            if (!string.IsNullOrEmpty(baseUrls.ReactClientLocal))
+            {
+                // Additional React Client for local development, if different from regular react client
+                clients.Add(new Client
+                {
+                    ClientId = "reactLocal",
+                    ClientName = "React Client",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = false,
+
+                    RedirectUris = { $"{baseUrls.ReactClientLocal}/authentication/callback", $"{baseUrls.ReactClientLocal}/authentication/silentCallback" },
+                    PostLogoutRedirectUris = { $"{baseUrls.ReactClientLocal}/" },
+                    AllowedCorsOrigins = { baseUrls.ReactClientLocal },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        ApiResources.ReactAdvantageApi
+                    }
+                });
+            }
+
             if (environment.IsEnvironment("Test"))
             {
+                //Client for Integration Tests
                 clients.Add(new Client
                 {
                     ClientId = "testClient",
