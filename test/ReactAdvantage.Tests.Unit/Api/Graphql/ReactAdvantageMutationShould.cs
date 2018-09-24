@@ -189,7 +189,81 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             AssertEditUserQueryPassed(result);
         }
 
+        [Fact]
+        public async void EditUserWithoutChangingThePassword()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            userContextMock.Setup(x => x.Id).Returns("1");
 
+            var seededUser = await SeedInitialUserForEdit();
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+            await userManager.AddPasswordAsync(seededUser, "Test123$");
+
+            string oldPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                oldPasswordHash = user.PasswordHash;
+            }
+            
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: false);
+
+            // Then
+            AssertEditUserQueryPassed(result);
+
+            string newPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                newPasswordHash = user.PasswordHash;
+            }
+
+            Assert.Equal(oldPasswordHash, newPasswordHash);
+            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
+            Assert.True(passwordCheckResult);
+        }
+
+        [Fact]
+        public async void EditUserWithChangingThePassword()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            userContextMock.Setup(x => x.Id).Returns("1");
+
+            var seededUser = await SeedInitialUserForEdit();
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+            await userManager.AddPasswordAsync(seededUser, "Test123$");
+
+            string oldPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                oldPasswordHash = user.PasswordHash;
+            }
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: true);
+
+            // Then
+            AssertEditUserQueryPassed(result);
+
+            string newPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                newPasswordHash = user.PasswordHash;
+            }
+
+            Assert.NotEqual(oldPasswordHash, newPasswordHash);
+            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
+            Assert.False(passwordCheckResult);
+            passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test456$");
+            Assert.True(passwordCheckResult);
+        }
 
         private async Threading.Task<User> SeedInitialUserForEdit()
         {
@@ -204,8 +278,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 IsActive = false
             };
             var userManager = ServiceProvider.GetService<UserManager<User>>();
-            userManager.CreateAsync(user) //todo try await
-                .GetAwaiter().GetResult().ThrowOnError();
+            await userManager.CreateAsync(user);
 
             return user;
         }
@@ -225,7 +298,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             lastName: ""Smith""
                             email: ""test@test.com""
                             isActive: true
-                            {(changePassword ? "password: \"456\"" : "")}
+                            {(changePassword ? "password: \"Test456$\"" : "")}
                         }})
                         {{ 
                             id
