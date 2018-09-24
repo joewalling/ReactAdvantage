@@ -48,7 +48,9 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     var userInput = context.GetArgument<UserInput>("user");
 
                     var userContext = context.GetUserContext();
-                    if (!userContext.IsInRole(RoleNames.HostAdministrator) && userContext.Id != userInput.Id)
+                    var isHostAdmin = userContext.IsInRole(RoleNames.HostAdministrator);
+                    var isEditingSelf = userContext.Id == userInput.Id;
+                    if (!isHostAdmin && !isEditingSelf)
                     {
                         throw new ExecutionError($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}" 
                                                  + " role to be able to edit any user, otherwise you can only edit" 

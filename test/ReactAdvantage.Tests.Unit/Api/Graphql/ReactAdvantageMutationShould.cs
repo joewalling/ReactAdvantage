@@ -3,40 +3,50 @@ using ReactAdvantage.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using GraphQL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using ReactAdvantage.Domain.Configuration;
 using Xunit;
+using Threading = System.Threading.Tasks;
 
 namespace ReactAdvantage.Tests.Unit.Api.Graphql
 {
     public class ReactAdvantageMutationShould : GraphqlTestBase
     {
         [Fact]
-        public async void AddUser()
+        public async void AddUserShouldFailForNonHostAdmin()
         {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+
             // When
-            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            var result = await ExecuteAddUserQueryAsync(userContextMock.Object);
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                addUserResult => AssertPairEqual(addUserResult, "addUser", null)
+            );
+            Assert.Collection(result.Errors, error =>
             {
-                Query = @"
-                    mutation 
-                    { 
-                        addUser(user: { 
-                            userName: ""TestUser""
-                            firstName: ""Tom""
-                            lastName: ""Smith""
-                            email: ""test@test.com""
-                            isActive: true
-                        })
-                        { 
-                            id
-                            userName
-                            firstName
-                            lastName
-                            email
-                            isActive
-                        }
-                    }"
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("Unauthorized. You have to be a member of HostAdministrator role.", exception.Message);
             });
+        }
+
+        [Fact]
+        public async void AddUserShouldPassForHostAdmin()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+
+            // When
+            var result = await ExecuteAddUserQueryAsync(userContextMock.Object);
 
             // Then
             AssertValidGraphqlExecutionResult(result);
@@ -74,22 +84,14 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
         }
 
-        [Fact]
-        public async void EditUser()
+        private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(GraphQLUserContext userContext)
         {
-            // Given
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            userManager.CreateAsync(new User { Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false })
-                .GetAwaiter().GetResult().ThrowOnError();
-
-            // When
-            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
             {
                 Query = @"
                     mutation 
                     { 
-                        editUser(user: { 
-                            id: ""1""
+                        addUser(user: { 
                             userName: ""TestUser""
                             firstName: ""Tom""
                             lastName: ""Smith""
@@ -105,9 +107,215 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             isActive
                         }
                     }"
+            }, userContext);
+        }
+
+        [Fact]
+        public async void EditUserShouldFailForNonSelfAndNonHostAdmin()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            userContextMock.Setup(x => x.Id).Returns("2");
+
+            await SeedInitialUserForEdit();
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
+            
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                editUserResult => AssertPairEqual(editUserResult, "editUser", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}"
+                             + " role to be able to edit any user, otherwise you can only edit"
+                             + " your own user (id: 2).", exception.Message);
             });
+        }
+
+        [Fact]
+        public async void EditUserShouldPassForSelfAndNonHostAdmin()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            userContextMock.Setup(x => x.Id).Returns("1");
+
+            await SeedInitialUserForEdit();
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
 
             // Then
+            AssertEditUserQueryPassed(result);
+        }
+
+        [Fact]
+        public async void EditUserShouldPassForNonSelfAndHostAdmin()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            userContextMock.Setup(x => x.Id).Returns("2");
+
+            await SeedInitialUserForEdit();
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
+
+            // Then
+            AssertEditUserQueryPassed(result);
+        }
+
+        [Fact]
+        public async void EditUserShouldPassForSelfAndHostAdmin()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            userContextMock.Setup(x => x.Id).Returns("1");
+
+            await SeedInitialUserForEdit();
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
+
+            // Then
+            AssertEditUserQueryPassed(result);
+        }
+
+        [Fact]
+        public async void EditUserWithoutChangingThePassword()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            userContextMock.Setup(x => x.Id).Returns("1");
+
+            var seededUser = await SeedInitialUserForEdit();
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+            await userManager.AddPasswordAsync(seededUser, "Test123$");
+
+            string oldPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                oldPasswordHash = user.PasswordHash;
+            }
+            
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: false);
+
+            // Then
+            AssertEditUserQueryPassed(result);
+
+            string newPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                newPasswordHash = user.PasswordHash;
+            }
+
+            Assert.Equal(oldPasswordHash, newPasswordHash);
+            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
+            Assert.True(passwordCheckResult);
+        }
+
+        [Fact]
+        public async void EditUserWithChangingThePassword()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            userContextMock.Setup(x => x.Id).Returns("1");
+
+            var seededUser = await SeedInitialUserForEdit();
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+            await userManager.AddPasswordAsync(seededUser, "Test123$");
+
+            string oldPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                oldPasswordHash = user.PasswordHash;
+            }
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: true);
+
+            // Then
+            AssertEditUserQueryPassed(result);
+
+            string newPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                newPasswordHash = user.PasswordHash;
+            }
+
+            Assert.NotEqual(oldPasswordHash, newPasswordHash);
+            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
+            Assert.False(passwordCheckResult);
+            passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test456$");
+            Assert.True(passwordCheckResult);
+        }
+
+        private async Threading.Task<User> SeedInitialUserForEdit()
+        {
+            //Given
+            var user = new User
+            {
+                Id = "1",
+                UserName = "BobRay1",
+                FirstName = "Bob",
+                LastName = "Ray",
+                Email = "BobRay@test.com",
+                IsActive = false
+            };
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+            await userManager.CreateAsync(user);
+
+            return user;
+        }
+
+        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(GraphQLUserContext userContext, bool changePassword = false)
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        editUser(user: {{ 
+                            id: ""1""
+                            userName: ""TestUser""
+                            firstName: ""Tom""
+                            lastName: ""Smith""
+                            email: ""test@test.com""
+                            isActive: true
+                            {(changePassword ? "password: \"Test456$\"" : "")}
+                        }})
+                        {{ 
+                            id
+                            userName
+                            firstName
+                            lastName
+                            email
+                            isActive
+                        }}
+                    }}"
+            }, userContext);
+
+            return result;
+        }
+
+        private void AssertEditUserQueryPassed(ExecutionResult result)
+        {
             AssertValidGraphqlExecutionResult(result);
 
             AssertGraphqlResultDictionary(result.Data,
