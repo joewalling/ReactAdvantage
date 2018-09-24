@@ -6,16 +6,20 @@ namespace ReactAdvantage.Api.GraphQLSchema
 {
     public class GraphQLUserContext
     {
+        public GraphQLUserContext()
+        {
+        }
+
         public GraphQLUserContext(ClaimsPrincipal user)
         {
             User = user;
         }
 
-        public ClaimsPrincipal User { get; set; }
+        public virtual ClaimsPrincipal User { get; set; }
         
-        public string Id => User?.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+        public virtual string Id => User?.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
 
-        public bool IsInRole(string role)
+        public virtual bool IsInRole(string role)
         {
             return User?.IsInRole(role) ?? false;
         }

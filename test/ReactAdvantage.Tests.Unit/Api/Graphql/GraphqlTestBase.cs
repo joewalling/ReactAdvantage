@@ -35,7 +35,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             ServiceProvider = services.BuildServiceProvider();
         }
 
-        protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query)
+        protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query, GraphQLUserContext userContext = null)
         {
             var schema = ServiceProvider.GetService<ISchema>();
             var documentExecuter = ServiceProvider.GetService<IDocumentExecuter>();
@@ -44,7 +44,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             {
                 Schema = schema,
                 Query = query.Query,
-                Inputs = query.Variables.ToInputs()
+                Inputs = query.Variables.ToInputs(),
+                UserContext = userContext
             };
 
             var result = await documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);
