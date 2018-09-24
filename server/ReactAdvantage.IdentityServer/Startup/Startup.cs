@@ -32,8 +32,16 @@ namespace ReactAdvantage.IdentityServer.Startup
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<ReactAdvantageContext>(options =>
-                options.UseSqlServer(connectionString));
+            if (Environment.IsEnvironment("Test"))
+            {
+                services.AddDbContext<ReactAdvantageContext>(options =>
+                    options.UseInMemoryDatabase(databaseName: "ReactAdvantage"));
+            }
+            else
+            {
+                services.AddDbContext<ReactAdvantageContext>(options =>
+                    options.UseSqlServer(connectionString));
+            }
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ReactAdvantageContext>()
@@ -52,13 +60,21 @@ namespace ReactAdvantage.IdentityServer.Startup
                 })
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
                 .AddInMemoryApiResources(Config.GetApiResources())
-                .AddInMemoryClients(Config.GetClients(Configuration.GetBaseUrls()))
+                .AddInMemoryClients(Config.GetClients(Configuration.GetBaseUrls(), Environment))
                 .AddAspNetIdentity<User>()
                 .AddOperationalStore(options =>
                 {
-                    options.ConfigureDbContext = builder =>
-                        builder.UseSqlServer(connectionString,
-                            sql => sql.MigrationsAssembly(migrationsAssembly));
+                    if (Environment.IsEnvironment("Test"))
+                    {
+                        options.ConfigureDbContext = builder =>
+                            builder.UseInMemoryDatabase("ReactAdvantage");
+                    }
+                    else
+                    {
+                        options.ConfigureDbContext = builder =>
+                            builder.UseSqlServer(connectionString,
+                                sql => sql.MigrationsAssembly(migrationsAssembly));
+                    }
 
                     // this enables automatic token cleanup. this is optional.
                     options.EnableTokenCleanup = true;
@@ -68,7 +84,7 @@ namespace ReactAdvantage.IdentityServer.Startup
             var signingCertificateThumbprint = Configuration["IdentityServer:SigningCertificateThumbprint"];
             _logger.LogInformation($"IdentityServer:SigningCertificateThumbprint is '{signingCertificateThumbprint}'");
 
-            if (string.IsNullOrEmpty(signingCertificateThumbprint) && Environment.IsDevelopment())
+            if (string.IsNullOrEmpty(signingCertificateThumbprint) && (Environment.IsDevelopment() || Environment.IsEnvironment("Test")))
             {
                 _logger.LogInformation("Using developer signing credential for Identity Server");
                 identityServerBuilder.AddDeveloperSigningCredential();
@@ -117,8 +133,18 @@ namespace ReactAdvantage.IdentityServer.Startup
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                _logger.LogInformation("Migrating database");
-                serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
+                var db = serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>();
+
+                if (Environment.IsEnvironment("Test"))
+                {
+                    _logger.LogInformation("Creating database if doesn't exist");
+                    db.Database.EnsureCreated();
+                }
+                else
+                {
+                    _logger.LogInformation("Migrating database");
+                    db.Database.Migrate();
+                }
             }
         }
     }

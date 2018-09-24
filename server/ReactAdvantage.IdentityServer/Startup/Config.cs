@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.AspNetCore.Hosting;
 using ReactAdvantage.Domain.Configuration;
 
 namespace ReactAdvantage.IdentityServer.Startup
@@ -26,10 +27,10 @@ namespace ReactAdvantage.IdentityServer.Startup
         }
 
         // clients want to access resources (aka scopes)
-        public static IEnumerable<Client> GetClients(BaseUrls baseUrls)
+        public static IEnumerable<Client> GetClients(BaseUrls baseUrls, IHostingEnvironment environment)
         {
             
-            return new List<Client>
+            var clients = new List<Client>
             {
                 // GraphQL Playground Client
                 new Client
@@ -73,6 +74,28 @@ namespace ReactAdvantage.IdentityServer.Startup
                     }
                 }
             };
+
+            if (environment.IsEnvironment("Test"))
+            {
+                clients.Add(new Client
+                {
+                    ClientId = "testClient",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        ApiResources.ReactAdvantageApi
+                    }
+                });
+            }
+
+            return clients;
         }
     }
 }

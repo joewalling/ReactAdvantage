@@ -1,28 +1,51 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using System.Net;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
-using ReactAdvantage.Api;
 using System.Net.Http;
 using System.Text;
+using IdentityModel.Client;
+using IdentityServer4.AccessTokenValidation;
+using Microsoft.Extensions.DependencyInjection;
+using ReactAdvantage.IdentityServer.Startup;
 using Xunit;
 
 namespace ReactAdvantage.Tests.Integration.Api.Controllers
 {
     public class GraphQLControllerShould
     {
-        private readonly TestServer _server;
-        private readonly HttpClient _client;
+        private readonly TestServer _identityServer;
+        private readonly HttpMessageHandler _identityServerHttpHandler;
+        private readonly TestServer _apiServer;
+        private readonly HttpClient _apiClient;
 
         public GraphQLControllerShould()
         {
-            _server = new TestServer(new WebHostBuilder()
+            _identityServer = new TestServer(new WebHostBuilder()
                 .UseEnvironment("Test")
-                .UseStartup<Startup>()
-            );
-            _client = _server.CreateClient();
+                .UseStartup<ReactAdvantage.IdentityServer.Startup.Startup>());
+            _identityServerHttpHandler = _identityServer.CreateHandler();
+
+            var authenticationOptionsSetter = (Action<IdentityServerAuthenticationOptions>)((options) =>
+            {
+                options.Authority = _identityServer.BaseAddress.ToString();
+                options.ApiName = "ReactAdvantageApi";
+                options.RequireHttpsMetadata = false;
+
+                options.JwtBackChannelHandler = _identityServerHttpHandler;
+                options.IntrospectionDiscoveryHandler = _identityServerHttpHandler;
+                options.IntrospectionBackChannelHandler = _identityServerHttpHandler;
+            });
+
+            _apiServer = new TestServer(new WebHostBuilder()
+                .UseEnvironment("Test")
+                .ConfigureServices(c => c.AddSingleton(authenticationOptionsSetter))
+                .UseStartup<ReactAdvantage.Api.Startup>());
+            _apiClient = _apiServer.CreateClient();
         }
 
         [Fact]
-        public async void ReturnTasks()
+        public async void Return401Unauthorized()
         {
             // Given
             var query = @"{
@@ -31,7 +54,30 @@ namespace ReactAdvantage.Tests.Integration.Api.Controllers
             var content = new StringContent(query, Encoding.UTF8, "application/json");
 
             // When
-            var response = await _client.PostAsync("/graphql", content);
+            var response = await _apiClient.PostAsync("/graphql", content);
+
+            // Then
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            var responseString = await response.Content.ReadAsStringAsync();
+            Assert.True(string.IsNullOrEmpty(responseString));
+        }
+
+        [Fact]
+        public async void ReturnTasks()
+        {
+            // Given
+            var tokenClient = new TokenClient(_identityServer.BaseAddress + "connect/token", "testClient", "secret", _identityServerHttpHandler);
+
+            var query = @"{
+                ""query"": ""query { tasks { id name description } }""
+            }";
+            var content = new StringContent(query, Encoding.UTF8, "application/json");
+
+            // When
+            var tokenResponse = await tokenClient.RequestClientCredentialsAsync(ApiResources.ReactAdvantageApi);
+            _apiClient.SetBearerToken(tokenResponse.AccessToken);
+
+            var response = await _apiClient.PostAsync("/graphql", content);
 
             // Then
             response.EnsureSuccessStatusCode();
