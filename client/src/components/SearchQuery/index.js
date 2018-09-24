@@ -20,6 +20,40 @@ export default class SearchQuery extends Component {
                 input: 'ui-inputtext ui-state-default ui-corner-all ui-widget',
                 txtArea: 'queryText',
             },
+            operators: [{
+                operator: '=',
+                label: '='
+            }, {
+                operator: '<>',
+                label: '<>'
+            }, {
+                operator: '<',
+                label: '<'
+            }, {
+                operator: '>',
+                label: '>'
+            }, {
+                operator: '>=',
+                label: '>='
+            }, {
+                operator: '<=',
+                label: '<='
+            }, {
+                operator: 'IS NULL',
+                label: 'Null'
+            }, {
+                operator: 'IS NOT NULL',
+                label: 'Not Null'
+            }, {
+                operator: 'IN',
+                label: 'Contains'
+            }, {
+                operator: 'NOT IN',
+                label: 'Does Not Contain',
+            }, {
+                operator: 'LIKE',
+                label: 'Starts With',
+            }],
             selectRenderer: this.renderSelect,
             datepickerRenderer: this.renderDatepicker,
         };
