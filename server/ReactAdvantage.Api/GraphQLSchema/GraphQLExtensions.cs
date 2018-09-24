@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using GraphQL;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Identity;
 
 namespace ReactAdvantage.Api.GraphQLSchema
@@ -35,6 +36,11 @@ namespace ReactAdvantage.Api.GraphQLSchema
             var error = identityResult.Errors.FirstOrDefault();
             var errorMessage = error != null ? error.Code + ": " + error.Description : "Identity error";
             throw new ExecutionError(errorMessage);
+        }
+
+        public static GraphQLUserContext GetUserContext<T>(this ResolveFieldContext<T> context)
+        {
+            return context.UserContext as GraphQLUserContext;
         }
     }
 }

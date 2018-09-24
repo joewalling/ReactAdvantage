@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 
@@ -22,6 +23,21 @@ namespace ReactAdvantage.Domain.Configuration
 
         public string ReactClient => _configuration["BaseUrls:ReactClient"];
 
+        public string ReactClientLocal => _configuration["BaseUrls:ReactClientLocal"];
+
+        public string[] CorsUrls
+        {
+            get
+            {
+                return new[]
+                    {
+                        GraphqlPlaygroundJsClient,
+                        ReactClient,
+                        ReactClientLocal
+                    }.Where(x => !string.IsNullOrEmpty(x))
+                    .ToArray();
+            }
+        }
     }
 
     public static class BaseUrlExtensions

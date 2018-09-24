@@ -1,9 +1,10 @@
-﻿using GraphQL.Types;
+﻿using GraphQL;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ReactAdvantage.Api.GraphQLSchema.Models;
 using ReactAdvantage.Api.GraphQLSchema.Types;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.Api.GraphQLSchema
@@ -22,6 +23,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 ),
                 resolve: context =>
                 {
+                    context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
+
                     var userInput = context.GetArgument<UserInput>("user");
                     userInput.Id = null;
                     if (string.IsNullOrEmpty(userInput.Password))
@@ -43,6 +46,15 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 resolve: context =>
                 {
                     var userInput = context.GetArgument<UserInput>("user");
+
+                    var userContext = context.GetUserContext();
+                    if (!userContext.IsInRole(RoleNames.HostAdministrator) && userContext.Id != userInput.Id)
+                    {
+                        throw new ExecutionError($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}" 
+                                                 + " role to be able to edit any user, otherwise you can only edit" 
+                                                 + $" your own user (id: {userContext.Id}).");
+                    }
+                    
                     var user = userManager.FindByIdAsync(userInput.Id).GetAwaiter().GetResult();
                     user.UpdateValuesFrom(userInput);
                     userManager.UpdateAsync(user).GetAwaiter().GetResult().ThrowOnError();

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.Data
@@ -91,10 +92,16 @@ namespace ReactAdvantage.Data
 
         private void SeedUsers()
         {
-            if (!_db.Roles.Any(r => r.Name == "Administrator"))
+            if (!_db.Roles.Any(r => r.Name == RoleNames.HostAdministrator))
+            {
+                _db.Logger.LogInformation("Seeding host administrator role");
+                _roleManager.CreateAsync(new IdentityRole(RoleNames.HostAdministrator)).GetAwaiter().GetResult();
+            }
+
+            if (!_db.Roles.Any(r => r.Name == RoleNames.Administrator))
             {
                 _db.Logger.LogInformation("Seeding administrator role");
-                _roleManager.CreateAsync(new IdentityRole("Administrator")).GetAwaiter().GetResult();
+                _roleManager.CreateAsync(new IdentityRole(RoleNames.Administrator)).GetAwaiter().GetResult();
             }
             
             if (!_db.Users.Any())
@@ -103,6 +110,13 @@ namespace ReactAdvantage.Data
 
                 var users = new[]
                 {
+                    new User
+                    {
+                        UserName = "hostAdmin",
+                        Email = "jwalling@wallingis.com",
+                        EmailConfirmed = true,
+                        IsActive = true
+                    },
                     new User
                     {
                         UserName = "admin",
@@ -144,7 +158,8 @@ namespace ReactAdvantage.Data
                     _userManager.CreateAsync(user, "Pass123$").GetAwaiter().GetResult();
                 }
 
-                _userManager.AddToRoleAsync(users[0], "Administrator").GetAwaiter().GetResult();
+                _userManager.AddToRoleAsync(users[0], RoleNames.HostAdministrator).GetAwaiter().GetResult();
+                _userManager.AddToRoleAsync(users[1], RoleNames.Administrator).GetAwaiter().GetResult();
             }
         }
     }
