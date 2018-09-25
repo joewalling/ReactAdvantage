@@ -1,8 +1,6 @@
 ﻿using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using GraphQL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +42,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             //Given
             var userContextMock = new Mock<GraphQLUserContext>();
             userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync(userContextMock.Object);
@@ -51,6 +50,69 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Then
             AssertValidGraphqlExecutionResult(result);
 
+            var userId = AssertAddUserQueryPassed(result);
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find(userId);
+                Assert.Null(user.PasswordHash);
+                Assert.False(await userManager.CheckPasswordAsync(user, "Test123$"));
+            }
+        }
+
+        [Fact]
+        public async void AddUserWithPassword()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+
+            // When
+            var result = await ExecuteAddUserQueryAsync(userContextMock.Object, setPassword: true, password: "Test123$");
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            var userId = AssertAddUserQueryPassed(result);
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find(userId);
+                Assert.NotNull(user.PasswordHash);
+                Assert.True(await userManager.CheckPasswordAsync(user, "Test123$"));
+            }
+        }
+
+        private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(GraphQLUserContext userContext, bool setPassword = false, string password = null)
+        {
+            return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        addUser(user: {{ 
+                            userName: ""TestUser""
+                            firstName: ""Tom""
+                            lastName: ""Smith""
+                            email: ""test@test.com""
+                            isActive: true
+                            {(setPassword ? $@"password: ""{password}""" : "")}
+                        }})
+                        {{ 
+                            id
+                            userName
+                            firstName
+                            lastName
+                            email
+                            isActive
+                        }}
+                    }}"
+            }, userContext);
+        }
+
+        private string AssertAddUserQueryPassed(ExecutionResult result)
+        {
             string userId = null;
 
             AssertGraphqlResultDictionary(result.Data,
@@ -82,32 +144,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("test@test.com", user.Email);
                 Assert.True(user.IsActive);
             }
-        }
 
-        private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(GraphQLUserContext userContext)
-        {
-            return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
-            {
-                Query = @"
-                    mutation 
-                    { 
-                        addUser(user: { 
-                            userName: ""TestUser""
-                            firstName: ""Tom""
-                            lastName: ""Smith""
-                            email: ""test@test.com""
-                            isActive: true
-                        })
-                        { 
-                            id
-                            userName
-                            firstName
-                            lastName
-                            email
-                            isActive
-                        }
-                    }"
-            }, userContext);
+            return userId;
         }
 
         [Fact]
@@ -217,8 +255,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.Equal(oldPasswordHash, newPasswordHash);
-            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
-            Assert.True(passwordCheckResult);
+            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
         }
 
         [Fact]
@@ -254,10 +291,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.NotEqual(oldPasswordHash, newPasswordHash);
-            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
-            Assert.False(passwordCheckResult);
-            passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test456$");
-            Assert.True(passwordCheckResult);
+            Assert.False(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test456$"));
         }
 
         [Fact]
@@ -297,10 +332,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.Equal(oldPasswordHash, newPasswordHash);
-            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
-            Assert.True(passwordCheckResult);
-            passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "123");
-            Assert.False(passwordCheckResult);
+            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.False(await userManager.CheckPasswordAsync(seededUser, "123"));
         }
 
         private async Threading.Task<User> SeedInitialUserForEdit()

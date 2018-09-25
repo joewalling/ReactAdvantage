@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Moq;
 using ReactAdvantage.Domain.Configuration;
 using Xunit;
@@ -18,17 +15,24 @@ namespace ReactAdvantage.Tests.Unit.Domain.Configuration
             //Given
             _configurationMock = new Mock<IConfiguration>();
             _configurationMock.Setup(x => x["BaseUrls:Api"]).Returns("http://api");
+            _configurationMock.Setup(x => x["BaseUrls:IdentityServer"]).Returns("http://identity");
             _configurationMock.Setup(x => x["BaseUrls:GraphqlPlaygroundJsClient"]).Returns("http://graphqlPlayground");
             _configurationMock.Setup(x => x["BaseUrls:ReactClient"]).Returns("http://react");
             _configurationMock.Setup(x => x["BaseUrls:ReactClientLocal"]).Returns("http://reactLocal");
 
-            _baseUrls = new BaseUrls(_configurationMock.Object);
+            _baseUrls = _configurationMock.Object.GetBaseUrls();
         }
 
         [Fact]
         public void ReturnApiUrl()
         {
             Assert.Equal("http://api", _baseUrls.Api);
+        }
+
+        [Fact]
+        public void ReturnIdentityServerUrl()
+        {
+            Assert.Equal("http://identity", _baseUrls.IdentityServer);
         }
 
         [Fact]
