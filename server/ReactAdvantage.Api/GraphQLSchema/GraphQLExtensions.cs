@@ -21,11 +21,6 @@ namespace ReactAdvantage.Api.GraphQLSchema
             return handler(argumentValue, query);
         }
 
-        public static Inputs ToInputs(this Dictionary<string, object> dictionary)
-        {
-            return new Inputs(dictionary ?? new Dictionary<string, object>());
-        }
-
         public static void ThrowOnError(this IdentityResult identityResult)
         {
             if (identityResult.Succeeded)
