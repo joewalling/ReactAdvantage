@@ -14,7 +14,7 @@ if not exist %ReportGeneratorPath%\ goto :noDirectoryError
 
 if not exist coverage\unit mkdir coverage\unit
 echo Running OpenCover
-%OpenCoverPath%\OpenCover.Console.exe -target:"dotnet.exe" -targetargs:"test -f netcoreapp2.1 -c Release test/ReactAdvantage.Tests.Unit/ReactAdvantage.Tests.Unit.csproj" -hideskipped:File -output:coverage/unit/coverage.xml -oldStyle -filter:"+[ReactAdvantage*]* -[ReactAdvantage.Tests*]* -[ReactAdvantage.Api]*Program -[ReactAdvantage.Api]*Startup -[ReactAdvantage.Data]*EntityFramework.Workaround.Program -[ReactAdvantage.Data]*EntityFramework.Migrations* -[ReactAdvantage.Data]*EntityFramework.Seed*" -searchdirs:"Tests/ReactAdvantage.Tests.Unit/bin/Release/netcoreapp2.1" -register:user || goto :error
+%OpenCoverPath%\OpenCover.Console.exe -target:"dotnet.exe" -targetargs:"test -f netcoreapp2.1 -c Release test/ReactAdvantage.Tests.Unit/ReactAdvantage.Tests.Unit.csproj" -hideskipped:File -output:coverage/unit/coverage.xml -oldStyle -filter:"+[ReactAdvantage*]* -[ReactAdvantage.Tests*]* -[ReactAdvantage.Api]*Program -[ReactAdvantage.Api]*Startup -[ReactAdvantage.Api.Views]* -[ReactAdvantage.Data]*.Migrations.*" -searchdirs:"Tests/ReactAdvantage.Tests.Unit/bin/Release/netcoreapp2.1" -register:user || goto :error
 echo Running ReportGenerator
 %ReportGeneratorPath%\ReportGenerator.exe -reports:coverage/unit/coverage.xml -targetdir:coverage/unit -verbosity:Error || goto :error
 echo Opening the report file
