@@ -58,6 +58,17 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     }
                     
                     var user = userManager.FindByIdAsync(userInput.Id).GetAwaiter().GetResult();
+
+                    if (!string.IsNullOrEmpty(userInput.Password))
+                    {
+                        //validate the password before editing the user so we can leave the user unchanged if the validation fails
+                        foreach (var validator in userManager.PasswordValidators)
+                        {
+                            validator.ValidateAsync(userManager, user, userInput.Password).GetAwaiter().GetResult()
+                                .ThrowOnError();
+                        }
+                    }
+
                     user.UpdateValuesFrom(userInput);
                     userManager.UpdateAsync(user).GetAwaiter().GetResult().ThrowOnError();
 
@@ -65,6 +76,9 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     {
                         userManager.RemovePasswordAsync(user).GetAwaiter().GetResult().ThrowOnError();
                         userManager.AddPasswordAsync(user, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
+                        //the below doesn't work without adding IUserTwoFactorTokenProvider
+                        //var resetToken = userManager.GeneratePasswordResetTokenAsync(user).GetAwaiter().GetResult();
+                        //userManager.ResetPasswordAsync(user, resetToken, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
                     }
 
                     return userInput;

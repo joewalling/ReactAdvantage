@@ -1,8 +1,6 @@
 ﻿using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Domain.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using GraphQL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,6 +42,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             //Given
             var userContextMock = new Mock<GraphQLUserContext>();
             userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync(userContextMock.Object);
@@ -51,6 +50,69 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Then
             AssertValidGraphqlExecutionResult(result);
 
+            var userId = AssertAddUserQueryPassed(result);
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find(userId);
+                Assert.Null(user.PasswordHash);
+                Assert.False(await userManager.CheckPasswordAsync(user, "Test123$"));
+            }
+        }
+
+        [Fact]
+        public async void AddUserWithPassword()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+
+            // When
+            var result = await ExecuteAddUserQueryAsync(userContextMock.Object, setPassword: true, password: "Test123$");
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            var userId = AssertAddUserQueryPassed(result);
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find(userId);
+                Assert.NotNull(user.PasswordHash);
+                Assert.True(await userManager.CheckPasswordAsync(user, "Test123$"));
+            }
+        }
+
+        private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(GraphQLUserContext userContext, bool setPassword = false, string password = null)
+        {
+            return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        addUser(user: {{ 
+                            userName: ""TestUser""
+                            firstName: ""Tom""
+                            lastName: ""Smith""
+                            email: ""test@test.com""
+                            isActive: true
+                            {(setPassword ? $@"password: ""{password}""" : "")}
+                        }})
+                        {{ 
+                            id
+                            userName
+                            firstName
+                            lastName
+                            email
+                            isActive
+                        }}
+                    }}"
+            }, userContext);
+        }
+
+        private string AssertAddUserQueryPassed(ExecutionResult result)
+        {
             string userId = null;
 
             AssertGraphqlResultDictionary(result.Data,
@@ -82,32 +144,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("test@test.com", user.Email);
                 Assert.True(user.IsActive);
             }
-        }
 
-        private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(GraphQLUserContext userContext)
-        {
-            return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
-            {
-                Query = @"
-                    mutation 
-                    { 
-                        addUser(user: { 
-                            userName: ""TestUser""
-                            firstName: ""Tom""
-                            lastName: ""Smith""
-                            email: ""test@test.com""
-                            isActive: true
-                        })
-                        { 
-                            id
-                            userName
-                            firstName
-                            lastName
-                            email
-                            isActive
-                        }
-                    }"
-            }, userContext);
+            return userId;
         }
 
         [Fact]
@@ -124,12 +162,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
             
             // Then
-            Assert.NotNull(result);
-            Assert.NotNull(result.Data);
-            AssertGraphqlResultDictionary(result.Data,
-                editUserResult => AssertPairEqual(editUserResult, "editUser", null)
-            );
-            Assert.Collection(result.Errors, error =>
+            AssertEditUserQueryFailed(result, error =>
             {
                 var exception = Assert.IsType<ExecutionError>(error);
                 Assert.Equal($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}"
@@ -222,8 +255,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.Equal(oldPasswordHash, newPasswordHash);
-            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
-            Assert.True(passwordCheckResult);
+            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
         }
 
         [Fact]
@@ -259,10 +291,49 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.NotEqual(oldPasswordHash, newPasswordHash);
-            var passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test123$");
-            Assert.False(passwordCheckResult);
-            passwordCheckResult = await userManager.CheckPasswordAsync(seededUser, "Test456$");
-            Assert.True(passwordCheckResult);
+            Assert.False(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test456$"));
+        }
+
+        [Fact]
+        public async void EditUserShouldFailForSimplePassword()
+        {
+            //Given
+            var userContextMock = new Mock<GraphQLUserContext>();
+            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            userContextMock.Setup(x => x.Id).Returns("1");
+
+            var seededUser = await SeedInitialUserForEdit();
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+            await userManager.AddPasswordAsync(seededUser, "Test123$");
+
+            string oldPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                oldPasswordHash = user.PasswordHash;
+            }
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: true, newPassword: "123");
+
+            // Then
+            AssertEditUserQueryFailed(result, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("PasswordTooShort: Passwords must be at least 6 characters.", exception.Message);
+            });
+
+            string newPasswordHash;
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                newPasswordHash = user.PasswordHash;
+            }
+
+            Assert.Equal(oldPasswordHash, newPasswordHash);
+            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.False(await userManager.CheckPasswordAsync(seededUser, "123"));
         }
 
         private async Threading.Task<User> SeedInitialUserForEdit()
@@ -283,7 +354,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             return user;
         }
 
-        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(GraphQLUserContext userContext, bool changePassword = false)
+        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(GraphQLUserContext userContext, bool changePassword = false, string newPassword = "Test456$")
         {
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -298,7 +369,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             lastName: ""Smith""
                             email: ""test@test.com""
                             isActive: true
-                            {(changePassword ? "password: \"Test456$\"" : "")}
+                            {(changePassword ? $@"password: ""{newPassword}""" : "")}
                         }})
                         {{ 
                             id
@@ -339,6 +410,26 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("Smith", user.LastName);
                 Assert.Equal("test@test.com", user.Email);
                 Assert.True(user.IsActive);
+            }
+        }
+
+        private void AssertEditUserQueryFailed(ExecutionResult result, params Action<ExecutionError>[] errorInspectors)
+        {
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                editUserResult => AssertPairEqual(editUserResult, "editUser", null)
+            );
+            Assert.Collection(result.Errors, errorInspectors);
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var user = db.Users.Find("1");
+                Assert.Equal("BobRay1", user.UserName);
+                Assert.Equal("Bob", user.FirstName);
+                Assert.Equal("Ray", user.LastName);
+                Assert.Equal("BobRay@test.com", user.Email);
+                Assert.False(user.IsActive);
             }
         }
 
