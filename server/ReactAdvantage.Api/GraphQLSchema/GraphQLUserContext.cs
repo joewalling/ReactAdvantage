@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using GraphQL;
+using ReactAdvantage.Domain.Extensions;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {
@@ -17,7 +18,9 @@ namespace ReactAdvantage.Api.GraphQLSchema
 
         public virtual ClaimsPrincipal User { get; set; }
         
-        public virtual string Id => User?.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+        public virtual string Id => User.GetId();
+
+        public virtual int? TenantId => User.GetTenantId();
 
         public virtual bool IsInRole(string role)
         {

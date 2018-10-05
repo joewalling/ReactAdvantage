@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -17,6 +18,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Controllers
         private readonly Mock<ISchema> _schemaMock;
         private readonly Mock<IDocumentExecuter> _documentExecutorMock;
         private readonly Mock<ILogger<GraphQLController>> _loggerMock;
+        private readonly Mock<IHostingEnvironment> _envMock;
 
         public GraphQLControllerShould()
         {
@@ -25,7 +27,9 @@ namespace ReactAdvantage.Tests.Unit.Api.Controllers
             _documentExecutorMock.Setup(x => x.ExecuteAsync(It.IsAny<ExecutionOptions>())).Returns(Task.FromResult(new ExecutionResult()));
             _schemaMock = new Mock<ISchema>();
             _loggerMock = new Mock<ILogger<GraphQLController>>();
-            _graphqlController = new GraphQLController(_schemaMock.Object, _documentExecutorMock.Object, _loggerMock.Object);
+            _envMock = new Mock<IHostingEnvironment>();
+            _envMock.Setup(x => x.EnvironmentName).Returns("Test");
+            _graphqlController = new GraphQLController(_schemaMock.Object, _documentExecutorMock.Object, _loggerMock.Object, _envMock.Object);
         }
 
         [Fact]

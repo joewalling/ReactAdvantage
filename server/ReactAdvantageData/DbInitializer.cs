@@ -15,6 +15,7 @@ namespace ReactAdvantage.Data
         private readonly IHostingEnvironment _environment;
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private int _defaulTenantId;
 
         public DbInitializer(
             ReactAdvantageContext db,
@@ -42,8 +43,26 @@ namespace ReactAdvantage.Data
             }
 
             _db.Logger.LogInformation("Seeding database");
+            _defaulTenantId = SeedTenantsAndGetDefaultTenantId();
             SeedUsers();
             SeedTasks();
+        }
+
+        private int SeedTenantsAndGetDefaultTenantId()
+        {
+            if (!_db.Tenants.Any())
+            {
+                _db.Logger.LogInformation("Seeding tenants");
+
+                _db.Tenants.Add(new Tenant
+                {
+                    Name = "default"
+                });
+
+                _db.SaveChanges();
+            }
+
+            return _db.Tenants.First().Id;
         }
 
         private void SeedTasks()
@@ -52,13 +71,14 @@ namespace ReactAdvantage.Data
             {
                 _db.Logger.LogInformation("Seeding tasks and projects");
 
-                var project = new Project { Name = "Create a software product" };
+                var project = new Project { Name = "Create a software product", TenantId = _defaulTenantId };
 
                 _db.Tasks.Add(new Task
                 {
                     Name = "Create UI",
                     Description = "Create a great looking user interface",
                     DueDate = DateTime.Now,
+                    TenantId = _defaulTenantId,
                     Project = project
                 });
                 _db.Tasks.Add(new Task
@@ -66,16 +86,18 @@ namespace ReactAdvantage.Data
                     Name = "Create Business logic",
                     Description = "Create the business logic",
                     DueDate = DateTime.Now,
+                    TenantId = _defaulTenantId,
                     Project = project
                 });
 
-                var project2 = new Project { Name = "Create a second software product" };
+                var project2 = new Project { Name = "Create a second software product", TenantId = _defaulTenantId };
 
                 _db.Tasks.Add(new Task
                 {
                     Name = "Create login form",
                     Description = "Create a great looking login form",
                     DueDate = DateTime.Now,
+                    TenantId = _defaulTenantId,
                     Project = project2
                 });
                 _db.Tasks.Add(new Task
@@ -83,6 +105,7 @@ namespace ReactAdvantage.Data
                     Name = "Create logic for login",
                     Description = "Create the logic for the login form",
                     DueDate = DateTime.Now,
+                    TenantId = _defaulTenantId,
                     Project = project2
                 });
                 
@@ -122,7 +145,8 @@ namespace ReactAdvantage.Data
                         UserName = "admin",
                         Email = "jwalling@wallingis.com",
                         EmailConfirmed = true,
-                        IsActive = true
+                        IsActive = true,
+                        TenantId = _defaulTenantId
                     },
                     new User
                     {
@@ -131,7 +155,8 @@ namespace ReactAdvantage.Data
                         UserName = "jdoe",
                         Email = "jdoe@123.com",
                         EmailConfirmed = true,
-                        IsActive = true
+                        IsActive = true,
+                        TenantId = _defaulTenantId
                     },
                     new User
                     {
@@ -140,7 +165,8 @@ namespace ReactAdvantage.Data
                         UserName = "fflintstone",
                         Email = "fflintstone@gmail.com",
                         EmailConfirmed = true,
-                        IsActive = true
+                        IsActive = true,
+                        TenantId = _defaulTenantId
                     },
                     new User
                     {
@@ -149,7 +175,8 @@ namespace ReactAdvantage.Data
                         UserName = "brubble",
                         Email = "brubble@slate.com",
                         EmailConfirmed = true,
-                        IsActive = true
+                        IsActive = true,
+                        TenantId = _defaulTenantId
                     }
                 };
 

@@ -10,6 +10,8 @@ namespace ReactAdvantage.Domain.Models
         [Key]
         public int Id { get; set; }
 
+        public int TenantId { get; set; }
+
         public int ProjectId { get; set; }
 
         public virtual Project Project { get; set; }
@@ -25,6 +27,7 @@ namespace ReactAdvantage.Domain.Models
 
         public DateTime? CompletionDate { get; set; }
 
+        public virtual Tenant Tenant { get; set; }
 
     }
 }

@@ -3,7 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <DebugType>Full</DebugType>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20181004161839_AddTenantsTable.cs" />
+    <Compile Remove="Migrations\20181004162229_AddTenantsTable.cs" />
+    <Compile Remove="Migrations\20181004180700_AddTenantsTable.cs" />
+    <Compile Remove="Migrations\20181004184602_AddTenantsTable.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="2.1.3" />

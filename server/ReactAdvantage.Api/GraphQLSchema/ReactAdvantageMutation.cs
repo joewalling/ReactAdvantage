@@ -16,6 +16,38 @@ namespace ReactAdvantage.Api.GraphQLSchema
             UserManager<User> userManager
             )
         {
+            Field<TenantType>(
+                "addTenant",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<TenantInputType>> { Name = "tenant" }
+                ),
+                resolve: context =>
+                {
+                    context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
+
+                    var tenant = context.GetArgument<Tenant>("tenant");
+                    tenant.Id = 0;
+                    db.Add(tenant);
+                    db.SaveChanges();
+                    return tenant;
+                });
+
+            Field<TenantType>(
+                "editTenant",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<TenantInputType>> { Name = "tenant" }
+                ),
+                resolve: context =>
+                {
+                    context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
+
+                    var tenant = context.GetArgument<Tenant>("tenant");
+                    var entity = db.Tenants.Find(tenant.Id);
+                    db.Entry(entity).CurrentValues.SetValues(tenant);
+                    db.SaveChanges();
+                    return tenant;
+                });
+
             Field<UserType>(
                 "addUser",
                 arguments: new QueryArguments(
