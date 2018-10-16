@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using ReactAdvantage.Domain.MultiTenancy;
 
 namespace ReactAdvantage.Domain.Models
 {
-    public class Project
+    public class Project : IMustHaveTenant
     {
         public Project()
         {
@@ -23,5 +24,12 @@ namespace ReactAdvantage.Domain.Models
         public virtual ICollection<Task> Tasks { get; set; }
 
         public virtual Tenant Tenant { get; set; }
+
+        public void UpdateValuesFrom(Project other)
+        {
+            //only update the editable fields
+            //TenantId = other.TenantId;
+            Name = other.Name;
+        }
     }
 }

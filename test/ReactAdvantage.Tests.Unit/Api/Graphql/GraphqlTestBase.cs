@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using ReactAdvantage.Api.Extensions;
 using ReactAdvantage.Api.GraphQLSchema;
+using ReactAdvantage.Api.Services;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Models;
 using Xunit;
@@ -21,6 +22,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
     {
         private readonly string _databaseName;
         protected ServiceProvider ServiceProvider { get; }
+        protected Mock<GraphQLUserContext> UserContextMock { get; }
 
         public GraphqlTestBase()
         {
@@ -33,9 +35,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             services.AddGraphqlServices();
 
             ServiceProvider = services.BuildServiceProvider();
+
+            UserContextMock = new Mock<GraphQLUserContext>();
+            UserContextMock.Setup(x => x.TenantId).Returns(1);
         }
 
-        protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query, GraphQLUserContext userContext = null)
+        protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query)
         {
             var schema = ServiceProvider.GetService<ISchema>();
             var documentExecuter = ServiceProvider.GetService<IDocumentExecuter>();
@@ -45,7 +50,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Schema = schema,
                 Query = query.Query,
                 Inputs = query.Variables.ToInputs(),
-                UserContext = userContext
+                UserContext = UserContextMock.Object
             };
 
             var result = await documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);
@@ -53,7 +58,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             return result;
         }
 
-        protected ReactAdvantageContext GetInMemoryDbContext()
+        protected ReactAdvantageContext GetInMemoryDbContext(int? tenantId = 1)
         {
             var options = new DbContextOptionsBuilder<ReactAdvantageContext>()
                 .UseInMemoryDatabase(databaseName: _databaseName)
@@ -61,7 +66,10 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
 
             var dbLogger = new Mock<ILogger<ReactAdvantageContext>>();
 
-            return new ReactAdvantageContext(options, dbLogger.Object);
+            var tenantProvider = new Mock<ITenantProvider>();
+            tenantProvider.Setup(x => x.GetTenantId()).Returns(tenantId);
+
+            return new ReactAdvantageContext(options, dbLogger.Object, tenantProvider.Object);
         }
         
         protected void AssertValidGraphqlExecutionResult(ExecutionResult result)

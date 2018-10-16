@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using ReactAdvantage.Api.Services;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
@@ -27,8 +28,10 @@ namespace ReactAdvantage.Tests.Unit.Data
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
             var loggerMock = new Mock<ILogger<ReactAdvantageContext>>();
+            var tenantProviderMock = new Mock<ITenantProvider>();
+            tenantProviderMock.Setup(x => x.GetTenantId()).Returns((int?)null);
 
-            _db = new ReactAdvantageContext(dbOptions, loggerMock.Object);
+            _db = new ReactAdvantageContext(dbOptions, loggerMock.Object, tenantProviderMock.Object);
 
             _envMock = new Mock<IHostingEnvironment>();
             _envMock.Setup(x => x.EnvironmentName).Returns("Test");
@@ -70,8 +73,11 @@ namespace ReactAdvantage.Tests.Unit.Data
 
             //Then
 
-            Assert.True(_db.Projects.AnyAsync().GetAwaiter().GetResult());
-            Assert.True(_db.Tasks.AnyAsync().GetAwaiter().GetResult());
+            using (_db.DisableTenantFilter())
+            {
+                Assert.True(_db.Projects.AnyAsync().GetAwaiter().GetResult());
+                Assert.True(_db.Tasks.AnyAsync().GetAwaiter().GetResult());
+            }
         }
 
         [Fact]
@@ -115,20 +121,22 @@ namespace ReactAdvantage.Tests.Unit.Data
         public void NotSeedExistingTasks()
         {
             //Given
+            using (_db.SetTenantFilterValue(1))
+            {
+                var task = new Task { Name = "Test Task", TenantId = 1 };
+                _db.Tasks.Add(task);
+                _db.SaveChanges();
 
-            var task = new Task { Name = "Test Task" };
-            _db.Tasks.Add(task);
-            _db.SaveChanges();
+                //When
 
-            //When
+                _dbInitializer.Initialize();
 
-            _dbInitializer.Initialize();
+                //Then
 
-            //Then
-
-            Assert.Collection(_db.Tasks,
-                dbTask => Assert.Same(task, dbTask)
-            );
+                Assert.Collection(_db.Tasks,
+                    dbTask => Assert.Same(task, dbTask)
+                );
+            }
         }
 
         [Fact]

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using ReactAdvantage.Api.Services;
 using ReactAdvantage.Data;
 using Xunit;
 
@@ -16,13 +17,15 @@ namespace ReactAdvantage.Tests.Unit.Data
             var options = new DbContextOptionsBuilder<ReactAdvantageContext>()
                 .UseInMemoryDatabase(databaseName: "ReactAdvantage")
                 .Options;
+            var tenantProviderMock = new Mock<ITenantProvider>();
+            tenantProviderMock.Setup(x => x.GetTenantId()).Returns(1);
 
             //When
-            using (var db = new ReactAdvantageContext(options, dbLogger.Object))
+            using (var db = new ReactAdvantageContext(options, dbLogger.Object, tenantProviderMock.Object))
             {
                 //Then
                 Assert.NotNull(db.Logger);
-                Assert.Equal(dbLogger.Object, db.Logger);
+                Assert.Same(dbLogger.Object, db.Logger);
             }
         }
     }

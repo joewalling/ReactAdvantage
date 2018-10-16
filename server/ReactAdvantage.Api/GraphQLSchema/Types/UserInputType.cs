@@ -10,7 +10,7 @@ namespace ReactAdvantage.Api.GraphQLSchema.Types
         {
             Name = "UserInput";
             Field(x => x.Id, nullable: true);
-            Field(x => x.TenantId, nullable: true);
+            //Field(x => x.TenantId, nullable: true);
             Field(x => x.FirstName, nullable: true);
             Field(x => x.LastName, nullable: true);
             Field(x => x.UserName, nullable: false);

@@ -125,6 +125,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 {
                     var project = context.GetArgument<Project>("project");
                     project.Id = 0;
+                    project.SetTenantIdOrThrow(context);
                     db.Add(project);
                     db.SaveChanges();
                     return project;
@@ -139,7 +140,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 {
                     var project = context.GetArgument<Project>("project");
                     var entity = db.Projects.Find(project.Id);
-                    db.Entry(entity).CurrentValues.SetValues(project);
+                    entity.UpdateValuesFrom(project);
                     db.SaveChanges();
                     return project;
                 });
@@ -153,6 +154,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 {
                     var task = context.GetArgument<Task>("task");
                     task.Id = 0;
+                    task.SetTenantIdOrThrow(context);
                     db.Add(task);
                     db.SaveChanges();
                     return task;
@@ -167,7 +169,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 {
                     var task = context.GetArgument<Task>("task");
                     var entity = db.Tasks.Find(task.Id);
-                    db.Entry(entity).CurrentValues.SetValues(task);
+                    entity.UpdateValuesFrom(task);
                     db.SaveChanges();
                     return task;
                 });

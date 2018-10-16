@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using ReactAdvantage.Domain.MultiTenancy;
 
 namespace ReactAdvantage.Domain.Models
 {
-    public class User : IdentityUser
+    public class User : IdentityUser, IMayHaveTenant
     {
         public int? TenantId { get; set; }
 
@@ -16,7 +17,8 @@ namespace ReactAdvantage.Domain.Models
 
         public void UpdateValuesFrom(User other)
         {
-            //TenantId = other.TenantId; //only update the editable fields
+            //only update the editable fields
+            //TenantId = other.TenantId;
             FirstName = other.FirstName;
             LastName = other.LastName;
             UserName = other.UserName;

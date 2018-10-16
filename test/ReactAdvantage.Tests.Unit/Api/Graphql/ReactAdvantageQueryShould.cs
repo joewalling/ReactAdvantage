@@ -13,38 +13,38 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             using (var db = GetInMemoryDbContext())
             {
-                db.Users.Add(new User { Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = true });
-                db.Users.Add(new User { Id = "2", UserName = "BobRay2", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false });
-                db.Users.Add(new User { Id = "3", UserName = "BobRay3", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = true });
-                db.Users.Add(new User { Id = "4", UserName = "BobRay4", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = false });
-                db.Users.Add(new User { Id = "5", UserName = "BobSmith1", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = true });
-                db.Users.Add(new User { Id = "6", UserName = "BobSmith2", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = false });
-                db.Users.Add(new User { Id = "7", UserName = "BobSmith3", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = true });
-                db.Users.Add(new User { Id = "8", UserName = "BobSmith4", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = false });
-                db.Users.Add(new User { Id = "9", UserName = "BarbaraRay1", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = true });
-                db.Users.Add(new User { Id = "10", UserName = "BarbaraRay2", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = false });
-                db.Users.Add(new User { Id = "11", UserName = "BarbaraRay3", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = true });
-                db.Users.Add(new User { Id = "12", UserName = "BarbaraRay4", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = false });
-                db.Users.Add(new User { Id = "13", UserName = "BarbaraSmith1", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = true });
-                db.Users.Add(new User { Id = "14", UserName = "BarbaraSmith2", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = false });
-                db.Users.Add(new User { Id = "15", UserName = "BarbaraSmith3", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = true });
-                db.Users.Add(new User { Id = "16", UserName = "BarbaraSmith4", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "2", UserName = "BobRay2", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "3", UserName = "BobRay3", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "4", UserName = "BobRay4", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "5", UserName = "BobSmith1", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "6", UserName = "BobSmith2", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "7", UserName = "BobSmith3", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "8", UserName = "BobSmith4", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "9", UserName = "BarbaraRay1", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "10", UserName = "BarbaraRay2", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "11", UserName = "BarbaraRay3", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "12", UserName = "BarbaraRay4", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "13", UserName = "BarbaraSmith1", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "14", UserName = "BarbaraSmith2", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = false });
+                db.Users.Add(new User { TenantId = 1, Id = "15", UserName = "BarbaraSmith3", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = true });
+                db.Users.Add(new User { TenantId = 1, Id = "16", UserName = "BarbaraSmith4", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = false });
                 db.SaveChanges();
 
-                db.Projects.Add(new Project { Id = 1, Name = "Test Project 1" });
-                db.Projects.Add(new Project { Id = 2, Name = "Test Project 2" });
-                db.Projects.Add(new Project { Id = 3, Name = "Another Project 3" });
+                db.Projects.Add(new Project { TenantId = 1, Id = 1, Name = "Test Project 1" });
+                db.Projects.Add(new Project { TenantId = 1, Id = 2, Name = "Test Project 2" });
+                db.Projects.Add(new Project { TenantId = 1, Id = 3, Name = "Another Project 3" });
                 db.SaveChanges();
 
-                db.Tasks.Add(new Task { Id = 1, ProjectId = 1, Name = "Task 1", Description = "This is a test task", DueDate = new DateTime(2020, 1, 1) });
-                db.Tasks.Add(new Task { Id = 2, ProjectId = 1, Name = "Task 2", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
-                db.Tasks.Add(new Task { Id = 3, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
-                db.Tasks.Add(new Task { Id = 4, ProjectId = 2, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
-                db.Tasks.Add(new Task { Id = 5, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2001, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
-                db.Tasks.Add(new Task { Id = 6, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = false, CompletionDate = new DateTime(2010, 1, 1) });
-                db.Tasks.Add(new Task { Id = 7, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2011, 1, 1) });
-                db.Tasks.Add(new Task { Id = 8, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = null });
-                db.Tasks.Add(new Task { Id = 9, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 1, ProjectId = 1, Name = "Task 1", Description = "This is a test task", DueDate = new DateTime(2020, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 2, ProjectId = 1, Name = "Task 2", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 3, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 4, ProjectId = 2, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 5, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2001, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 6, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = false, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 7, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2011, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 8, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = null });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 9, ProjectId = 1, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
                 db.SaveChanges();
             }
         }

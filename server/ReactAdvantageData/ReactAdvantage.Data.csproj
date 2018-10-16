@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20181004162229_AddTenantsTable.cs" />
     <Compile Remove="Migrations\20181004180700_AddTenantsTable.cs" />
     <Compile Remove="Migrations\20181004184602_AddTenantsTable.cs" />
+    <Compile Remove="Migrations\20181009225132_MakeTenantIdFieldRequired.cs" />
+    <Compile Remove="Migrations\20181009231518_MakeTenantIdFieldRequired.cs" />
   </ItemGroup>
 
   <ItemGroup>

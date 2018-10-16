@@ -11,6 +11,7 @@ using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Models;
 using ReactAdvantage.Api.Extensions;
+using ReactAdvantage.Api.Services;
 using ReactAdvantage.Domain.Configuration;
 
 namespace ReactAdvantage.Api
@@ -46,6 +47,7 @@ namespace ReactAdvantage.Api
             // Add application services.
             services.AddGraphqlServices();
             services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddScoped<ITenantProvider, TenantProvider>();
 
             services.AddMvc();
 
