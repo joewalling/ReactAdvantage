@@ -27,6 +27,14 @@ namespace ReactAdvantage.Api.GraphQLSchema
             return User?.IsInRole(role) ?? false;
         }
 
+        public void EnsureIsInEitherRole(params string[] roles)
+        {
+            if (!roles.Any(IsInRole))
+            {
+                throw new ExecutionError($"Unauthorized. You have to be a member of either one of these roles: {string.Join(", ", roles)}");
+            }
+        }
+
         public void EnsureIsInRole(string role)
         {
             if (!IsInRole(role))

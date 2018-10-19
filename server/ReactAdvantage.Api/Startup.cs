@@ -13,6 +13,7 @@ using ReactAdvantage.Domain.Models;
 using ReactAdvantage.Api.Extensions;
 using ReactAdvantage.Api.Services;
 using ReactAdvantage.Domain.Configuration;
+using ReactAdvantage.Domain.Services;
 
 namespace ReactAdvantage.Api
 {

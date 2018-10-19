@@ -182,11 +182,17 @@ namespace ReactAdvantage.Data
 
                 foreach (var user in users)
                 {
-                    _userManager.CreateAsync(user, "Pass123$").GetAwaiter().GetResult();
-                }
+                    using (_db.SetTenantFilterValue(user.TenantId))
+                    {
+                        _userManager.CreateAsync(user, "Pass123$").GetAwaiter().GetResult();
 
-                _userManager.AddToRoleAsync(users[0], RoleNames.HostAdministrator).GetAwaiter().GetResult();
-                _userManager.AddToRoleAsync(users[1], RoleNames.Administrator).GetAwaiter().GetResult();
+                        if (user.UserName == "admin")
+                        {
+                            _userManager.AddToRoleAsync(user, user.TenantId == null ? RoleNames.HostAdministrator : RoleNames.Administrator)
+                                .GetAwaiter().GetResult();
+                        }
+                    }
+                }
             }
         }
     }

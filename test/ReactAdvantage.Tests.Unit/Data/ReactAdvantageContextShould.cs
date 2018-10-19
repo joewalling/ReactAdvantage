@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using ReactAdvantage.Api.Services;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Services;
 using Xunit;
 
 namespace ReactAdvantage.Tests.Unit.Data

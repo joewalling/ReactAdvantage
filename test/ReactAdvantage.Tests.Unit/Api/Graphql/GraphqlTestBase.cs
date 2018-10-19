@@ -14,6 +14,7 @@ using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Api.Services;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Models;
+using ReactAdvantage.Domain.Services;
 using Xunit;
 
 namespace ReactAdvantage.Tests.Unit.Api.Graphql

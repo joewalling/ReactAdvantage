@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
+using ReactAdvantage.Domain.Services;
 using ReactAdvantage.IdentityServer.Services;
 
 namespace ReactAdvantage.IdentityServer.Startup
@@ -50,6 +51,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                 .AddDefaultTokenProviders();
 
             //services.AddSingleton<BaseUrls>();
+            services.AddScoped<ITenantProvider, TenantProvider>();
 
             services.AddMvc();
 

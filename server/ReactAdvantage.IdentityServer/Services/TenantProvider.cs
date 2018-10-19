@@ -2,7 +2,7 @@
 using ReactAdvantage.Domain.Extensions;
 using ReactAdvantage.Domain.Services;
 
-namespace ReactAdvantage.Api.Services
+namespace ReactAdvantage.IdentityServer.Services
 {
     public class TenantProvider : ITenantProvider
     {

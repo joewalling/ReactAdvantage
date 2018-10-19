@@ -11,11 +11,17 @@ namespace ReactAdvantage.Api.GraphQLSchema
 {
     public class ReactAdvantageMutation : ObjectGraphType
     {
+        private readonly ReactAdvantageContext _db;
+        private readonly UserManager<User> _userManager;
+        
         public ReactAdvantageMutation(
             ReactAdvantageContext db,
             UserManager<User> userManager
             )
         {
+            _db = db;
+            _userManager = userManager;
+
             Field<TenantType>(
                 "addTenant",
                 arguments: new QueryArguments(
@@ -25,11 +31,24 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 {
                     context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
 
-                    var tenant = context.GetArgument<Tenant>("tenant");
-                    tenant.Id = 0;
-                    db.Add(tenant);
+                    var tenantInput = context.GetArgument<TenantInput>("tenant");
+                    tenantInput.Id = 0;
+                    var tenant = new Tenant();
+                    tenant.UpdateValuesFrom(tenantInput);
+                    db.Add(tenantInput);
                     db.SaveChanges();
-                    return tenant;
+
+                    using (_db.SetTenantFilterValue(tenant.Id))
+                    {
+                        var adminUser = tenantInput.AdminUser;
+                        adminUser.UserName = "admin";
+                        adminUser.TenantId = tenant.Id;
+                        AddUser(adminUser);
+
+                        _userManager.AddToRoleAsync(adminUser, RoleNames.Administrator).GetAwaiter().GetResult();
+                    }
+
+                    return tenantInput;
                 });
 
             Field<TenantType>(
@@ -41,11 +60,11 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 {
                     context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
 
-                    var tenant = context.GetArgument<Tenant>("tenant");
-                    var entity = db.Tenants.Find(tenant.Id);
-                    db.Entry(entity).CurrentValues.SetValues(tenant);
+                    var tenantInput = context.GetArgument<TenantInput>("tenant");
+                    var entity = db.Tenants.Find(tenantInput.Id);
+                    entity.UpdateValuesFrom(tenantInput);
                     db.SaveChanges();
-                    return tenant;
+                    return tenantInput;
                 });
 
             Field<UserType>(
@@ -55,19 +74,15 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 ),
                 resolve: context =>
                 {
-                    context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
+                    context.GetUserContext().EnsureIsInEitherRole(RoleNames.HostAdministrator, RoleNames.Administrator);
 
                     var userInput = context.GetArgument<UserInput>("user");
-                    userInput.Id = null;
-                    if (string.IsNullOrEmpty(userInput.Password))
-                    {
-                        userManager.CreateAsync(userInput).GetAwaiter().GetResult().ThrowOnError();
-                    }
-                    else
-                    {
-                        userManager.CreateAsync(userInput, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
-                    }
-                    return userInput;
+
+                    userInput.TenantId = context.GetUserContext().TenantId;
+
+                    var user = AddUser(userInput);
+
+                    return user;
                 });
 
             Field<UserType>(
@@ -88,32 +103,10 @@ namespace ReactAdvantage.Api.GraphQLSchema
                                                  + " role to be able to edit any user, otherwise you can only edit" 
                                                  + $" your own user (id: {userContext.Id}).");
                     }
-                    
-                    var user = userManager.FindByIdAsync(userInput.Id).GetAwaiter().GetResult();
 
-                    if (!string.IsNullOrEmpty(userInput.Password))
-                    {
-                        //validate the password before editing the user so we can leave the user unchanged if the validation fails
-                        foreach (var validator in userManager.PasswordValidators)
-                        {
-                            validator.ValidateAsync(userManager, user, userInput.Password).GetAwaiter().GetResult()
-                                .ThrowOnError();
-                        }
-                    }
+                    var user = EditUser(userInput);
 
-                    user.UpdateValuesFrom(userInput);
-                    userManager.UpdateAsync(user).GetAwaiter().GetResult().ThrowOnError();
-
-                    if (!string.IsNullOrEmpty(userInput.Password))
-                    {
-                        userManager.RemovePasswordAsync(user).GetAwaiter().GetResult().ThrowOnError();
-                        userManager.AddPasswordAsync(user, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
-                        //the below doesn't work without adding IUserTwoFactorTokenProvider
-                        //var resetToken = userManager.GeneratePasswordResetTokenAsync(user).GetAwaiter().GetResult();
-                        //userManager.ResetPasswordAsync(user, resetToken, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
-                    }
-
-                    return userInput;
+                    return user;
                 });
 
             Field<ProjectType>(
@@ -173,6 +166,51 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     db.SaveChanges();
                     return task;
                 });
+        }
+
+        private User AddUser(UserInput userInput)
+        {
+            userInput.Id = null;
+
+            if (string.IsNullOrEmpty(userInput.Password))
+            {
+                _userManager.CreateAsync(userInput).GetAwaiter().GetResult().ThrowOnError();
+            }
+            else
+            {
+                _userManager.CreateAsync(userInput, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
+            }
+
+            return userInput;
+        }
+
+        private User EditUser(UserInput userInput)
+        {
+            var user = _userManager.FindByIdAsync(userInput.Id).GetAwaiter().GetResult();
+
+            if (!string.IsNullOrEmpty(userInput.Password))
+            {
+                //validate the password before editing the user so we can leave the user unchanged if the validation fails
+                foreach (var validator in _userManager.PasswordValidators)
+                {
+                    validator.ValidateAsync(_userManager, user, userInput.Password).GetAwaiter().GetResult()
+                        .ThrowOnError();
+                }
+            }
+
+            user.UpdateValuesFrom(userInput);
+            _userManager.UpdateAsync(user).GetAwaiter().GetResult().ThrowOnError();
+
+            if (!string.IsNullOrEmpty(userInput.Password))
+            {
+                _userManager.RemovePasswordAsync(user).GetAwaiter().GetResult().ThrowOnError();
+                _userManager.AddPasswordAsync(user, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
+                //the below doesn't work without adding IUserTwoFactorTokenProvider
+                //var resetToken = _userManager.GeneratePasswordResetTokenAsync(user).GetAwaiter().GetResult();
+                //_userManager.ResetPasswordAsync(user, resetToken, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
+            }
+
+            return userInput;
         }
     }
 }

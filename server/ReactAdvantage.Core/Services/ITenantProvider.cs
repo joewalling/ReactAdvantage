@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReactAdvantage.Api.Services
+namespace ReactAdvantage.Domain.Services
 {
     public interface ITenantProvider
     {

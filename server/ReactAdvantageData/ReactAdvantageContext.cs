@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ReactAdvantage.Api.Services;
 using ReactAdvantage.Domain;
 using ReactAdvantage.Domain.Models;
+using ReactAdvantage.Domain.Services;
 
 namespace ReactAdvantage.Data
 {
