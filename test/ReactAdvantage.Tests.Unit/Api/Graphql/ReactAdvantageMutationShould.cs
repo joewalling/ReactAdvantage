@@ -29,15 +29,17 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Query = $@"
                     mutation 
                     {{ 
-                        addTenant(tenant: {{
-                            name: ""TestTenant""
+                        addTenant(
+                            tenant: {{
+                                name: ""TestTenant""
+                            }},
                             adminUser: {{ 
                                 userName: ""admin""
                                 email: ""admin@test.com""
                                 isActive: true
                                 password: ""Test123$""
                             }}
-                        }})
+                        )
                         {{ 
                             id
                             name
@@ -92,15 +94,17 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Query = $@"
                     mutation 
                     {{ 
-                        addTenant(tenant: {{
-                            name: ""TestTenant""
+                        addTenant(
+                            tenant: {{
+                                name: ""TestTenant""
+                            }},
                             adminUser: {{ 
                                 userName: ""admin""
                                 email: ""admin@test.com""
                                 isActive: true
                                 password: ""Test123$""
                             }}
-                        }})
+                        )
                         {{ 
                             id
                             name

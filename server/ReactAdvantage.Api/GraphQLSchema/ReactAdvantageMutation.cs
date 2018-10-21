@@ -25,13 +25,14 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field<TenantType>(
                 "addTenant",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<TenantInputType>> { Name = "tenant" }
+                    new QueryArgument<NonNullGraphType<TenantInputType>> { Name = "tenant" },
+                    new QueryArgument<NonNullGraphType<UserInputType>> { Name = "adminUser" }
                 ),
                 resolve: context =>
                 {
                     context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
 
-                    var tenantInput = context.GetArgument<TenantInput>("tenant");
+                    var tenantInput = context.GetArgument<Tenant>("tenant");
                     //tenantInput.Id = 0;
                     var tenant = new Tenant();
                     tenant.UpdateValuesFrom(tenantInput);
@@ -40,9 +41,10 @@ namespace ReactAdvantage.Api.GraphQLSchema
 
                     using (_db.SetTenantFilterValue(tenant.Id))
                     {
-                        var adminUser = tenantInput.AdminUser;
+                        var adminUser = context.GetArgument<UserInput>("adminUser");
                         adminUser.UserName = "admin";
                         adminUser.TenantId = tenant.Id;
+                        adminUser.IsActive = true;
                         AddUser(adminUser);
 
                         _userManager.AddToRoleAsync(adminUser, RoleNames.Administrator).GetAwaiter().GetResult();
@@ -60,7 +62,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 {
                     context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
 
-                    var tenantInput = context.GetArgument<TenantInput>("tenant");
+                    var tenantInput = context.GetArgument<Tenant>("tenant");
                     var entity = db.Tenants.Find(tenantInput.Id);
                     entity.UpdateValuesFrom(tenantInput);
                     db.SaveChanges();
