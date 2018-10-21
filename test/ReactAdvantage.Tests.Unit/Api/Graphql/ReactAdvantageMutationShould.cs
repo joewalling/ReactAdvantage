@@ -640,6 +640,41 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         }
 
         [Fact]
+        public async void AddProjectShouldFailForNonTenantUser()
+        {
+            //Given
+            UserContextMock.Setup(x => x.TenantId).Returns((int?)null);
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        addProject(project: { 
+                            name: ""Test Project""
+                        })
+                        { 
+                            id
+                            name
+                        }
+                    }"
+            });
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                addUserResult => AssertPairEqual(addUserResult, "addProject", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal($"No tenant id. You have to be a member of a tenant to be able to add or edit this record", exception.Message);
+            });
+        }
+
+        [Fact]
         public async void EditProject()
         {
             // Given

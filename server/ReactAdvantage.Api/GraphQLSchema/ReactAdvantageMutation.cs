@@ -80,7 +80,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
 
                     var userInput = context.GetArgument<UserInput>("user");
 
-                    userInput.TenantId = context.GetUserContext().TenantId;
+                    userInput.SetTenantIdOrThrow(context);
 
                     var user = AddUser(userInput);
 

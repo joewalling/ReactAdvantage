@@ -53,6 +53,67 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             Assert.Null(id);
         }
 
+        [Fact]
+        public void ReturnTenantId()
+        {
+            //Given
+            var claimsPrincipal = new Mock<ClaimsPrincipal>();
+            claimsPrincipal.Setup(x => x.Claims).Returns(new[] { new Claim("tenantid", "5") });
+
+            var userContext = new GraphQLUserContext(claimsPrincipal.Object);
+
+            //When
+            var tenantId = userContext.TenantId;
+
+            //Then
+            Assert.Equal(5, tenantId);
+        }
+
+        [Fact]
+        public void NotThrowOnMissingTenantIdClaim()
+        {
+            //Given
+            var claimsPrincipal = new Mock<ClaimsPrincipal>();
+            claimsPrincipal.Setup(x => x.Claims).Returns(new[] { new Claim("notTenantI", "test value") });
+
+            var userContext = new GraphQLUserContext(claimsPrincipal.Object);
+
+            //When
+            var id = userContext.TenantId;
+
+            //Then
+            Assert.Null(id);
+        }
+
+        [Fact]
+        public void ReturnTenantIdForEmptyUser()
+        {
+            //Given
+            var claimsPrincipal = new Mock<ClaimsPrincipal>();
+            claimsPrincipal.Setup(x => x.Claims).Returns(new[] { new Claim("tenantid", "five") });
+
+            var userContext = new GraphQLUserContext(claimsPrincipal.Object);
+
+            //When
+            var id = userContext.TenantId;
+
+            //Then
+            Assert.Null(id);
+        }
+
+        [Fact]
+        public void NotThrowOnNonNumericTenantId()
+        {
+            //Given
+            var userContext = new GraphQLUserContext();
+
+            //When
+            var id = userContext.TenantId;
+
+            //Then
+            Assert.Null(id);
+        }
+
         private Mock<ClaimsPrincipal> GetClaimPrincipalMockForRoles()
         {
             var claimsPrincipal = new Mock<ClaimsPrincipal>();
