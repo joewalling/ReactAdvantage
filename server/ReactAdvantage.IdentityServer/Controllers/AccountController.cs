@@ -132,14 +132,14 @@ namespace ReactAdvantage.IdentityServer.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName));
-                        
+
                     if (context != null)
                     {
                         if (await _clientStore.IsPkceClientAsync(context.ClientId))
                         {
                             // if the client is PKCE then we assume it's native, so this change in how to
                             // return the response is for better UX for the end user.
-                            return View("Redirect", new RedirectViewModel {RedirectUrl = model.ReturnUrl});
+                            return View("Redirect", new RedirectViewModel { RedirectUrl = model.ReturnUrl });
                         }
 
                         // we can trust model.ReturnUrl since GetAuthorizationContextAsync returned non-null
