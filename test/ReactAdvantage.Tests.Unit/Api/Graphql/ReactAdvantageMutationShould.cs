@@ -1,10 +1,12 @@
 ﻿using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Domain.Models;
 using System;
+using System.Linq;
 using GraphQL;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
 using Xunit;
 using Threading = System.Threading.Tasks;
@@ -14,14 +16,124 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
     public class ReactAdvantageMutationShould : GraphqlTestBase
     {
         [Fact]
-        public async void AddUserShouldFailForNonHostAdmin()
+        public async void AddTenantShouldPassForHostAdmin()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            SeedRoles();
 
             // When
-            var result = await ExecuteAddUserQueryAsync(userContextMock.Object);
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        addTenant(
+                            tenant: {{
+                                name: ""TestTenant""
+                            }},
+                            adminUser: {{ 
+                                userName: ""admin""
+                                email: ""admin@test.com""
+                                isActive: true
+                                password: ""Test123$""
+                            }}
+                        )
+                        {{ 
+                            id
+                            name
+                        }}
+                    }}"
+            });
+
+            // Then
+            int tenantId = 0;
+
+            AssertGraphqlResultDictionary(result.Data,
+                addTenantResult => AssertPairEqual(addTenantResult,
+                    "addTenant", tenant => AssertGraphqlResultDictionary(tenant,
+                        field => AssertPairEqual(field, "id", idObject =>
+                        {
+                            var id = Assert.IsType<int>(idObject);
+                            Assert.NotEqual(0, id);
+                            tenantId = id;
+                        }),
+                        field => AssertPairEqual(field, "name", "TestTenant")
+                    )
+                )
+            );
+
+            Assert.NotEqual(0, tenantId);
+
+            using (var db = GetInMemoryDbContext())
+            using (db.SetTenantFilterValue(tenantId))
+            {
+                var tenant = db.Tenants.Find(tenantId);
+                Assert.NotNull(tenant);
+                Assert.Equal("TestTenant", tenant.Name);
+
+                var adminUser = db.Users.Single();
+                Assert.Equal("admin", adminUser.UserName);
+                Assert.Equal("admin@test.com", adminUser.Email);
+                Assert.True(adminUser.IsActive);
+            }
+        }
+
+        [Fact]
+        public async void AddTenantShouldFailForNonHostAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            SeedRoles();
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        addTenant(
+                            tenant: {{
+                                name: ""TestTenant""
+                            }},
+                            adminUser: {{ 
+                                userName: ""admin""
+                                email: ""admin@test.com""
+                                isActive: true
+                                password: ""Test123$""
+                            }}
+                        )
+                        {{ 
+                            id
+                            name
+                        }}
+                    }}"
+            });
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                addUserResult => AssertPairEqual(addUserResult, "addTenant", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator} role.", exception.Message);
+            });
+        }
+
+        [Fact]
+        public async void AddUserShouldFailForNonAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+
+            // When
+            var result = await ExecuteAddUserQueryAsync();
 
             // Then
             Assert.NotNull(result);
@@ -32,20 +144,54 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             Assert.Collection(result.Errors, error =>
             {
                 var exception = Assert.IsType<ExecutionError>(error);
-                Assert.Equal("Unauthorized. You have to be a member of HostAdministrator role.", exception.Message);
+                Assert.Equal("Unauthorized. You have to be a member of either one of these roles: HostAdministrator, Administrator", exception.Message);
             });
         }
 
         [Fact]
         public async void AddUserShouldPassForHostAdmin()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
             var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
-            var result = await ExecuteAddUserQueryAsync(userContextMock.Object);
+            var result = await ExecuteAddUserQueryAsync();
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertAddUserQueryPassed(result);
+        }
+
+        [Fact]
+        public async void AddUserShouldPassForAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+
+            // When
+            var result = await ExecuteAddUserQueryAsync();
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertAddUserQueryPassed(result);
+        }
+
+        [Fact]
+        public async void AddUserWithNoPassword()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            var userManager = ServiceProvider.GetService<UserManager<User>>();
+
+            // When
+            var result = await ExecuteAddUserQueryAsync();
 
             // Then
             AssertValidGraphqlExecutionResult(result);
@@ -63,13 +209,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         [Fact]
         public async void AddUserWithPassword()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
             var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
-            var result = await ExecuteAddUserQueryAsync(userContextMock.Object, setPassword: true, password: "Test123$");
+            var result = await ExecuteAddUserQueryAsync(setPassword: true, password: "Test123$");
 
             // Then
             AssertValidGraphqlExecutionResult(result);
@@ -79,12 +224,11 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             using (var db = GetInMemoryDbContext())
             {
                 var user = db.Users.Find(userId);
-                Assert.NotNull(user.PasswordHash);
                 Assert.True(await userManager.CheckPasswordAsync(user, "Test123$"));
             }
         }
 
-        private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(GraphQLUserContext userContext, bool setPassword = false, string password = null)
+        private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(bool setPassword = false, string password = null)
         {
             return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
             {
@@ -108,7 +252,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             isActive
                         }}
                     }}"
-            }, userContext);
+            });
         }
 
         private string AssertAddUserQueryPassed(ExecutionResult result)
@@ -149,40 +293,40 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         }
 
         [Fact]
-        public async void EditUserShouldFailForNonSelfAndNonHostAdmin()
+        public async void EditUserShouldFailForNonSelfNonHostAdminNonAdmin()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
-            userContextMock.Setup(x => x.Id).Returns("2");
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.Id).Returns("2");
 
             await SeedInitialUserForEdit();
 
             // When
-            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
+            var result = await ExecuteEditUserQueryAsync();
             
             // Then
             AssertEditUserQueryFailed(result, error =>
             {
                 var exception = Assert.IsType<ExecutionError>(error);
                 Assert.Equal($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}"
-                             + " role to be able to edit any user, otherwise you can only edit"
+                             + $" or {RoleNames.Administrator} role to be able to edit any user, otherwise you can only edit"
                              + " your own user (id: 2).", exception.Message);
             });
         }
 
         [Fact]
-        public async void EditUserShouldPassForSelfAndNonHostAdmin()
+        public async void EditUserShouldPassForSelfNonAdmin()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
-            userContextMock.Setup(x => x.Id).Returns("1");
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.Id).Returns("1");
 
             await SeedInitialUserForEdit();
 
             // When
-            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
+            var result = await ExecuteEditUserQueryAsync();
 
             // Then
             AssertEditUserQueryPassed(result);
@@ -191,15 +335,32 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         [Fact]
         public async void EditUserShouldPassForNonSelfAndHostAdmin()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            userContextMock.Setup(x => x.Id).Returns("2");
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.Id).Returns("2");
 
             await SeedInitialUserForEdit();
 
             // When
-            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
+            var result = await ExecuteEditUserQueryAsync();
+
+            // Then
+            AssertEditUserQueryPassed(result);
+        }
+
+        [Fact]
+        public async void EditUserShouldPassForNonSelfAndAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            UserContextMock.Setup(x => x.Id).Returns("2");
+
+            await SeedInitialUserForEdit();
+
+            // When
+            var result = await ExecuteEditUserQueryAsync();
 
             // Then
             AssertEditUserQueryPassed(result);
@@ -208,15 +369,15 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         [Fact]
         public async void EditUserShouldPassForSelfAndHostAdmin()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            userContextMock.Setup(x => x.Id).Returns("1");
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            UserContextMock.Setup(x => x.Id).Returns("1");
 
             await SeedInitialUserForEdit();
 
             // When
-            var result = await ExecuteEditUserQueryAsync(userContextMock.Object);
+            var result = await ExecuteEditUserQueryAsync();
 
             // Then
             AssertEditUserQueryPassed(result);
@@ -225,10 +386,9 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         [Fact]
         public async void EditUserWithoutChangingThePassword()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            userContextMock.Setup(x => x.Id).Returns("1");
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
             var userManager = ServiceProvider.GetService<UserManager<User>>();
@@ -242,7 +402,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
             
             // When
-            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: false);
+            var result = await ExecuteEditUserQueryAsync(changePassword: false);
 
             // Then
             AssertEditUserQueryPassed(result);
@@ -261,10 +421,9 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         [Fact]
         public async void EditUserWithChangingThePassword()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            userContextMock.Setup(x => x.Id).Returns("1");
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
             var userManager = ServiceProvider.GetService<UserManager<User>>();
@@ -278,7 +437,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             // When
-            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: true);
+            var result = await ExecuteEditUserQueryAsync(changePassword: true);
 
             // Then
             AssertEditUserQueryPassed(result);
@@ -298,10 +457,9 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         [Fact]
         public async void EditUserShouldFailForSimplePassword()
         {
-            //Given
-            var userContextMock = new Mock<GraphQLUserContext>();
-            userContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            userContextMock.Setup(x => x.Id).Returns("1");
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
+            UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
             var userManager = ServiceProvider.GetService<UserManager<User>>();
@@ -315,7 +473,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             // When
-            var result = await ExecuteEditUserQueryAsync(userContextMock.Object, changePassword: true, newPassword: "123");
+            var result = await ExecuteEditUserQueryAsync(changePassword: true, newPassword: "123");
 
             // Then
             AssertEditUserQueryFailed(result, error =>
@@ -338,7 +496,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
 
         private async Threading.Task<User> SeedInitialUserForEdit()
         {
-            //Given
+            // Given
             var user = new User
             {
                 Id = "1",
@@ -346,7 +504,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 FirstName = "Bob",
                 LastName = "Ray",
                 Email = "BobRay@test.com",
-                IsActive = false
+                IsActive = false,
+                TenantId = 1
             };
             var userManager = ServiceProvider.GetService<UserManager<User>>();
             await userManager.CreateAsync(user);
@@ -354,7 +513,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             return user;
         }
 
-        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(GraphQLUserContext userContext, bool changePassword = false, string newPassword = "Test456$")
+        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(bool changePassword = false, string newPassword = "Test456$")
         {
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -380,7 +539,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             isActive
                         }}
                     }}"
-            }, userContext);
+            });
 
             return result;
         }
@@ -481,12 +640,47 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         }
 
         [Fact]
+        public async void AddProjectShouldFailForNonTenantUser()
+        {
+            //Given
+            UserContextMock.Setup(x => x.TenantId).Returns((int?)null);
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        addProject(project: { 
+                            name: ""Test Project""
+                        })
+                        { 
+                            id
+                            name
+                        }
+                    }"
+            });
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                addUserResult => AssertPairEqual(addUserResult, "addProject", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal($"No tenant id. You have to be a member of a tenant to be able to add or edit this record", exception.Message);
+            });
+        }
+
+        [Fact]
         public async void EditProject()
         {
             // Given
             using (var db = GetInMemoryDbContext())
             {
-                db.Projects.Add(new Project { Id = 1, Name = "Test Project 1" });
+                db.Projects.Add(new Project { TenantId = 1, Id = 1, Name = "Test Project 1" });
                 db.SaveChanges();
             }
 
@@ -532,7 +726,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             using (var db = GetInMemoryDbContext())
             {
-                db.Projects.Add(new Project { Id = 1, Name = "Test Project 1" });
+                db.Projects.Add(new Project { TenantId = 1, Id = 1, Name = "Test Project 1" });
                 db.SaveChanges();
             }
 
@@ -614,10 +808,10 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             using (var db = GetInMemoryDbContext())
             {
-                db.Projects.Add(new Project { Id = 1, Name = "Test Project 1" });
-                db.Projects.Add(new Project { Id = 2, Name = "Test Project 2" });
+                db.Projects.Add(new Project { TenantId = 1, Id = 1, Name = "Test Project 1" });
+                db.Projects.Add(new Project { TenantId = 1, Id = 2, Name = "Test Project 2" });
                 db.SaveChanges();
-                db.Tasks.Add(new Task { Id = 3, ProjectId = 2, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
+                db.Tasks.Add(new Task { TenantId = 1, Id = 3, ProjectId = 2, Name = "Test Task Query", Description = "Another test task", DueDate = new DateTime(2000, 1, 1), Completed = true, CompletionDate = new DateTime(2010, 1, 1) });
                 db.SaveChanges();
             }
 

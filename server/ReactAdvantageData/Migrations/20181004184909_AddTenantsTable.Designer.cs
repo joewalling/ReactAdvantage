@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReactAdvantage.Data;
 
 namespace ReactAdvantage.Data.Migrations
 {
     [DbContext(typeof(ReactAdvantageContext))]
-    partial class ReactAdvantageContextModelSnapshot : ModelSnapshot
+    [Migration("20181004184909_AddTenantsTable")]
+    partial class AddTenantsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,17 +240,15 @@ namespace ReactAdvantage.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedEmail", "TenantId")
-                        .IsUnique()
-                        .HasName("EmailIndex")
-                        .HasFilter("[NormalizedEmail] IS NOT NULL AND [TenantId] IS NOT NULL");
-
-                    b.HasIndex("NormalizedUserName", "TenantId")
+                    b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL AND [TenantId] IS NOT NULL");
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("TenantId");
 
                     b.ToTable("AspNetUsers");
                 });

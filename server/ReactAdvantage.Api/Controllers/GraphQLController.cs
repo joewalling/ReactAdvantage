@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -18,13 +19,15 @@ namespace ReactAdvantage.Api.Controllers
     {
         private readonly IDocumentExecuter _documentExecuter;
         private readonly ILogger _logger;
+        private readonly IHostingEnvironment _env;
         private readonly ISchema _schema;
 
-        public GraphQLController(ISchema schema, IDocumentExecuter documentExecuter, ILogger<GraphQLController> logger)
+        public GraphQLController(ISchema schema, IDocumentExecuter documentExecuter, ILogger<GraphQLController> logger, IHostingEnvironment env)
         {
             _schema = schema;
             _documentExecuter = documentExecuter;
             _logger = logger;
+            _env = env;
         }
 
         [HttpPost]
@@ -40,7 +43,8 @@ namespace ReactAdvantage.Api.Controllers
                 Schema = _schema,
                 Query = query.Query,
                 Inputs = query.Variables.ToInputs(),
-                UserContext = new GraphQLUserContext(User)
+                UserContext = new GraphQLUserContext(User),
+                //ExposeExceptions = _env.IsDevelopment()
             };
 
             var result = await _documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);

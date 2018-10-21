@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.Events;
@@ -16,6 +17,8 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
 using ReactAdvantage.IdentityServer.Models.Account;
 using ReactAdvantage.IdentityServer.Startup;
@@ -26,6 +29,7 @@ namespace ReactAdvantage.IdentityServer.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
+        private readonly ReactAdvantageContext _db;
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IIdentityServerInteractionService _interaction;
@@ -34,6 +38,7 @@ namespace ReactAdvantage.IdentityServer.Controllers
         private readonly IEventService _events;
 
         public AccountController(
+            ReactAdvantageContext db,
             UserManager<User> userManager,
             SignInManager<User> signInManager,
             IIdentityServerInteractionService interaction,
@@ -41,6 +46,7 @@ namespace ReactAdvantage.IdentityServer.Controllers
             IAuthenticationSchemeProvider schemeProvider,
             IEventService events)
         {
+            _db = db;
             _userManager = userManager;
             _signInManager = signInManager;
             _interaction = interaction;
@@ -106,7 +112,22 @@ namespace ReactAdvantage.IdentityServer.Controllers
 
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberLogin, lockoutOnFailure: true);
+                int? tenantId = null;
+                if (model.TenantName != null)
+                {
+                    var tenant = _db.Tenants.FirstOrDefault(x => x.Name == model.TenantName);
+                    if (tenant == null)
+                    {
+                        ModelState.AddModelError("", "Invalid tenant name");
+                        return View(await BuildLoginViewModelAsync(model));
+                    }
+                    tenantId = tenant.Id;
+                }
+
+                _db.SetTenantFilterValue(tenantId);
+                
+                var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password,
+                    model.RememberLogin, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);

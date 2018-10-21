@@ -7,7 +7,7 @@ namespace ReactAdvantage.Api.GraphQLSchema.Types
     {
         public ProjectType()
         {
-            Field(c => c.Id);
+            Field(c => c.Id, nullable: false);
             Field(c => c.Name, nullable: true);
         }
     }

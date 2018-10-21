@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,8 +12,11 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using ReactAdvantage.Api.Extensions;
 using ReactAdvantage.Api.GraphQLSchema;
+using ReactAdvantage.Api.Services;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
+using ReactAdvantage.Domain.Services;
 using Xunit;
 
 namespace ReactAdvantage.Tests.Unit.Api.Graphql
@@ -21,6 +25,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
     {
         private readonly string _databaseName;
         protected ServiceProvider ServiceProvider { get; }
+        protected Mock<GraphQLUserContext> UserContextMock { get; }
 
         public GraphqlTestBase()
         {
@@ -28,14 +33,17 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
 
             var services = new ServiceCollection();
 
-            services.AddTransient<ReactAdvantageContext>(x => GetInMemoryDbContext());
+            services.AddScoped<ReactAdvantageContext>(x => GetInMemoryDbContext());
             services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
             services.AddGraphqlServices();
 
             ServiceProvider = services.BuildServiceProvider();
+
+            UserContextMock = new Mock<GraphQLUserContext>();
+            UserContextMock.Setup(x => x.TenantId).Returns(1);
         }
 
-        protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query, GraphQLUserContext userContext = null)
+        protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query)
         {
             var schema = ServiceProvider.GetService<ISchema>();
             var documentExecuter = ServiceProvider.GetService<IDocumentExecuter>();
@@ -45,7 +53,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Schema = schema,
                 Query = query.Query,
                 Inputs = query.Variables.ToInputs(),
-                UserContext = userContext
+                UserContext = UserContextMock.Object
             };
 
             var result = await documentExecuter.ExecuteAsync(executionOptions).ConfigureAwait(false);
@@ -53,7 +61,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             return result;
         }
 
-        protected ReactAdvantageContext GetInMemoryDbContext()
+        protected ReactAdvantageContext GetInMemoryDbContext(int? tenantId = 1)
         {
             var options = new DbContextOptionsBuilder<ReactAdvantageContext>()
                 .UseInMemoryDatabase(databaseName: _databaseName)
@@ -61,9 +69,29 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
 
             var dbLogger = new Mock<ILogger<ReactAdvantageContext>>();
 
-            return new ReactAdvantageContext(options, dbLogger.Object);
+            var tenantProvider = new Mock<ITenantProvider>();
+            tenantProvider.Setup(x => x.GetTenantId()).Returns(tenantId);
+
+            return new ReactAdvantageContext(options, dbLogger.Object, tenantProvider.Object);
         }
-        
+
+        private DbInitializer GetDbInitializer()
+        {
+            var hostingEnvironmentMock = new Mock<IHostingEnvironment>();
+            var dbInitializer = new DbInitializer(
+                GetInMemoryDbContext(),
+                hostingEnvironmentMock.Object,
+                ServiceProvider.GetService<UserManager<User>>(),
+                ServiceProvider.GetService<RoleManager<IdentityRole>>()
+            );
+            return dbInitializer;
+        }
+
+        protected void SeedRoles()
+        {
+            GetDbInitializer().SeedRoles();
+        }
+
         protected void AssertValidGraphqlExecutionResult(ExecutionResult result)
         {
             Assert.NotNull(result);
