@@ -12,7 +12,7 @@ namespace ReactAdvantage.Api.GraphQLSchema.Types
             Field(x => x.Id, nullable: true);
             Field(x => x.Name, nullable: false);
 
-            Field(x => x.AdminUser, nullable: true);
+            Field(x => x.AdminUser, nullable: true, type: typeof(UserInputType));
         }
     }
 }

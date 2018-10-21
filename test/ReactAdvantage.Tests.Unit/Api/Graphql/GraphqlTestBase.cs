@@ -13,6 +13,7 @@ using ReactAdvantage.Api.Extensions;
 using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Api.Services;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
 using ReactAdvantage.Domain.Services;
 using Xunit;
@@ -72,7 +73,14 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
 
             return new ReactAdvantageContext(options, dbLogger.Object, tenantProvider.Object);
         }
-        
+
+        protected void SeedRoles()
+        {
+            var roleManager = ServiceProvider.GetService<RoleManager<IdentityRole>>();
+            roleManager.CreateAsync(new IdentityRole(RoleNames.HostAdministrator)).GetAwaiter().GetResult();
+            roleManager.CreateAsync(new IdentityRole(RoleNames.Administrator)).GetAwaiter().GetResult();
+        }
+
         protected void AssertValidGraphqlExecutionResult(ExecutionResult result)
         {
             Assert.NotNull(result);

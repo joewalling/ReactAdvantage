@@ -60,9 +60,9 @@ namespace ReactAdvantage.Tests.Unit.Data
 
             //Then
 
-            _userManagerMock.Verify(x => x.CreateAsync(It.Is<User>(u => u.UserName == "hostAdmin" && u.TenantId == null), It.IsAny<string>()));
+            _userManagerMock.Verify(x => x.CreateAsync(It.Is<User>(u => u.UserName == "admin" && u.TenantId == null), It.IsAny<string>()));
             _roleManagerMock.Verify(x => x.CreateAsync(It.Is<IdentityRole>(r => r.Name == RoleNames.HostAdministrator)));
-            _userManagerMock.Verify(x => x.AddToRoleAsync(It.Is<User>(u => u.UserName == "hostAdmin" && u.TenantId == null), RoleNames.HostAdministrator));
+            _userManagerMock.Verify(x => x.AddToRoleAsync(It.Is<User>(u => u.UserName == "admin" && u.TenantId == null), RoleNames.HostAdministrator));
         }
 
         [Fact]

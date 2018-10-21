@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Claims;
-using ClaimTypes = ReactAdvantage.Domain.Configuration.ClaimTypes;
+using ReactAdvantage.Domain.Configuration;
 
 namespace ReactAdvantage.Domain.Extensions
 {
@@ -14,7 +14,7 @@ namespace ReactAdvantage.Domain.Extensions
 
         public static int? GetTenantId(this ClaimsPrincipal user)
         {
-            var tenantIdString = user?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.TenantId)?.Value;
+            var tenantIdString = user?.Claims.FirstOrDefault(x => x.Type == ApplicationClaimTypes.TenantId)?.Value;
             
             if (int.TryParse(tenantIdString, out var tenantId))
             {

@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Domain;
 using ReactAdvantage.Domain.Models;
+using ReactAdvantage.Domain.MultiTenancy;
 using ReactAdvantage.Domain.Services;
 
 namespace ReactAdvantage.Data
@@ -52,29 +54,35 @@ namespace ReactAdvantage.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<User>(u =>
+            {
+                u.Metadata.RemoveIndex(u.HasIndex(x => x.NormalizedUserName).Metadata.Properties);
+                u.HasIndex(x => new { x.NormalizedUserName, x.TenantId })
+                    .HasName("UserNameIndex")
+                    .IsUnique();
+
+                u.Metadata.RemoveIndex(u.HasIndex(x => x.NormalizedEmail).Metadata.Properties);
+                u.HasIndex(x => new { x.NormalizedEmail, x.TenantId })
+                    .HasName("EmailIndex")
+                    .IsUnique();
+            });
+
+            builder.Entity<User>()
+                .HasQueryFilter(x => !IsTenantFilterEnabled || x.TenantId == TenantFilterValue)
+                .HasOne(x => x.Tenant)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<Task>()
                 .HasQueryFilter(x => !IsTenantFilterEnabled || x.TenantId == TenantFilterValue)
                 .HasOne(x => x.Tenant)
                 .WithMany()
-                //.HasForeignKey(x => x.TenantId)
-                //.IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder.Entity<User>()
-                //.HasQueryFilter(x => x.TenantId == _tenantId || _tenantId == null) //show all users to the host admin
-                .HasQueryFilter(x => !IsTenantFilterEnabled || x.TenantId == TenantFilterValue)
-                .HasOne(x => x.Tenant)
-                .WithMany()
-                //.HasForeignKey(x => x.TenantId)
-                //.IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Project>()
                 .HasQueryFilter(x => !IsTenantFilterEnabled || x.TenantId == TenantFilterValue)
                 .HasOne(x => x.Tenant)
                 .WithMany()
-                //.HasForeignKey(x => x.TenantId)
-                //.IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

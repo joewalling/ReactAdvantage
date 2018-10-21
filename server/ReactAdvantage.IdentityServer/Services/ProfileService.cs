@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityServer4.Extensions;
 using ReactAdvantage.Data;
-using ClaimTypes = ReactAdvantage.Domain.Configuration.ClaimTypes;
+using ReactAdvantage.Domain.Configuration;
 using Task = System.Threading.Tasks.Task;
 
 namespace ReactAdvantage.IdentityServer.Services
@@ -36,7 +36,7 @@ namespace ReactAdvantage.IdentityServer.Services
 
             context.AddRequestedClaims(new[]
             {
-                new Claim(ClaimTypes.TenantId, user.TenantId?.ToString() ?? "")
+                new Claim(ApplicationClaimTypes.TenantId, user.TenantId?.ToString() ?? "")
             });
         }
 

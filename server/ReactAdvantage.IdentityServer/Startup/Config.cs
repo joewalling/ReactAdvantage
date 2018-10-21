@@ -23,7 +23,7 @@ namespace ReactAdvantage.IdentityServer.Startup
         {
             return new List<ApiResource>
             {
-                new ApiResource(ApiResources.ReactAdvantageApi, "ReactAdvantage API", new[] { JwtClaimTypes.Subject, JwtClaimTypes.Email, JwtClaimTypes.Role, ClaimTypes.TenantId })
+                new ApiResource(ApiResources.ReactAdvantageApi, "ReactAdvantage API", new[] { JwtClaimTypes.Subject, JwtClaimTypes.Email, JwtClaimTypes.Role, ApplicationClaimTypes.TenantId })
             };
         }
 

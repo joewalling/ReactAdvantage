@@ -32,10 +32,10 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
 
                     var tenantInput = context.GetArgument<TenantInput>("tenant");
-                    tenantInput.Id = 0;
+                    //tenantInput.Id = 0;
                     var tenant = new Tenant();
                     tenant.UpdateValuesFrom(tenantInput);
-                    db.Add(tenantInput);
+                    db.Add(tenant);
                     db.SaveChanges();
 
                     using (_db.SetTenantFilterValue(tenant.Id))
@@ -48,7 +48,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                         _userManager.AddToRoleAsync(adminUser, RoleNames.Administrator).GetAwaiter().GetResult();
                     }
 
-                    return tenantInput;
+                    return tenant;
                 });
 
             Field<TenantType>(
@@ -95,13 +95,14 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     var userInput = context.GetArgument<UserInput>("user");
 
                     var userContext = context.GetUserContext();
-                    var isHostAdmin = userContext.IsInRole(RoleNames.HostAdministrator);
+                    var isAdmin = userContext.IsInRole(RoleNames.HostAdministrator) 
+                                 || userContext.IsInRole(RoleNames.Administrator);
                     var isEditingSelf = userContext.Id == userInput.Id;
-                    if (!isHostAdmin && !isEditingSelf)
+                    if (!isAdmin && !isEditingSelf)
                     {
                         throw new ExecutionError($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}" 
-                                                 + " role to be able to edit any user, otherwise you can only edit" 
-                                                 + $" your own user (id: {userContext.Id}).");
+                                                 + $" or {RoleNames.Administrator} role to be able to edit any user," 
+                                                 + $" otherwise you can only edit your own user (id: {userContext.Id}).");
                     }
 
                     var user = EditUser(userInput);

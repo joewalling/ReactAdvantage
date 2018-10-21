@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
 using IdentityServer4.Events;
@@ -17,6 +18,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ReactAdvantage.Data;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
 using ReactAdvantage.IdentityServer.Models.Account;
 using ReactAdvantage.IdentityServer.Startup;
@@ -130,7 +132,7 @@ namespace ReactAdvantage.IdentityServer.Controllers
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
                     await _events.RaiseAsync(new UserLoginSuccessEvent(user.UserName, user.Id, user.UserName));
-
+                        
                     if (context != null)
                     {
                         if (await _clientStore.IsPkceClientAsync(context.ClientId))

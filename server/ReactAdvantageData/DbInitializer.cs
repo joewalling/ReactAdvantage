@@ -44,6 +44,7 @@ namespace ReactAdvantage.Data
 
             _db.Logger.LogInformation("Seeding database");
             _defaulTenantId = SeedTenantsAndGetDefaultTenantId();
+            SeedRoles();
             SeedUsers();
             SeedTasks();
         }
@@ -113,7 +114,7 @@ namespace ReactAdvantage.Data
             }
         }
 
-        private void SeedUsers()
+        public void SeedRoles()
         {
             if (!_db.Roles.Any(r => r.Name == RoleNames.HostAdministrator))
             {
@@ -126,7 +127,10 @@ namespace ReactAdvantage.Data
                 _db.Logger.LogInformation("Seeding administrator role");
                 _roleManager.CreateAsync(new IdentityRole(RoleNames.Administrator)).GetAwaiter().GetResult();
             }
-            
+        }
+
+        private void SeedUsers()
+        {
             if (!_db.Users.Any())
             {
                 _db.Logger.LogInformation("Seeding users");
@@ -135,7 +139,7 @@ namespace ReactAdvantage.Data
                 {
                     new User
                     {
-                        UserName = "hostAdmin",
+                        UserName = "admin",
                         Email = "jwalling@wallingis.com",
                         EmailConfirmed = true,
                         IsActive = true
