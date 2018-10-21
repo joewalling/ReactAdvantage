@@ -105,7 +105,12 @@ namespace ReactAdvantage.Tests.Unit.Data
         {
             //Given
 
+            var tenant = new Tenant { Name = "Test Tenant" };
+            _db.Tenants.Add(tenant);
+            _db.SaveChanges();
+
             _db.Users.Add(new User { UserName = "Test" });
+            _db.Users.Add(new User { UserName = "Test2", TenantId = tenant.Id });
             _db.SaveChanges();
 
             //When

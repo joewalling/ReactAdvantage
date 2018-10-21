@@ -68,49 +68,52 @@ namespace ReactAdvantage.Data
 
         private void SeedTasks()
         {
-            if (!_db.Tasks.Any())
+            using (_db.SetTenantFilterValue(_defaulTenantId))
             {
-                _db.Logger.LogInformation("Seeding tasks and projects");
-
-                var project = new Project { Name = "Create a software product", TenantId = _defaulTenantId };
-
-                _db.Tasks.Add(new Task
+                if (!_db.Tasks.Any())
                 {
-                    Name = "Create UI",
-                    Description = "Create a great looking user interface",
-                    DueDate = DateTime.Now,
-                    TenantId = _defaulTenantId,
-                    Project = project
-                });
-                _db.Tasks.Add(new Task
-                {
-                    Name = "Create Business logic",
-                    Description = "Create the business logic",
-                    DueDate = DateTime.Now,
-                    TenantId = _defaulTenantId,
-                    Project = project
-                });
+                    _db.Logger.LogInformation("Seeding default tenant tasks and projects");
 
-                var project2 = new Project { Name = "Create a second software product", TenantId = _defaulTenantId };
+                    var project = new Project {Name = "Create a software product", TenantId = _defaulTenantId};
 
-                _db.Tasks.Add(new Task
-                {
-                    Name = "Create login form",
-                    Description = "Create a great looking login form",
-                    DueDate = DateTime.Now,
-                    TenantId = _defaulTenantId,
-                    Project = project2
-                });
-                _db.Tasks.Add(new Task
-                {
-                    Name = "Create logic for login",
-                    Description = "Create the logic for the login form",
-                    DueDate = DateTime.Now,
-                    TenantId = _defaulTenantId,
-                    Project = project2
-                });
-                
-                _db.SaveChanges();
+                    _db.Tasks.Add(new Task
+                    {
+                        Name = "Create UI",
+                        Description = "Create a great looking user interface",
+                        DueDate = DateTime.Now,
+                        TenantId = _defaulTenantId,
+                        Project = project
+                    });
+                    _db.Tasks.Add(new Task
+                    {
+                        Name = "Create Business logic",
+                        Description = "Create the business logic",
+                        DueDate = DateTime.Now,
+                        TenantId = _defaulTenantId,
+                        Project = project
+                    });
+
+                    var project2 = new Project {Name = "Create a second software product", TenantId = _defaulTenantId};
+
+                    _db.Tasks.Add(new Task
+                    {
+                        Name = "Create login form",
+                        Description = "Create a great looking login form",
+                        DueDate = DateTime.Now,
+                        TenantId = _defaulTenantId,
+                        Project = project2
+                    });
+                    _db.Tasks.Add(new Task
+                    {
+                        Name = "Create logic for login",
+                        Description = "Create the logic for the login form",
+                        DueDate = DateTime.Now,
+                        TenantId = _defaulTenantId,
+                        Project = project2
+                    });
+
+                    _db.SaveChanges();
+                }
             }
         }
 
@@ -131,73 +134,86 @@ namespace ReactAdvantage.Data
 
         private void SeedUsers()
         {
-            if (!_db.Users.Any())
+            using (_db.SetTenantFilterValue(null))
             {
-                _db.Logger.LogInformation("Seeding users");
-
-                var users = new[]
+                if (!_db.Users.Any())
                 {
-                    new User
+                    _db.Logger.LogInformation("Seeding host admin");
+
+                    var hostAdmin = new User
                     {
                         UserName = "admin",
                         Email = "jwalling@wallingis.com",
                         EmailConfirmed = true,
                         IsActive = true
-                    },
-                    new User
-                    {
-                        UserName = "admin",
-                        Email = "jwalling@wallingis.com",
-                        EmailConfirmed = true,
-                        IsActive = true,
-                        TenantId = _defaulTenantId
-                    },
-                    new User
-                    {
-                        FirstName = "John",
-                        LastName = "Doe",
-                        UserName = "jdoe",
-                        Email = "jdoe@123.com",
-                        EmailConfirmed = true,
-                        IsActive = true,
-                        TenantId = _defaulTenantId
-                    },
-                    new User
-                    {
-                        FirstName = "Fred",
-                        LastName = "Flintstone",
-                        UserName = "fflintstone",
-                        Email = "fflintstone@gmail.com",
-                        EmailConfirmed = true,
-                        IsActive = true,
-                        TenantId = _defaulTenantId
-                    },
-                    new User
-                    {
-                        FirstName = "Barney",
-                        LastName = "Rubble",
-                        UserName = "brubble",
-                        Email = "brubble@slate.com",
-                        EmailConfirmed = true,
-                        IsActive = true,
-                        TenantId = _defaulTenantId
-                    }
-                };
+                    };
 
-                foreach (var user in users)
+                    _userManager.CreateAsync(hostAdmin, "Pass123$").GetAwaiter().GetResult();
+                    _userManager.AddToRoleAsync(hostAdmin, RoleNames.HostAdministrator).GetAwaiter().GetResult();
+                }
+            }
+
+            using (_db.SetTenantFilterValue(_defaulTenantId))
+            {
+                if (!_db.Users.Any())
                 {
-                    using (_db.SetTenantFilterValue(user.TenantId))
+                    _db.Logger.LogInformation("Seeding default tenant users");
+
+                    var users = new[]
+                    {
+                        new User
+                        {
+                            UserName = "admin",
+                            Email = "jwalling@wallingis.com",
+                            EmailConfirmed = true,
+                            IsActive = true,
+                            TenantId = _defaulTenantId
+                        },
+                        new User
+                        {
+                            FirstName = "John",
+                            LastName = "Doe",
+                            UserName = "jdoe",
+                            Email = "jdoe@123.com",
+                            EmailConfirmed = true,
+                            IsActive = true,
+                            TenantId = _defaulTenantId
+                        },
+                        new User
+                        {
+                            FirstName = "Fred",
+                            LastName = "Flintstone",
+                            UserName = "fflintstone",
+                            Email = "fflintstone@gmail.com",
+                            EmailConfirmed = true,
+                            IsActive = true,
+                            TenantId = _defaulTenantId
+                        },
+                        new User
+                        {
+                            FirstName = "Barney",
+                            LastName = "Rubble",
+                            UserName = "brubble",
+                            Email = "brubble@slate.com",
+                            EmailConfirmed = true,
+                            IsActive = true,
+                            TenantId = _defaulTenantId
+                        }
+                    };
+
+                    foreach (var user in users)
                     {
                         _userManager.CreateAsync(user, "Pass123$").GetAwaiter().GetResult();
 
                         if (user.UserName == "admin")
                         {
-                            _userManager.AddToRoleAsync(user, user.TenantId == null ? RoleNames.HostAdministrator : RoleNames.Administrator)
-                                .GetAwaiter().GetResult();
+                            _userManager.AddToRoleAsync(user, RoleNames.Administrator).GetAwaiter().GetResult();
                         }
                     }
                 }
             }
+
+            
         }
     }
 }

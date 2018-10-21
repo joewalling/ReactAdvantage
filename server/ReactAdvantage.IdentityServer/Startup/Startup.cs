@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
@@ -51,7 +52,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                 .AddDefaultTokenProviders();
 
             //services.AddSingleton<BaseUrls>();
-            services.AddScoped<ITenantProvider, TenantProvider>();
+            services.TryAddScoped<ITenantProvider, TenantProvider>();
 
             services.AddMvc();
 

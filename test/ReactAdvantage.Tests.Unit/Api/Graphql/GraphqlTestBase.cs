@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GraphQL;
 using GraphQL.Types;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +33,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
 
             var services = new ServiceCollection();
 
-            services.AddTransient<ReactAdvantageContext>(x => GetInMemoryDbContext());
+            services.AddScoped<ReactAdvantageContext>(x => GetInMemoryDbContext());
             services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
             services.AddGraphqlServices();
 
@@ -74,11 +75,21 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             return new ReactAdvantageContext(options, dbLogger.Object, tenantProvider.Object);
         }
 
+        private DbInitializer GetDbInitializer()
+        {
+            var hostingEnvironmentMock = new Mock<IHostingEnvironment>();
+            var dbInitializer = new DbInitializer(
+                GetInMemoryDbContext(),
+                hostingEnvironmentMock.Object,
+                ServiceProvider.GetService<UserManager<User>>(),
+                ServiceProvider.GetService<RoleManager<IdentityRole>>()
+            );
+            return dbInitializer;
+        }
+
         protected void SeedRoles()
         {
-            var roleManager = ServiceProvider.GetService<RoleManager<IdentityRole>>();
-            roleManager.CreateAsync(new IdentityRole(RoleNames.HostAdministrator)).GetAwaiter().GetResult();
-            roleManager.CreateAsync(new IdentityRole(RoleNames.Administrator)).GetAwaiter().GetResult();
+            GetDbInitializer().SeedRoles();
         }
 
         protected void AssertValidGraphqlExecutionResult(ExecutionResult result)

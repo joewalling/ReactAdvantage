@@ -6,7 +6,9 @@ using System.Net.Http;
 using System.Text;
 using IdentityModel.Client;
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using ReactAdvantage.Domain.Services;
 using ReactAdvantage.IdentityServer.Startup;
 using Xunit;
 
@@ -39,7 +41,12 @@ namespace ReactAdvantage.Tests.Integration.Api.Controllers
 
             _apiServer = new TestServer(new WebHostBuilder()
                 .UseEnvironment("Test")
-                .ConfigureServices(c => c.AddSingleton(authenticationOptionsSetter))
+                .ConfigureServices(c =>
+                {
+                    c.AddSingleton(authenticationOptionsSetter);
+                    c.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+                    c.AddScoped<ITenantProvider, FakeTenantProvider>();
+                })
                 .UseStartup<ReactAdvantage.Api.Startup>());
             _apiClient = _apiServer.CreateClient();
         }

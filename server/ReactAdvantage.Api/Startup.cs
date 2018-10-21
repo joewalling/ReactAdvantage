@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Api.GraphQLSchema;
 using ReactAdvantage.Data;
@@ -48,7 +49,7 @@ namespace ReactAdvantage.Api
             // Add application services.
             services.AddGraphqlServices();
             services.AddScoped<IDbInitializer, DbInitializer>();
-            services.AddScoped<ITenantProvider, TenantProvider>();
+            services.TryAddScoped<ITenantProvider, TenantProvider>();
 
             services.AddMvc();
 
