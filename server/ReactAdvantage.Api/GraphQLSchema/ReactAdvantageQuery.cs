@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using GraphQL.Types;
 using ReactAdvantage.Data;
 using System.Linq;
+using GraphQL;
 using ReactAdvantage.Api.GraphQLSchema.Types;
+using ReactAdvantage.Domain.Configuration;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {
@@ -12,6 +14,45 @@ namespace ReactAdvantage.Api.GraphQLSchema
         public ReactAdvantageQuery(ReactAdvantageContext db)
         {
             Name = "Query";
+            
+            Field<TenantType>(
+                "tenant",
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "id" }),
+                resolve: context =>
+                {
+                    var idInput = context.GetArgument<int>("id");
+
+                    var userContext = context.GetUserContext();
+                    var isHostAdmin = userContext.IsInRole(RoleNames.HostAdministrator);
+                    var isUserFromThisTenant = userContext.TenantId == idInput;
+                    if (!isHostAdmin && !isUserFromThisTenant)
+                    {
+                        throw new ExecutionError($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}"
+                                                 + " role to be able to query any tenant, otherwise you can only query"
+                                                 + $" your own tenant (id: {userContext.TenantId}).");
+                    }
+
+                    return db.Tenants.Find(idInput);
+                }
+            );
+
+            Field<ListGraphType<TenantType>>(
+                "tenants",
+                arguments: new QueryArguments(
+                    new QueryArgument<ListGraphType<IntGraphType>> { Name = "id" },
+                    new QueryArgument<StringGraphType> { Name = "name" }
+                ),
+                resolve: context =>
+                {
+                    context.GetUserContext().EnsureIsInRole(RoleNames.HostAdministrator);
+
+                    return db.Tenants
+                        .HandleQueryArgument(new ArgumentGetter<List<int?>>("id", context), (arg, query) =>
+                            query.Where(x => arg.Contains(x.Id)))
+                        .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
+                            string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Name.Contains(arg)));
+                }
+            );
 
             Field<UserType>(
                 "user",

@@ -8,6 +8,8 @@ namespace ReactAdvantage.IdentityServer.Models.Account
 {
     public class LoginInputModel
     {
+        [Display(Name = "Tenant")]
+        public string TenantName { get; set; }
         [Required]
         public string Username { get; set; }
         [Required]

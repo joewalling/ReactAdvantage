@@ -14,6 +14,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
             services.AddTransient<ReactAdvantageMutation>();
             services.AddTransient<TaskType>();
             services.AddTransient<TaskInputType>();
+            services.AddTransient<TenantType>();
+            services.AddTransient<TenantInputType>();
             services.AddTransient<UserType>();
             services.AddTransient<UserInputType>();
             services.AddTransient<ProjectType>();

@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Reflection;
 using IdentityServer4.EntityFramework.DbContexts;
+using IdentityServer4.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
+using ReactAdvantage.Domain.Services;
+using ReactAdvantage.IdentityServer.Services;
 
 namespace ReactAdvantage.IdentityServer.Startup
 {
@@ -48,6 +52,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                 .AddDefaultTokenProviders();
 
             //services.AddSingleton<BaseUrls>();
+            services.TryAddScoped<ITenantProvider, TenantProvider>();
 
             services.AddMvc();
 
@@ -62,6 +67,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                 .AddInMemoryApiResources(Config.GetApiResources())
                 .AddInMemoryClients(Config.GetClients(Configuration.GetBaseUrls(), Environment))
                 .AddAspNetIdentity<User>()
+                .AddProfileService<ProfileService>()
                 .AddOperationalStore(options =>
                 {
                     if (Environment.IsEnvironment("Test"))

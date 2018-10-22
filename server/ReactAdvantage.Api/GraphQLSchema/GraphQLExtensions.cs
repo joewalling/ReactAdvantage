@@ -4,6 +4,7 @@ using System.Linq;
 using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Identity;
+using ReactAdvantage.Domain.MultiTenancy;
 
 namespace ReactAdvantage.Api.GraphQLSchema
 {
@@ -36,6 +37,23 @@ namespace ReactAdvantage.Api.GraphQLSchema
         public static GraphQLUserContext GetUserContext<T>(this ResolveFieldContext<T> context)
         {
             return context.UserContext as GraphQLUserContext;
+        }
+
+        public static void SetTenantIdOrThrow<T>(this IMustHaveTenant entity, ResolveFieldContext<T> context)
+        {
+            var userContext = context.GetUserContext();
+            if (userContext.TenantId == null)
+            {
+                throw new ExecutionError("No tenant id. You have to be a member of a tenant to be able to add or edit this record");
+            }
+
+            entity.TenantId = userContext.TenantId.Value;
+        }
+
+        public static void SetTenantIdOrThrow<T>(this IMayHaveTenant entity, ResolveFieldContext<T> context)
+        {
+            var userContext = context.GetUserContext();
+            entity.TenantId = userContext.TenantId;
         }
     }
 }
