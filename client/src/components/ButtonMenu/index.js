@@ -6,7 +6,7 @@ export default class ButtonMenu extends Component {
         const {
             label,
             items,
-            ...props,
+            ...props
         } = this.props;
         return (
             <SplitButton

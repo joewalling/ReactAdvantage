@@ -349,17 +349,15 @@ export default class UsersList extends Component {
     renderHeaderActions() {
         return [
             <Button
+                label="Export"
                 key="export"
                 onClick={() => this.tableRef.exportCSV()}
-            >
-                Export
-            </Button>,
+            ></Button>,
             <Button
+                label="Create new user"
                 key="create-user"
                 onClick={this.onCreateUser}
-            >
-                Create new user
-            </Button>
+            ></Button>
         ];
     }
 

@@ -5,7 +5,7 @@
   text-overflow: ellipsis; }
 
 .users-actions-cell {
-  width: 90px; }
+  width: 105px; }
   @media (max-width: 640px) {
     .users-actions-cell .ui-column-title {
       display: none !important; } }

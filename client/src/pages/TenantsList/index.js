@@ -236,17 +236,15 @@ export default class TenantsList extends Component{
     renderHeaderActions() {
         return [
             <Button
+                label="Export"
                 key="export"
                 onClick={() => this.tableRef.exportCSV()}
-            >
-                Export
-            </Button>,
+            ></Button>,
             <Button
+                label="Create new tenant"
                 key="create-tenant"
                 onClick={this.onCreateTenant}
-            >
-                Create new tenant
-            </Button>
+            ></Button>
         ];
     }
 

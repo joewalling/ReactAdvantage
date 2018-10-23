@@ -17,6 +17,7 @@ import Logout from "./pages/Logout";
 import './App.css';
 import 'primereact/resources/primereact.min.css';
 import 'primereact/resources/themes/omega/theme.css';
+import 'primeicons/primeicons.css';
 import 'font-awesome/css/font-awesome.css';
 
 class App extends Component {
