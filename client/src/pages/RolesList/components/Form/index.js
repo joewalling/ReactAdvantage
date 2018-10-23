@@ -185,18 +185,16 @@ export default class Form extends Component {
         return (
             <div>
                 <Button
+                    label="Cancel"
                     secondary
                     onClick={this.props.onHide}
                     className="edit-role-cancel-button"
-                >
-                    Cancel
-                </Button>
+                ></Button>
                 <Button
+                    label="Save"
                     onClick={this.onSubmit}
                     className="edit-role-save-button"
-                >
-                    Save
-                </Button>
+                ></Button>
             </div>
         );
     }

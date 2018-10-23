@@ -92,9 +92,7 @@ export default class SearchQuery extends Component {
 
         return (
             <div className="filters-search-button-wrapper">
-                <Button onClick={onSearch}>
-                    {searchLabel}
-                </Button>
+                <Button label={searchLabel} onClick={onSearch}></Button>
             </div>
         );
     }

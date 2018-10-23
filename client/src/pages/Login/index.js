@@ -207,11 +207,10 @@ export default class Login extends Component {
             <div key="actions" className="login-input-wrapper login-input-wrapper-actions">
                 <div className="login-button-wrapper">
                     <Button
+                        label="Save"
                         className="login-forgot-password"
                         onClick={this.onSubmit}
-                    >
-                        Save
-                    </Button>
+                    ></Button>
                 </div>
             </div>
         ];
@@ -233,20 +232,18 @@ export default class Login extends Component {
             <div key="actions" className="login-input-wrapper login-input-wrapper-actions">
                 <div className="login-button-wrapper">
                     <Button
+                        label="Back"
                         onClick={this.onForgotPasswordBackClick}
                         className="login-forgot-password-back-btn"
                         secondary
-                    >
-                        Back
-                    </Button>
+                    ></Button>
                 </div>
                 <div className="login-button-wrapper">
                     <Button
+                        label="Submit"
                         className="login-forgot-password"
                         onClick={this.onSubmit}
-                    >
-                        Submit
-                    </Button>
+                    ></Button>
                 </div>
             </div>
         ];
@@ -277,9 +274,7 @@ export default class Login extends Component {
             </div>,
             <div key="actions" className="login-input-wrapper login-input-wrapper-actions">
                 <div className="login-button-wrapper">
-                    <Button onClick={this.onSubmit}>
-                        Log in
-                    </Button>
+                    <Button label="Log in" onClick={this.onSubmit}></Button>
                 </div>
                 <div className="login-checkbox-wrapper">
                     <Checkbox

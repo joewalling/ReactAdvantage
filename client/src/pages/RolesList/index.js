@@ -218,17 +218,15 @@ export default class RolesList extends Component {
     renderHeaderActions() {
         return [
             <Button
+                label="Export"
                 key="export"
                 onClick={() => this.tableRef.exportCSV()}
-            >
-                Export
-            </Button>,
+            ></Button>,
             <Button
+                label="Create new role"
                 key="create-role"
                 onClick={this.onCreateRole}
-            >
-                Create new role
-            </Button>
+            ></Button>
         ];
     }
 
