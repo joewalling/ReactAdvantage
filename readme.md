@@ -11,9 +11,12 @@ This application has 2 parts. The backend components will all be under the serve
 
 ### Service configuration 
 
-Before the web service can be run, you need to configure the database. Since the application is using Entity Framework code first against a SQL Server database, you will need to run the data migrations against the database.
+The backend has two web services: API and IdentityServer.
 
-Configure the server name for the database connection string in either user secrets or the appsettings.json file.
+Before the web services can be run, you need to configure the database. Since the application is using Entity Framework code first against a SQL Server database, you will need to run the data migrations against the database.
+
+Configure the server name for the database connection string in either user secrets or the appsettings.json file for both projects.
+(e.g. `server/ReactAdvantage.Api/appsettings.Development.json` and `server/ReactAdvantage.IdentityServer/appsettings.Development.json`)
 
 After the connection string is configured, run the update-database command in the package manager if you are using Visual Studio. Be sure you have specified the EntityFramework project to run the command against.
 
@@ -21,16 +24,30 @@ After the connection string is configured, run the update-database command in th
 update-database
 ```
 
-Next, run the application. If all works properly, a browser should open and it will display a Swagger page showing the available services.
+Next, run IdentityServer application and API application. You can use RunServer.bat in the root folder of the repository to run both projects at once. If you are using Visual Studio, you can run both projects by selecting them and running without debug with Ctrl+F5. If all works properly, a browser should open and it will display identity server login form.
 
-Note the port that the service is running on your localhost development environment. You will need to be sure to configure it properly on the client. It should default to port 28955.
+<img src="images/identityServerLoginForm.png">
 
-<img src="images/swaggerRunning.png" >
+You can use the following default values to log in (tenant/username/password):
+* (_leave empty_)/`admin`/`Pass123$` for host admin
+* `default`/`admin`/`Pass123$` for default tenant admin
+
+After authorization you should be redirected back to Graphql Playground:
+
+<img src="images/GraphqlPlayground.png">
 
 ### Client
-The client application and tooling depend on Node and Yarn, so be sure you have a current version of Node and Yarn installed on your development system.
+The client application and tooling depend on Node and Yarn, so be sure you have a current version of [Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/docs/install) installed on your development system.
 
-Currently, the frontend uses port 28955 to connect to the service. Shortly, this should be changed to allow you to configure the URI of the web service.
+The client is configured to use the locally running API and IdentityServer services. Alternatively, you can configure the client to use GraphQL API running on our dev server. You will need to [request a login](mailto:reactadvantage@wallingis.com) in order to be able to access it.
+To use our dev server, modify `client/.env.development` to lool like below:
+
+```sh
+REACT_APP_API_URI=https://reactadvantageapidev.azurewebsites.net
+REACT_APP_IDENTITY_SERVER_URI=https://reactadvantageidentitydev.azurewebsites.net
+REACT_APP_CLIENT_ID=reactLocal
+REACT_APP_URI=http://localhost:3000
+```
 
 Change to the root directory of the client application, install the JavaScript dependencies, and start the application.
 
@@ -55,6 +72,7 @@ While much of the scss will be associated with the pages and components, the ove
 * [Apollo](https://www.apollographql.com/) - Connect data to your UI as well as providing tooling and infrastructure for GraphQL queries.
 * [GraphQL](https://graphql.org) - a query language for APIs and a runtime for fulfilling those queries with your existing data.
 * [Asp.NET Core 2](https://docs.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-2.1) - the framework the backend application logic is written in.
+* [IdentityServer 4](https://identityserver4.readthedocs.io/en/release/) - OpenID Connect and OAuth 2.0 framework for ASP.NET Core 2.
 
 ## Contributing
 
