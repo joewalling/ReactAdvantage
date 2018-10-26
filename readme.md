@@ -72,7 +72,7 @@ While much of the scss will be associated with the pages and components, the ove
 * [Apollo](https://www.apollographql.com/) - Connect data to your UI as well as providing tooling and infrastructure for GraphQL queries.
 * [GraphQL](https://graphql.org) - a query language for APIs and a runtime for fulfilling those queries with your existing data.
 * [Asp.NET Core 2](https://docs.microsoft.com/en-us/aspnet/core/getting-started/?view=aspnetcore-2.1) - the framework the backend application logic is written in.
-* [IdentityServer 4](http://identityserver.io/)
+* [IdentityServer 4](https://identityserver4.readthedocs.io/en/release/) - OpenID Connect and OAuth 2.0 framework for ASP.NET Core 2.
 
 ## Contributing
 
