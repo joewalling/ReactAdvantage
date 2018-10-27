@@ -10,7 +10,7 @@ using ReactAdvantage.Domain.Services;
 
 namespace ReactAdvantage.Data
 {
-    public class ReactAdvantageContext : IdentityDbContext<User>
+    public class ReactAdvantageContext : IdentityDbContext<User, Role, string>
     {
         public ILogger Logger { get; }
 
@@ -68,6 +68,12 @@ namespace ReactAdvantage.Data
             });
 
             builder.Entity<User>()
+                .HasQueryFilter(x => !IsTenantFilterEnabled || x.TenantId == TenantFilterValue)
+                .HasOne(x => x.Tenant)
+                .WithMany()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Role>()
                 .HasQueryFilter(x => !IsTenantFilterEnabled || x.TenantId == TenantFilterValue)
                 .HasOne(x => x.Tenant)
                 .WithMany()

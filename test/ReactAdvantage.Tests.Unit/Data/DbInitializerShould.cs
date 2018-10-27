@@ -18,7 +18,7 @@ namespace ReactAdvantage.Tests.Unit.Data
         private readonly ReactAdvantageContext _db;
         private readonly Mock<IHostingEnvironment> _envMock;
         private readonly Mock<UserManager<User>> _userManagerMock;
-        private readonly Mock<RoleManager<IdentityRole>> _roleManagerMock;
+        private readonly Mock<RoleManager<Role>> _roleManagerMock;
         private readonly DbInitializer _dbInitializer;
 
         public DbInitializerShould()
@@ -40,8 +40,8 @@ namespace ReactAdvantage.Tests.Unit.Data
             var userStoreMock = new Mock<IUserStore<User>>();
             _userManagerMock = new Mock<UserManager<User>>(userStoreMock.Object, null, null, null, null, null, null, null, null);
 
-            var roleStore = new Mock<IRoleStore<IdentityRole>>();
-            _roleManagerMock = new Mock<RoleManager<IdentityRole>>(roleStore.Object, null, null, null, null);
+            var roleStore = new Mock<IRoleStore<Role>>();
+            _roleManagerMock = new Mock<RoleManager<Role>>(roleStore.Object, null, null, null, null);
 
             _dbInitializer = new DbInitializer(
                 _db,
@@ -61,7 +61,9 @@ namespace ReactAdvantage.Tests.Unit.Data
             //Then
 
             _userManagerMock.Verify(x => x.CreateAsync(It.Is<User>(u => u.UserName == "admin" && u.TenantId == null), It.IsAny<string>()));
-            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<IdentityRole>(r => r.Name == RoleNames.HostAdministrator)));
+            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<Role>(r => r.TenantId == null && r.Name == RoleNames.HostAdministrator)));
+            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<Role>(r => r.TenantId != null && r.Name == RoleNames.Administrator)));
+            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<Role>(r => r.TenantId != null && r.Name == RoleNames.User)));
             _userManagerMock.Verify(x => x.AddToRoleAsync(It.Is<User>(u => u.UserName == "admin" && u.TenantId == null), RoleNames.HostAdministrator));
         }
 
@@ -86,8 +88,14 @@ namespace ReactAdvantage.Tests.Unit.Data
         {
             //Given
 
-            _db.Roles.Add(new IdentityRole { Name = RoleNames.HostAdministrator });
-            _db.Roles.Add(new IdentityRole { Name = RoleNames.Administrator });
+
+            var tenant = new Tenant { Name = "Test Tenant" };
+            _db.Tenants.Add(tenant);
+            _db.SaveChanges();
+
+            _db.Roles.Add(new Role { TenantId = null, Name = RoleNames.HostAdministrator });
+            _db.Roles.Add(new Role { TenantId = tenant.Id, Name = RoleNames.Administrator });
+            _db.Roles.Add(new Role { TenantId = tenant.Id, Name = RoleNames.User });
             _db.SaveChanges();
 
             //When
@@ -96,8 +104,9 @@ namespace ReactAdvantage.Tests.Unit.Data
 
             //Then
 
-            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<IdentityRole>(r => r.Name == RoleNames.HostAdministrator)), Times.Never);
-            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<IdentityRole>(r => r.Name == RoleNames.Administrator)), Times.Never);
+            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<Role>(r => r.Name == RoleNames.HostAdministrator)), Times.Never);
+            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<Role>(r => r.Name == RoleNames.Administrator)), Times.Never);
+            _roleManagerMock.Verify(x => x.CreateAsync(It.Is<Role>(r => r.Name == RoleNames.User)), Times.Never);
         }
 
         [Fact]

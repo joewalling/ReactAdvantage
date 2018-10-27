@@ -20,7 +20,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         {
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
             SeedRoles();
 
             // When
@@ -77,6 +76,11 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("admin", adminUser.UserName);
                 Assert.Equal("admin@test.com", adminUser.Email);
                 Assert.True(adminUser.IsActive);
+
+                var adminRole = db.Roles.First(x => x.Name == RoleNames.Administrator);
+                Assert.True(adminRole.IsStatic);
+                var userRole = db.Roles.First(x => x.Name == RoleNames.User);
+                Assert.True(userRole.IsStatic);
             }
         }
 

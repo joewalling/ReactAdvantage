@@ -14,14 +14,14 @@ namespace ReactAdvantage.Data
         private readonly ReactAdvantageContext _db;
         private readonly IHostingEnvironment _environment;
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
         private int _defaulTenantId;
 
         public DbInitializer(
             ReactAdvantageContext db,
             IHostingEnvironment environment,
             UserManager<User> userManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<Role> roleManager)
         {
             _db = db;
             _environment = environment;
@@ -119,16 +119,55 @@ namespace ReactAdvantage.Data
 
         public void SeedRoles()
         {
-            if (!_db.Roles.Any(r => r.Name == RoleNames.HostAdministrator))
-            {
-                _db.Logger.LogInformation("Seeding host administrator role");
-                _roleManager.CreateAsync(new IdentityRole(RoleNames.HostAdministrator)).GetAwaiter().GetResult();
-            }
+            SeedHostRoles();
+            SeedTenantRoles(_defaulTenantId);
+        }
 
-            if (!_db.Roles.Any(r => r.Name == RoleNames.Administrator))
+        public void SeedHostRoles()
+        {
+            using (_db.SetTenantFilterValue(null))
             {
-                _db.Logger.LogInformation("Seeding administrator role");
-                _roleManager.CreateAsync(new IdentityRole(RoleNames.Administrator)).GetAwaiter().GetResult();
+                if (!_db.Roles.Any(r => r.Name == RoleNames.HostAdministrator))
+                {
+                    _db.Logger.LogInformation("Seeding host administrator role");
+                    _roleManager.CreateAsync(new Role
+                    {
+                        TenantId = null,
+                        Name = RoleNames.HostAdministrator,
+                        DisplayName = "Host Administrator",
+                        IsStatic = true
+                    }).GetAwaiter().GetResult();
+                }
+            }
+        }
+
+        public void SeedTenantRoles(int tenantId)
+        {
+            using (_db.SetTenantFilterValue(tenantId))
+            {
+                if (!_db.Roles.Any(r => r.Name == RoleNames.Administrator))
+                {
+                    _db.Logger.LogInformation("Seeding administrator role");
+                    _roleManager.CreateAsync(new Role
+                    {
+                        TenantId = tenantId,
+                        Name = RoleNames.Administrator,
+                        DisplayName = "Admin",
+                        IsStatic = true
+                    }).GetAwaiter().GetResult();
+                }
+
+                if (!_db.Roles.Any(r => r.Name == RoleNames.User))
+                {
+                    _db.Logger.LogInformation("Seeding user role");
+                    _roleManager.CreateAsync(new Role
+                    {
+                        TenantId = tenantId,
+                        Name = RoleNames.User,
+                        DisplayName = "User",
+                        IsStatic = true
+                    }).GetAwaiter().GetResult();
+                }
             }
         }
 

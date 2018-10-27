@@ -16,7 +16,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
         
         public ReactAdvantageMutation(
             ReactAdvantageContext db,
-            UserManager<User> userManager
+            UserManager<User> userManager,
+            IDbInitializer dbInitializer
             )
         {
             _db = db;
@@ -38,6 +39,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     tenant.UpdateValuesFrom(tenantInput);
                     db.Add(tenant);
                     db.SaveChanges();
+
+                    dbInitializer.SeedTenantRoles(tenant.Id);
 
                     using (_db.SetTenantFilterValue(tenant.Id))
                     {

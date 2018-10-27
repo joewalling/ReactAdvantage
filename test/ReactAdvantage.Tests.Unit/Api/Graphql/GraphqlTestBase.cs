@@ -31,10 +31,15 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         {
             _databaseName = Guid.NewGuid().ToString();
 
+            var hostingEnvironmentMock = new Mock<IHostingEnvironment>();
+            hostingEnvironmentMock.Setup(x => x.EnvironmentName).Returns("Test");
+
             var services = new ServiceCollection();
 
             services.AddScoped<ReactAdvantageContext>(x => GetInMemoryDbContext());
-            services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
+            services.AddIdentityCore<User, Role, ReactAdvantageContext>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddScoped<IHostingEnvironment>(x => hostingEnvironmentMock.Object);
             services.AddGraphqlServices();
 
             ServiceProvider = services.BuildServiceProvider();
@@ -82,7 +87,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 GetInMemoryDbContext(),
                 hostingEnvironmentMock.Object,
                 ServiceProvider.GetService<UserManager<User>>(),
-                ServiceProvider.GetService<RoleManager<IdentityRole>>()
+                ServiceProvider.GetService<RoleManager<Role>>()
             );
             return dbInitializer;
         }
