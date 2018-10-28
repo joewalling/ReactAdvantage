@@ -31,7 +31,7 @@ namespace ReactAdvantage.Data.Migrations
                 onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.Sql("update AspNetRoles set IsStatic = 1");
-            migrationBuilder.Sql("update AspNetRoles set TenantId = (select top 1 Id from Tenants) where Name != \"HostAdministrator\"");
+            migrationBuilder.Sql("update AspNetRoles set TenantId = (select top 1 Id from Tenants) where Name != 'HostAdministrator'");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
