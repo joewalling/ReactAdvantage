@@ -129,7 +129,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field<RoleType>(
                 "addRole",
                 arguments: new QueryArguments(
-                    new QueryArgument<NonNullGraphType<UserInputType>> { Name = "role" }
+                    new QueryArgument<NonNullGraphType<RoleInputType>> { Name = "role" }
                 ),
                 resolve: context =>
                 {
@@ -138,7 +138,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                     var role = context.GetArgument<Role>("role");
 
                     role.Id = null;
-                    role.IsStatic = true;
+                    role.IsStatic = false;
                     role.SetTenantIdOrThrow(context);
                     roleManager.CreateAsync(role).GetAwaiter().GetResult();
 

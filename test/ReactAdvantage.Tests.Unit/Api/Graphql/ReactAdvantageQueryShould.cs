@@ -212,6 +212,34 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         }
 
         [Fact]
+        public async void ReturnAllRoles()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { roles { name isStatic } }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                rolesResult => AssertPairEqual(rolesResult,
+                    "roles", roles => AssertGraphqlResultArray(roles,
+                        role => AssertGraphqlResultDictionary(role,
+                            field => AssertPairEqual(field, "name", RoleNames.Administrator),
+                            field => AssertPairEqual(field, "isStatic", true)
+                        ),
+                        role => AssertGraphqlResultDictionary(role,
+                            field => AssertPairEqual(field, "name", RoleNames.User),
+                            field => AssertPairEqual(field, "isStatic", true)
+                        )
+                    )
+                )
+            );
+        }
+
+        [Fact]
         public async void ReturnProject()
         {
             // When

@@ -648,6 +648,233 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         }
 
         [Fact]
+        public async void AddRole()
+        {
+            //Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        addRole(role: { 
+                            name: ""Test Role""
+                        })
+                        { 
+                            id
+                            name
+                            isStatic
+                        }
+                    }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            string roleId = null;
+
+            AssertGraphqlResultDictionary(result.Data,
+                addRoleResult => AssertPairEqual(addRoleResult,
+                    "addRole", role => AssertGraphqlResultDictionary(role,
+                        field => AssertPairEqual(field, "id", idObject =>
+                        {
+                            var id = Assert.IsType<string>(idObject);
+                            Assert.False(string.IsNullOrEmpty(id));
+                            roleId = id;
+                        }),
+                        field => AssertPairEqual(field, "name", "Test Role"),
+                        field => AssertPairEqual(field, "isStatic", false)
+                    )
+                )
+            );
+
+            Assert.False(string.IsNullOrEmpty(roleId));
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var role = db.Roles.Find(roleId);
+                Assert.Equal("Test Role", role.Name);
+                Assert.False(role.IsStatic);
+            }
+        }
+
+        [Fact]
+        public async void AddRoleShouldFailForNonAdmin()
+        {
+            //Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        addRole(role: { 
+                            name: ""Test Role""
+                        })
+                        { 
+                            id
+                            name
+                            isStatic
+                        }
+                    }"
+            });
+            
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                addRoleResult => AssertPairEqual(addRoleResult, "addRole", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("Unauthorized. You have to be a member of either one of these roles: HostAdministrator, Administrator", exception.Message);
+            });
+        }
+
+        [Fact]
+        public async void EditRole()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            var initialRole = new Role { TenantId = 1, Name = "Test Role", IsStatic = false };
+            RoleManager.CreateAsync(initialRole).GetAwaiter().GetResult().ThrowOnError();
+            
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        editRole(role: {{ 
+                            id: ""{initialRole.Id}""
+                            name: ""Changed name""
+                        }})
+                        {{ 
+                            id
+                            name
+                            isStatic
+                        }}
+                    }}"
+            });
+
+            // Then
+            AssertGraphqlResultDictionary(result.Data,
+                editRoleResult => AssertPairEqual(editRoleResult,
+                    "editRole", role => AssertGraphqlResultDictionary(role,
+                        field => AssertPairEqual(field, "id", initialRole.Id),
+                        field => AssertPairEqual(field, "name", "Changed name"),
+                        field => AssertPairEqual(field, "isStatic", false)
+                    )
+                )
+            );
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var role = db.Roles.Find(initialRole.Id);
+                Assert.Equal("Changed name", role.Name);
+                Assert.False(role.IsStatic);
+            }
+        }
+
+        [Fact]
+        public async void EditRoleShouldFailForNonAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            var initialRole = new Role { TenantId = 1, Name = "Test Role", IsStatic = false };
+            RoleManager.CreateAsync(initialRole).GetAwaiter().GetResult().ThrowOnError();
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        editRole(role: {{ 
+                            id: ""{initialRole.Id}""
+                            name: ""Changed name""
+                        }})
+                        {{ 
+                            id
+                            name
+                            isStatic
+                        }}
+                    }}"
+            });
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                editRoleResult => AssertPairEqual(editRoleResult, "editRole", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("Unauthorized. You have to be a member of either one of these roles: HostAdministrator, Administrator", exception.Message);
+            });
+        }
+
+        [Fact]
+        public async void EditRoleShouldFailForStaticRole()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            DbInitializer.SeedTenantRoles(1);
+            string roleToEditId;
+            using (var db = GetInMemoryDbContext())
+            {
+                var roleToEdit = db.Roles.Single(x => x.Name == RoleNames.Administrator);
+                Assert.True(roleToEdit.IsStatic);
+                roleToEditId = roleToEdit.Id;
+            }
+            
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        editRole(role: {{ 
+                            id: ""{roleToEditId}""
+                            name: ""Changed name""
+                        }})
+                        {{ 
+                            id
+                            name
+                            isStatic
+                        }}
+                    }}"
+            });
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                editRoleResult => AssertPairEqual(editRoleResult, "editRole", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("You can't edit static roles", exception.Message);
+            });
+            
+            using (var db = GetInMemoryDbContext())
+            {
+                var role = db.Roles.Find(roleToEditId);
+                Assert.Equal(RoleNames.Administrator, role.Name);
+                Assert.True(role.IsStatic);
+            }
+        }
+
+        [Fact]
         public async void AddProject()
         {
             // When
