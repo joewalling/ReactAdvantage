@@ -1,16 +1,18 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Domain;
 using ReactAdvantage.Domain.Models;
-using ReactAdvantage.Domain.MultiTenancy;
 using ReactAdvantage.Domain.Services;
 
 namespace ReactAdvantage.Data
 {
-    public class ReactAdvantageContext : IdentityDbContext<User, Role, string>
+    public class ReactAdvantageContext : IdentityDbContext<User, Role, string,
+        IdentityUserClaim<string>,
+        UserRole, IdentityUserLogin<string>,
+        IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public ILogger Logger { get; }
 
@@ -64,6 +66,29 @@ namespace ReactAdvantage.Data
                 u.Metadata.RemoveIndex(u.HasIndex(x => x.NormalizedEmail).Metadata.Properties);
                 u.HasIndex(x => new { x.NormalizedEmail, x.TenantId })
                     .HasName("EmailIndex")
+                    .IsUnique();
+            });
+
+            builder.Entity<UserRole>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+
+                userRole.HasOne(ur => ur.Role)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+
+                userRole.HasOne(ur => ur.User)
+                    .WithMany(r => r.UserRoles)
+                    .HasForeignKey(ur => ur.UserId)
+                    .IsRequired();
+            });
+
+            builder.Entity<Role>(r =>
+            {
+                r.Metadata.RemoveIndex(r.HasIndex(x => x.NormalizedName).Metadata.Properties);
+                r.HasIndex(x => new { x.NormalizedName, x.TenantId })
+                    .HasName("RoleNameIndex")
                     .IsUnique();
             });
 

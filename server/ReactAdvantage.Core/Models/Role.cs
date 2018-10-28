@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using ReactAdvantage.Domain.MultiTenancy;
 
 namespace ReactAdvantage.Domain.Models
@@ -15,12 +16,17 @@ namespace ReactAdvantage.Domain.Models
             TenantId = tenantId;
         }
 
-        public string DisplayName { get; set; }
-
         public bool IsStatic { get; set; }
 
         public int? TenantId { get; set; }
 
         public virtual Tenant Tenant { get; set; }
+
+        public virtual ICollection<UserRole> UserRoles { get; set; }
+
+        public void UpdateValuesFrom(Role role)
+        {
+            Name = role.Name;
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
 using ReactAdvantage.Domain.MultiTenancy;
 
 namespace ReactAdvantage.Domain.Models
@@ -14,6 +15,8 @@ namespace ReactAdvantage.Domain.Models
         public bool IsActive { get; set; }
 
         public virtual Tenant Tenant { get; set; }
+
+        public virtual ICollection<UserRole> UserRoles { get; set; }
 
         public void UpdateValuesFrom(User other)
         {

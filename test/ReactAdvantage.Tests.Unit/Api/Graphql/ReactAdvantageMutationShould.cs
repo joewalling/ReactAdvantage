@@ -20,7 +20,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         {
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            SeedRoles();
 
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -90,7 +89,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
-            SeedRoles();
 
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -158,7 +156,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync();
@@ -175,7 +172,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync();
@@ -192,7 +188,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync();
@@ -206,7 +201,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             {
                 var user = db.Users.Find(userId);
                 Assert.Null(user.PasswordHash);
-                Assert.False(await userManager.CheckPasswordAsync(user, "Test123$"));
+                Assert.False(await UserManager.CheckPasswordAsync(user, "Test123$"));
             }
         }
 
@@ -215,7 +210,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         {
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync(setPassword: true, password: "Test123$");
@@ -228,12 +222,14 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             using (var db = GetInMemoryDbContext())
             {
                 var user = db.Users.Find(userId);
-                Assert.True(await userManager.CheckPasswordAsync(user, "Test123$"));
+                Assert.True(await UserManager.CheckPasswordAsync(user, "Test123$"));
             }
         }
 
         private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(bool setPassword = false, string password = null)
         {
+            DbInitializer.SeedTenantRoles(1);
+
             return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
             {
                 Query = $@"
@@ -246,6 +242,9 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             email: ""test@test.com""
                             isActive: true
                             {(setPassword ? $@"password: ""{password}""" : "")}
+                            roles: [
+                                ""{RoleNames.User}""
+                            ]
                         }})
                         {{ 
                             id
@@ -254,6 +253,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             lastName
                             email
                             isActive
+                            roles
                         }}
                     }}"
             });
@@ -276,7 +276,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                         field => AssertPairEqual(field, "firstName", "Tom"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "test@test.com"),
-                        field => AssertPairEqual(field, "isActive", true)
+                        field => AssertPairEqual(field, "isActive", true),
+                        field => AssertPairEqual(field, "roles",
+                            roles => AssertGraphqlResultArray<string>(roles,
+                                role => Assert.Equal(role, RoleNames.User)
+                            )
+                        )
                     )
                 )
             );
@@ -330,10 +335,33 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             await SeedInitialUserForEdit();
 
             // When
-            var result = await ExecuteEditUserQueryAsync();
+            var result = await ExecuteEditUserQueryAsync(changeRoles: false);
 
             // Then
-            AssertEditUserQueryPassed(result);
+            AssertEditUserQueryPassed(result, expectChangedRoles: false);
+        }
+
+        [Fact]
+        public async void EditUserRolesShouldFailForSelfNonAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.Id).Returns("1");
+
+            await SeedInitialUserForEdit();
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(changeRoles: true);
+
+            // Then
+
+            AssertEditUserQueryFailed(result, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}"
+                             + $" or {RoleNames.Administrator} role to be able to change user roles.", exception.Message);
+            });
         }
 
         [Fact]
@@ -395,8 +423,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.AddPasswordAsync(seededUser, "Test123$");
+            await UserManager.AddPasswordAsync(seededUser, "Test123$");
 
             string oldPasswordHash;
             using (var db = GetInMemoryDbContext())
@@ -419,7 +446,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.Equal(oldPasswordHash, newPasswordHash);
-            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.True(await UserManager.CheckPasswordAsync(seededUser, "Test123$"));
         }
 
         [Fact]
@@ -430,8 +457,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.AddPasswordAsync(seededUser, "Test123$");
+            await UserManager.AddPasswordAsync(seededUser, "Test123$");
 
             string oldPasswordHash;
             using (var db = GetInMemoryDbContext())
@@ -454,8 +480,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.NotEqual(oldPasswordHash, newPasswordHash);
-            Assert.False(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
-            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test456$"));
+            Assert.False(await UserManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.True(await UserManager.CheckPasswordAsync(seededUser, "Test456$"));
         }
 
         [Fact]
@@ -466,8 +492,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.AddPasswordAsync(seededUser, "Test123$");
+            await UserManager.AddPasswordAsync(seededUser, "Test123$");
 
             string oldPasswordHash;
             using (var db = GetInMemoryDbContext())
@@ -494,12 +519,14 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.Equal(oldPasswordHash, newPasswordHash);
-            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
-            Assert.False(await userManager.CheckPasswordAsync(seededUser, "123"));
+            Assert.True(await UserManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.False(await UserManager.CheckPasswordAsync(seededUser, "123"));
         }
 
         private async Threading.Task<User> SeedInitialUserForEdit()
         {
+            DbInitializer.SeedTenantRoles(1);
+
             // Given
             var user = new User
             {
@@ -511,13 +538,13 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 IsActive = false,
                 TenantId = 1
             };
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.CreateAsync(user);
+            await UserManager.CreateAsync(user);
+            await UserManager.AddToRoleAsync(user, RoleNames.User);
 
             return user;
         }
 
-        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(bool changePassword = false, string newPassword = "Test456$")
+        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(bool changePassword = false, string newPassword = "Test456$", bool changeRoles = true)
         {
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -533,6 +560,10 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             email: ""test@test.com""
                             isActive: true
                             {(changePassword ? $@"password: ""{newPassword}""" : "")}
+                            {(changeRoles ? $@"
+                                roles: [
+                                    ""{RoleNames.Administrator}""
+                                ]" : "")}
                         }})
                         {{ 
                             id
@@ -541,6 +572,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             lastName
                             email
                             isActive
+                            roles
                         }}
                     }}"
             });
@@ -548,7 +580,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             return result;
         }
 
-        private void AssertEditUserQueryPassed(ExecutionResult result)
+        private void AssertEditUserQueryPassed(ExecutionResult result, bool expectChangedRoles = true)
         {
             AssertValidGraphqlExecutionResult(result);
 
@@ -560,7 +592,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                         field => AssertPairEqual(field, "firstName", "Tom"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "test@test.com"),
-                        field => AssertPairEqual(field, "isActive", true)
+                        field => AssertPairEqual(field, "isActive", true),
+                        field => AssertPairEqual(field, "roles",
+                            roles => AssertGraphqlResultArray<string>(roles,
+                                role => Assert.Equal(role, expectChangedRoles ? RoleNames.Administrator : RoleNames.User)
+                            )
+                        )
                     )
                 )
             );
@@ -573,6 +610,20 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("Smith", user.LastName);
                 Assert.Equal("test@test.com", user.Email);
                 Assert.True(user.IsActive);
+
+                var isAdmin = UserManager.IsInRoleAsync(user, RoleNames.Administrator).GetAwaiter().GetResult();
+                var isUser = UserManager.IsInRoleAsync(user, RoleNames.User).GetAwaiter().GetResult();
+
+                if (expectChangedRoles)
+                {
+                    Assert.True(isAdmin);
+                    Assert.False(isUser);
+                }
+                else
+                {
+                    Assert.False(isAdmin);
+                    Assert.True(isUser);
+                }
             }
         }
 

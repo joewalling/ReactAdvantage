@@ -31,8 +31,12 @@ namespace ReactAdvantage.IdentityServer.Services
         {
             var sub = context.Subject.GetSubjectId();
             var user = await GetUserAsync(sub);
-            var principal = await _claimsFactory.CreateAsync(user);
-            context.AddRequestedClaims(principal.Claims);
+
+            using (_db.SetTenantFilterValue(user.TenantId))
+            {
+                var principal = await _claimsFactory.CreateAsync(user);
+                context.AddRequestedClaims(principal.Claims);
+            }
 
             context.AddRequestedClaims(new[]
             {

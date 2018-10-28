@@ -13,6 +13,7 @@
     <Compile Remove="Migrations\20181004184602_AddTenantsTable.cs" />
     <Compile Remove="Migrations\20181009225132_MakeTenantIdFieldRequired.cs" />
     <Compile Remove="Migrations\20181009231518_MakeTenantIdFieldRequired.cs" />
+    <Compile Remove="Migrations\20181027173735_AddTenantIdToRole.cs" />
   </ItemGroup>
 
   <ItemGroup>

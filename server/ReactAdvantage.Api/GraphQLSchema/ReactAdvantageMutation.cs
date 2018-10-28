@@ -1,4 +1,6 @@
-﻿using GraphQL;
+﻿using System.Collections.Generic;
+using System.Linq;
+using GraphQL;
 using GraphQL.Types;
 using Microsoft.AspNetCore.Identity;
 using ReactAdvantage.Api.GraphQLSchema.Models;
@@ -17,6 +19,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
         public ReactAdvantageMutation(
             ReactAdvantageContext db,
             UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IDbInitializer dbInitializer
             )
         {
@@ -48,6 +51,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
                         adminUser.UserName = "admin";
                         adminUser.TenantId = tenant.Id;
                         adminUser.IsActive = true;
+                        adminUser.Roles = adminUser.Roles ?? new List<string>();
+                        adminUser.Roles.Add(RoleNames.Administrator);
                         AddUser(adminUser);
 
                         _userManager.AddToRoleAsync(adminUser, RoleNames.Administrator).GetAwaiter().GetResult();
@@ -85,9 +90,9 @@ namespace ReactAdvantage.Api.GraphQLSchema
 
                     userInput.SetTenantIdOrThrow(context);
 
-                    var user = AddUser(userInput);
-
-                    return user;
+                    var userDto = AddUser(userInput);
+                    
+                    return userDto;
                 });
 
             Field<UserType>(
@@ -110,9 +115,58 @@ namespace ReactAdvantage.Api.GraphQLSchema
                                                  + $" otherwise you can only edit your own user (id: {userContext.Id}).");
                     }
 
-                    var user = EditUser(userInput);
+                    if (!isAdmin && userInput.Roles != null)
+                    {
+                        throw new ExecutionError($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}" 
+                                                + $" or {RoleNames.Administrator} role to be able to change user roles.");
+                    }
 
-                    return user;
+                    var userDto = EditUser(userInput);
+
+                    return userDto;
+                });
+
+            Field<RoleType>(
+                "addRole",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<UserInputType>> { Name = "role" }
+                ),
+                resolve: context =>
+                {
+                    context.GetUserContext().EnsureIsInEitherRole(RoleNames.HostAdministrator, RoleNames.Administrator);
+
+                    var role = context.GetArgument<Role>("role");
+
+                    role.Id = null;
+                    role.IsStatic = true;
+                    role.SetTenantIdOrThrow(context);
+                    roleManager.CreateAsync(role).GetAwaiter().GetResult();
+
+                    return role;
+                });
+
+            Field<RoleType>(
+                "editRole",
+                arguments: new QueryArguments(
+                    new QueryArgument<NonNullGraphType<RoleInputType>> { Name = "role" }
+                ),
+                resolve: context =>
+                {
+                    var roleInput = context.GetArgument<Role>("role");
+
+                    context.GetUserContext().EnsureIsInEitherRole(RoleNames.HostAdministrator, RoleNames.Administrator);
+                    
+                    var role = roleManager.FindByIdAsync(roleInput.Id).GetAwaiter().GetResult();
+
+                    if (role.IsStatic)
+                    {
+                        throw new ExecutionError("You can't edit static roles");
+                    }
+
+                    role.UpdateValuesFrom(roleInput);
+                    roleManager.UpdateAsync(role).GetAwaiter().GetResult().ThrowOnError();
+
+                    return role;
                 });
 
             Field<ProjectType>(
@@ -174,7 +228,7 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 });
         }
 
-        private User AddUser(UserInput userInput)
+        private UserDto AddUser(UserInput userInput)
         {
             userInput.Id = null;
 
@@ -187,10 +241,23 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 _userManager.CreateAsync(userInput, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
             }
 
-            return userInput;
+            if (userInput.Roles != null)
+            {
+                foreach (var roleName in userInput.Roles.Distinct())
+                {
+                    _userManager.AddToRoleAsync(userInput, roleName).GetAwaiter().GetResult();
+                }
+            }
+
+            var userDto = new UserDto(userInput)
+            {
+                Roles = _userManager.GetRolesAsync(userInput).GetAwaiter().GetResult().ToArray()
+            };
+
+            return userDto;
         }
 
-        private User EditUser(UserInput userInput)
+        private UserDto EditUser(UserInput userInput)
         {
             var user = _userManager.FindByIdAsync(userInput.Id).GetAwaiter().GetResult();
 
@@ -216,7 +283,26 @@ namespace ReactAdvantage.Api.GraphQLSchema
                 //_userManager.ResetPasswordAsync(user, resetToken, userInput.Password).GetAwaiter().GetResult().ThrowOnError();
             }
 
-            return userInput;
+            if (userInput.Roles != null)
+            {
+                var existingRoles = _userManager.GetRolesAsync(user).GetAwaiter().GetResult();
+                foreach (var roleToAdd in userInput.Roles.Except(existingRoles).Distinct())
+                {
+                    _userManager.AddToRoleAsync(user, roleToAdd).GetAwaiter().GetResult();
+                }
+
+                foreach (var roleToRemove in existingRoles.Except(userInput.Roles).Distinct())
+                {
+                    _userManager.RemoveFromRoleAsync(user, roleToRemove).GetAwaiter().GetResult();
+                }
+            }
+
+            var userDto = new UserDto(user)
+            {
+                Roles = _userManager.GetRolesAsync(user).GetAwaiter().GetResult().ToArray()
+            };
+
+            return userDto;
         }
     }
 }

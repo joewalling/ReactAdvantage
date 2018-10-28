@@ -117,7 +117,7 @@ namespace ReactAdvantage.Data
             }
         }
 
-        public void SeedRoles()
+        private void SeedRoles()
         {
             SeedHostRoles();
             SeedTenantRoles(_defaulTenantId);
@@ -134,7 +134,6 @@ namespace ReactAdvantage.Data
                     {
                         TenantId = null,
                         Name = RoleNames.HostAdministrator,
-                        DisplayName = "Host Administrator",
                         IsStatic = true
                     }).GetAwaiter().GetResult();
                 }
@@ -152,7 +151,6 @@ namespace ReactAdvantage.Data
                     {
                         TenantId = tenantId,
                         Name = RoleNames.Administrator,
-                        DisplayName = "Admin",
                         IsStatic = true
                     }).GetAwaiter().GetResult();
                 }
@@ -164,7 +162,6 @@ namespace ReactAdvantage.Data
                     {
                         TenantId = tenantId,
                         Name = RoleNames.User,
-                        DisplayName = "User",
                         IsStatic = true
                     }).GetAwaiter().GetResult();
                 }
