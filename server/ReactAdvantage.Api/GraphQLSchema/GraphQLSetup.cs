@@ -20,6 +20,8 @@ namespace ReactAdvantage.Api.GraphQLSchema
             services.AddTransient<UserInputType>();
             services.AddTransient<ProjectType>();
             services.AddTransient<ProjectInputType>();
+            services.AddTransient<RoleType>();
+            services.AddTransient<RoleInputType>();
             services.AddTransient<ISchema, ReactAdvantageSchema>();
 
             return services;

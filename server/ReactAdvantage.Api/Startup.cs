@@ -44,7 +44,7 @@ namespace ReactAdvantage.Api
                     options.UseSqlServer(connectionString));
             }
 
-            services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
+            services.AddIdentityCore<User, Role, ReactAdvantageContext>();
 
             // Add application services.
             services.AddGraphqlServices();

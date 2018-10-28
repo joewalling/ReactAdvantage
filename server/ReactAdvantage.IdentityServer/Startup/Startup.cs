@@ -47,7 +47,7 @@ namespace ReactAdvantage.IdentityServer.Startup
                     options.UseSqlServer(connectionString));
             }
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<ReactAdvantageContext>()
                 .AddDefaultTokenProviders();
 

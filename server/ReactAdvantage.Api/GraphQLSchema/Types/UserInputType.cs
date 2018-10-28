@@ -1,6 +1,5 @@
 ﻿using GraphQL.Types;
 using ReactAdvantage.Api.GraphQLSchema.Models;
-using ReactAdvantage.Domain.Models;
 
 namespace ReactAdvantage.Api.GraphQLSchema.Types
 {
@@ -16,6 +15,7 @@ namespace ReactAdvantage.Api.GraphQLSchema.Types
             Field(x => x.Email, nullable: true);
             Field(x => x.IsActive, nullable: true);
             Field(x => x.Password, nullable: true);
+            Field(x => x.Roles, nullable: true);
         }
     }
 }

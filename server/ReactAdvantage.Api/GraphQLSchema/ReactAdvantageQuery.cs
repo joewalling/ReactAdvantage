@@ -4,6 +4,7 @@ using GraphQL.Types;
 using ReactAdvantage.Data;
 using System.Linq;
 using GraphQL;
+using ReactAdvantage.Api.GraphQLSchema.Models;
 using ReactAdvantage.Api.GraphQLSchema.Types;
 using ReactAdvantage.Domain.Configuration;
 
@@ -57,7 +58,19 @@ namespace ReactAdvantage.Api.GraphQLSchema
             Field<UserType>(
                 "user",
                 arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "id" }),
-                resolve: context => db.Users.FindAsync(context.GetArgument<string>("id"))
+                resolve: context => db.Users
+                    .Where(x => x.Id == context.GetArgument<string>("id", null))
+                    .Select(x => new UserDto
+                    {
+                        Id = x.Id,
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        UserName = x.UserName,
+                        Email = x.Email,
+                        IsActive = x.IsActive,
+                        Roles = x.UserRoles.Select(r => r.Role.Name).ToArray()
+                    })
+                    .FirstOrDefault()
             );
 
             Field<ListGraphType<UserType>>(
@@ -83,6 +96,32 @@ namespace ReactAdvantage.Api.GraphQLSchema
                         string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Email.Contains(arg)))
                     .HandleQueryArgument(new ArgumentGetter<bool>("isactive", context), (arg, query) =>
                         query.Where(x => x.IsActive == arg))
+                    .Select(x => new UserDto
+                    {
+                        Id = x.Id,
+                        FirstName = x.FirstName,
+                        LastName = x.LastName,
+                        UserName = x.UserName,
+                        Email = x.Email,
+                        IsActive = x.IsActive,
+                        Roles = x.UserRoles.Select(r => r.Role.Name).ToArray()
+                    })
+            );
+
+            Field<ListGraphType<RoleType>>(
+                "roles",
+                arguments: new QueryArguments(
+                    new QueryArgument<ListGraphType<StringGraphType>> { Name = "id" },
+                    new QueryArgument<StringGraphType> { Name = "name" },
+                    new QueryArgument<StringGraphType> { Name = "isstatic" }
+                ),
+                resolve: context => db.Roles
+                    .HandleQueryArgument(new ArgumentGetter<List<string>>("id", context), (arg, query) =>
+                        query.Where(x => arg.Contains(x.Id)))
+                    .HandleQueryArgument(new ArgumentGetter<string>("name", context), (arg, query) =>
+                        string.IsNullOrEmpty(arg) ? query : query.Where(x => x.Name.Contains(arg)))
+                    .HandleQueryArgument(new ArgumentGetter<bool>("isstatic", context), (arg, query) =>
+                        query.Where(x => x.IsStatic == arg))
             );
 
             Field<ProjectType>(

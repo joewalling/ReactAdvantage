@@ -3,5 +3,6 @@
     public interface IDbInitializer
     {
         void Initialize();
+        void SeedTenantRoles(int tenantId);
     }
 }

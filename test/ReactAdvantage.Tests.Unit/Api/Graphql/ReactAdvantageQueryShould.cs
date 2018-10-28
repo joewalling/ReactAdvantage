@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using ReactAdvantage.Api.GraphQLSchema;
+using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
 using Xunit;
 
@@ -13,24 +14,36 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             using (var db = GetInMemoryDbContext())
             {
-                db.Users.Add(new User { TenantId = 1, Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "2", UserName = "BobRay2", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false });
-                db.Users.Add(new User { TenantId = 1, Id = "3", UserName = "BobRay3", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "4", UserName = "BobRay4", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = false });
-                db.Users.Add(new User { TenantId = 1, Id = "5", UserName = "BobSmith1", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "6", UserName = "BobSmith2", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = false });
-                db.Users.Add(new User { TenantId = 1, Id = "7", UserName = "BobSmith3", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "8", UserName = "BobSmith4", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = false });
-                db.Users.Add(new User { TenantId = 1, Id = "9", UserName = "BarbaraRay1", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "10", UserName = "BarbaraRay2", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = false });
-                db.Users.Add(new User { TenantId = 1, Id = "11", UserName = "BarbaraRay3", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "12", UserName = "BarbaraRay4", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = false });
-                db.Users.Add(new User { TenantId = 1, Id = "13", UserName = "BarbaraSmith1", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "14", UserName = "BarbaraSmith2", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = false });
-                db.Users.Add(new User { TenantId = 1, Id = "15", UserName = "BarbaraSmith3", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = true });
-                db.Users.Add(new User { TenantId = 1, Id = "16", UserName = "BarbaraSmith4", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = false });
-                db.SaveChanges();
+                DbInitializer.SeedTenantRoles(1);
 
+                var users = new[]
+                {
+                    new User { TenantId = 1, Id = "1", UserName = "BobRay1", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = true },
+                    new User { TenantId = 1, Id = "2", UserName = "BobRay2", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test.com", IsActive = false },
+                    new User { TenantId = 1, Id = "3", UserName = "BobRay3", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = true },
+                    new User { TenantId = 1, Id = "4", UserName = "BobRay4", FirstName = "Bob", LastName = "Ray", Email = "BobRay@test2.com", IsActive = false },
+                    new User { TenantId = 1, Id = "5", UserName = "BobSmith1", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = true },
+                    new User { TenantId = 1, Id = "6", UserName = "BobSmith2", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test.com", IsActive = false },
+                    new User { TenantId = 1, Id = "7", UserName = "BobSmith3", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = true },
+                    new User { TenantId = 1, Id = "8", UserName = "BobSmith4", FirstName = "Bob", LastName = "Smith", Email = "BobSmith@test2.com", IsActive = false },
+                    new User { TenantId = 1, Id = "9", UserName = "BarbaraRay1", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = true },
+                    new User { TenantId = 1, Id = "10", UserName = "BarbaraRay2", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test.com", IsActive = false },
+                    new User { TenantId = 1, Id = "11", UserName = "BarbaraRay3", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = true },
+                    new User { TenantId = 1, Id = "12", UserName = "BarbaraRay4", FirstName = "Barbara", LastName = "Ray", Email = "BarbaraRay@test2.com", IsActive = false },
+                    new User { TenantId = 1, Id = "13", UserName = "BarbaraSmith1", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = true },
+                    new User { TenantId = 1, Id = "14", UserName = "BarbaraSmith2", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test.com", IsActive = false },
+                    new User { TenantId = 1, Id = "15", UserName = "BarbaraSmith3", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = true },
+                    new User { TenantId = 1, Id = "16", UserName = "BarbaraSmith4", FirstName = "Barbara", LastName = "Smith", Email = "BarbaraSmith@test2.com", IsActive = false }
+                };
+
+                foreach (var user in users)
+                {
+                    UserManager.CreateAsync(user).GetAwaiter().GetResult();
+                }
+
+                UserManager.AddToRoleAsync(users.First(x => x.Id == "7"), RoleNames.Administrator).GetAwaiter().GetResult();
+                UserManager.AddToRoleAsync(users.First(x => x.Id == "16"), RoleNames.User).GetAwaiter().GetResult();
+                
                 db.Projects.Add(new Project { TenantId = 1, Id = 1, Name = "Test Project 1" });
                 db.Projects.Add(new Project { TenantId = 1, Id = 2, Name = "Test Project 2" });
                 db.Projects.Add(new Project { TenantId = 1, Id = 3, Name = "Another Project 3" });
@@ -77,7 +90,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
             {
-                Query = "query { user(id: \"16\") { id userName firstName lastName email isActive } }"
+                Query = "query { user(id: \"16\") { id userName firstName lastName email isActive roles } }"
             });
 
             // Then
@@ -91,7 +104,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                         field => AssertPairEqual(field, "firstName", "Barbara"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "BarbaraSmith@test2.com"),
-                        field => AssertPairEqual(field, "isActive", false)
+                        field => AssertPairEqual(field, "isActive", false),
+                        field => AssertPairEqual(field, "roles", 
+                            roles => AssertGraphqlResultArray<string>(roles,
+                                role => Assert.Equal(role, RoleNames.User)
+                            )
+                        )
                     )
                 )
             );
@@ -103,7 +121,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
             {
-                Query = "query { users(firstname: \"Bo\", lastname: \"Sm\", email: \"@test2.com\", isactive: true) { id userName firstName lastName email isActive } }"
+                Query = "query { users(firstname: \"Bo\", lastname: \"Sm\", email: \"@test2.com\", isactive: true) { id userName firstName lastName email isActive roles } }"
             });
 
             // Then
@@ -118,7 +136,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             field => AssertPairEqual(field, "firstName", "Bob"),
                             field => AssertPairEqual(field, "lastName", "Smith"),
                             field => AssertPairEqual(field, "email", "BobSmith@test2.com"),
-                            field => AssertPairEqual(field, "isActive", true)
+                            field => AssertPairEqual(field, "isActive", true),
+                            field => AssertPairEqual(field, "roles",
+                                roles => AssertGraphqlResultArray<string>(roles,
+                                    role => Assert.Equal(role, RoleNames.Administrator)
+                                )
+                            )
                         )
                     )
                 )
@@ -184,6 +207,34 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             field => AssertPairEqual(field, "userName", "BobRay1")
                         );
                     }
+                )
+            );
+        }
+
+        [Fact]
+        public async void ReturnAllRoles()
+        {
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = "query { roles { name isStatic } }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            AssertGraphqlResultDictionary(result.Data,
+                rolesResult => AssertPairEqual(rolesResult,
+                    "roles", roles => AssertGraphqlResultArray(roles,
+                        role => AssertGraphqlResultDictionary(role,
+                            field => AssertPairEqual(field, "name", RoleNames.Administrator),
+                            field => AssertPairEqual(field, "isStatic", true)
+                        ),
+                        role => AssertGraphqlResultDictionary(role,
+                            field => AssertPairEqual(field, "name", RoleNames.User),
+                            field => AssertPairEqual(field, "isStatic", true)
+                        )
+                    )
                 )
             );
         }

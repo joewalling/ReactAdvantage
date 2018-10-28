@@ -20,8 +20,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         {
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
-            SeedRoles();
 
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -77,6 +75,11 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("admin", adminUser.UserName);
                 Assert.Equal("admin@test.com", adminUser.Email);
                 Assert.True(adminUser.IsActive);
+
+                var adminRole = db.Roles.First(x => x.Name == RoleNames.Administrator);
+                Assert.True(adminRole.IsStatic);
+                var userRole = db.Roles.First(x => x.Name == RoleNames.User);
+                Assert.True(userRole.IsStatic);
             }
         }
 
@@ -86,7 +89,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
-            SeedRoles();
 
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -154,7 +156,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync();
@@ -171,7 +172,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync();
@@ -188,7 +188,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
             UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync();
@@ -202,7 +201,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             {
                 var user = db.Users.Find(userId);
                 Assert.Null(user.PasswordHash);
-                Assert.False(await userManager.CheckPasswordAsync(user, "Test123$"));
+                Assert.False(await UserManager.CheckPasswordAsync(user, "Test123$"));
             }
         }
 
@@ -211,7 +210,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         {
             // Given
             UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(true);
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
 
             // When
             var result = await ExecuteAddUserQueryAsync(setPassword: true, password: "Test123$");
@@ -224,12 +222,14 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             using (var db = GetInMemoryDbContext())
             {
                 var user = db.Users.Find(userId);
-                Assert.True(await userManager.CheckPasswordAsync(user, "Test123$"));
+                Assert.True(await UserManager.CheckPasswordAsync(user, "Test123$"));
             }
         }
 
         private async Threading.Task<ExecutionResult> ExecuteAddUserQueryAsync(bool setPassword = false, string password = null)
         {
+            DbInitializer.SeedTenantRoles(1);
+
             return await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
             {
                 Query = $@"
@@ -242,6 +242,9 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             email: ""test@test.com""
                             isActive: true
                             {(setPassword ? $@"password: ""{password}""" : "")}
+                            roles: [
+                                ""{RoleNames.User}""
+                            ]
                         }})
                         {{ 
                             id
@@ -250,6 +253,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             lastName
                             email
                             isActive
+                            roles
                         }}
                     }}"
             });
@@ -272,7 +276,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                         field => AssertPairEqual(field, "firstName", "Tom"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "test@test.com"),
-                        field => AssertPairEqual(field, "isActive", true)
+                        field => AssertPairEqual(field, "isActive", true),
+                        field => AssertPairEqual(field, "roles",
+                            roles => AssertGraphqlResultArray<string>(roles,
+                                role => Assert.Equal(role, RoleNames.User)
+                            )
+                        )
                     )
                 )
             );
@@ -326,10 +335,33 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             await SeedInitialUserForEdit();
 
             // When
-            var result = await ExecuteEditUserQueryAsync();
+            var result = await ExecuteEditUserQueryAsync(changeRoles: false);
 
             // Then
-            AssertEditUserQueryPassed(result);
+            AssertEditUserQueryPassed(result, expectChangedRoles: false);
+        }
+
+        [Fact]
+        public async void EditUserRolesShouldFailForSelfNonAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.Id).Returns("1");
+
+            await SeedInitialUserForEdit();
+
+            // When
+            var result = await ExecuteEditUserQueryAsync(changeRoles: true);
+
+            // Then
+
+            AssertEditUserQueryFailed(result, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal($"Unauthorized. You have to be a member of {RoleNames.HostAdministrator}"
+                             + $" or {RoleNames.Administrator} role to be able to change user roles.", exception.Message);
+            });
         }
 
         [Fact]
@@ -391,8 +423,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.AddPasswordAsync(seededUser, "Test123$");
+            await UserManager.AddPasswordAsync(seededUser, "Test123$");
 
             string oldPasswordHash;
             using (var db = GetInMemoryDbContext())
@@ -415,7 +446,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.Equal(oldPasswordHash, newPasswordHash);
-            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.True(await UserManager.CheckPasswordAsync(seededUser, "Test123$"));
         }
 
         [Fact]
@@ -426,8 +457,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.AddPasswordAsync(seededUser, "Test123$");
+            await UserManager.AddPasswordAsync(seededUser, "Test123$");
 
             string oldPasswordHash;
             using (var db = GetInMemoryDbContext())
@@ -450,8 +480,8 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.NotEqual(oldPasswordHash, newPasswordHash);
-            Assert.False(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
-            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test456$"));
+            Assert.False(await UserManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.True(await UserManager.CheckPasswordAsync(seededUser, "Test456$"));
         }
 
         [Fact]
@@ -462,8 +492,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             UserContextMock.Setup(x => x.Id).Returns("1");
 
             var seededUser = await SeedInitialUserForEdit();
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.AddPasswordAsync(seededUser, "Test123$");
+            await UserManager.AddPasswordAsync(seededUser, "Test123$");
 
             string oldPasswordHash;
             using (var db = GetInMemoryDbContext())
@@ -490,12 +519,14 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             }
 
             Assert.Equal(oldPasswordHash, newPasswordHash);
-            Assert.True(await userManager.CheckPasswordAsync(seededUser, "Test123$"));
-            Assert.False(await userManager.CheckPasswordAsync(seededUser, "123"));
+            Assert.True(await UserManager.CheckPasswordAsync(seededUser, "Test123$"));
+            Assert.False(await UserManager.CheckPasswordAsync(seededUser, "123"));
         }
 
         private async Threading.Task<User> SeedInitialUserForEdit()
         {
+            DbInitializer.SeedTenantRoles(1);
+
             // Given
             var user = new User
             {
@@ -507,13 +538,13 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 IsActive = false,
                 TenantId = 1
             };
-            var userManager = ServiceProvider.GetService<UserManager<User>>();
-            await userManager.CreateAsync(user);
+            await UserManager.CreateAsync(user);
+            await UserManager.AddToRoleAsync(user, RoleNames.User);
 
             return user;
         }
 
-        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(bool changePassword = false, string newPassword = "Test456$")
+        private async Threading.Task<ExecutionResult> ExecuteEditUserQueryAsync(bool changePassword = false, string newPassword = "Test456$", bool changeRoles = true)
         {
             // When
             var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
@@ -529,6 +560,10 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             email: ""test@test.com""
                             isActive: true
                             {(changePassword ? $@"password: ""{newPassword}""" : "")}
+                            {(changeRoles ? $@"
+                                roles: [
+                                    ""{RoleNames.Administrator}""
+                                ]" : "")}
                         }})
                         {{ 
                             id
@@ -537,6 +572,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                             lastName
                             email
                             isActive
+                            roles
                         }}
                     }}"
             });
@@ -544,7 +580,7 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             return result;
         }
 
-        private void AssertEditUserQueryPassed(ExecutionResult result)
+        private void AssertEditUserQueryPassed(ExecutionResult result, bool expectChangedRoles = true)
         {
             AssertValidGraphqlExecutionResult(result);
 
@@ -556,7 +592,12 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                         field => AssertPairEqual(field, "firstName", "Tom"),
                         field => AssertPairEqual(field, "lastName", "Smith"),
                         field => AssertPairEqual(field, "email", "test@test.com"),
-                        field => AssertPairEqual(field, "isActive", true)
+                        field => AssertPairEqual(field, "isActive", true),
+                        field => AssertPairEqual(field, "roles",
+                            roles => AssertGraphqlResultArray<string>(roles,
+                                role => Assert.Equal(role, expectChangedRoles ? RoleNames.Administrator : RoleNames.User)
+                            )
+                        )
                     )
                 )
             );
@@ -569,6 +610,20 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("Smith", user.LastName);
                 Assert.Equal("test@test.com", user.Email);
                 Assert.True(user.IsActive);
+
+                var isAdmin = UserManager.IsInRoleAsync(user, RoleNames.Administrator).GetAwaiter().GetResult();
+                var isUser = UserManager.IsInRoleAsync(user, RoleNames.User).GetAwaiter().GetResult();
+
+                if (expectChangedRoles)
+                {
+                    Assert.True(isAdmin);
+                    Assert.False(isUser);
+                }
+                else
+                {
+                    Assert.False(isAdmin);
+                    Assert.True(isUser);
+                }
             }
         }
 
@@ -589,6 +644,233 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
                 Assert.Equal("Ray", user.LastName);
                 Assert.Equal("BobRay@test.com", user.Email);
                 Assert.False(user.IsActive);
+            }
+        }
+
+        [Fact]
+        public async void AddRole()
+        {
+            //Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        addRole(role: { 
+                            name: ""Test Role""
+                        })
+                        { 
+                            id
+                            name
+                            isStatic
+                        }
+                    }"
+            });
+
+            // Then
+            AssertValidGraphqlExecutionResult(result);
+
+            string roleId = null;
+
+            AssertGraphqlResultDictionary(result.Data,
+                addRoleResult => AssertPairEqual(addRoleResult,
+                    "addRole", role => AssertGraphqlResultDictionary(role,
+                        field => AssertPairEqual(field, "id", idObject =>
+                        {
+                            var id = Assert.IsType<string>(idObject);
+                            Assert.False(string.IsNullOrEmpty(id));
+                            roleId = id;
+                        }),
+                        field => AssertPairEqual(field, "name", "Test Role"),
+                        field => AssertPairEqual(field, "isStatic", false)
+                    )
+                )
+            );
+
+            Assert.False(string.IsNullOrEmpty(roleId));
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var role = db.Roles.Find(roleId);
+                Assert.Equal("Test Role", role.Name);
+                Assert.False(role.IsStatic);
+            }
+        }
+
+        [Fact]
+        public async void AddRoleShouldFailForNonAdmin()
+        {
+            //Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = @"
+                    mutation 
+                    { 
+                        addRole(role: { 
+                            name: ""Test Role""
+                        })
+                        { 
+                            id
+                            name
+                            isStatic
+                        }
+                    }"
+            });
+            
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                addRoleResult => AssertPairEqual(addRoleResult, "addRole", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("Unauthorized. You have to be a member of either one of these roles: HostAdministrator, Administrator", exception.Message);
+            });
+        }
+
+        [Fact]
+        public async void EditRole()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            var initialRole = new Role { TenantId = 1, Name = "Test Role", IsStatic = false };
+            RoleManager.CreateAsync(initialRole).GetAwaiter().GetResult().ThrowOnError();
+            
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        editRole(role: {{ 
+                            id: ""{initialRole.Id}""
+                            name: ""Changed name""
+                        }})
+                        {{ 
+                            id
+                            name
+                            isStatic
+                        }}
+                    }}"
+            });
+
+            // Then
+            AssertGraphqlResultDictionary(result.Data,
+                editRoleResult => AssertPairEqual(editRoleResult,
+                    "editRole", role => AssertGraphqlResultDictionary(role,
+                        field => AssertPairEqual(field, "id", initialRole.Id),
+                        field => AssertPairEqual(field, "name", "Changed name"),
+                        field => AssertPairEqual(field, "isStatic", false)
+                    )
+                )
+            );
+
+            using (var db = GetInMemoryDbContext())
+            {
+                var role = db.Roles.Find(initialRole.Id);
+                Assert.Equal("Changed name", role.Name);
+                Assert.False(role.IsStatic);
+            }
+        }
+
+        [Fact]
+        public async void EditRoleShouldFailForNonAdmin()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(false);
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.HostAdministrator)).Returns(false);
+            var initialRole = new Role { TenantId = 1, Name = "Test Role", IsStatic = false };
+            RoleManager.CreateAsync(initialRole).GetAwaiter().GetResult().ThrowOnError();
+
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        editRole(role: {{ 
+                            id: ""{initialRole.Id}""
+                            name: ""Changed name""
+                        }})
+                        {{ 
+                            id
+                            name
+                            isStatic
+                        }}
+                    }}"
+            });
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                editRoleResult => AssertPairEqual(editRoleResult, "editRole", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("Unauthorized. You have to be a member of either one of these roles: HostAdministrator, Administrator", exception.Message);
+            });
+        }
+
+        [Fact]
+        public async void EditRoleShouldFailForStaticRole()
+        {
+            // Given
+            UserContextMock.Setup(x => x.IsInRole(RoleNames.Administrator)).Returns(true);
+            DbInitializer.SeedTenantRoles(1);
+            string roleToEditId;
+            using (var db = GetInMemoryDbContext())
+            {
+                var roleToEdit = db.Roles.Single(x => x.Name == RoleNames.Administrator);
+                Assert.True(roleToEdit.IsStatic);
+                roleToEditId = roleToEdit.Id;
+            }
+            
+            // When
+            var result = await BuildSchemaAndExecuteQueryAsync(new GraphQLQuery
+            {
+                Query = $@"
+                    mutation 
+                    {{ 
+                        editRole(role: {{ 
+                            id: ""{roleToEditId}""
+                            name: ""Changed name""
+                        }})
+                        {{ 
+                            id
+                            name
+                            isStatic
+                        }}
+                    }}"
+            });
+
+            // Then
+            Assert.NotNull(result);
+            Assert.NotNull(result.Data);
+            AssertGraphqlResultDictionary(result.Data,
+                editRoleResult => AssertPairEqual(editRoleResult, "editRole", null)
+            );
+            Assert.Collection(result.Errors, error =>
+            {
+                var exception = Assert.IsType<ExecutionError>(error);
+                Assert.Equal("You can't edit static roles", exception.Message);
+            });
+            
+            using (var db = GetInMemoryDbContext())
+            {
+                var role = db.Roles.Find(roleToEditId);
+                Assert.Equal(RoleNames.Administrator, role.Name);
+                Assert.True(role.IsStatic);
             }
         }
 

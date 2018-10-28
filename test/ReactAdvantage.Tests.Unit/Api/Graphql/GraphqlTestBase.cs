@@ -26,21 +26,41 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
         private readonly string _databaseName;
         protected ServiceProvider ServiceProvider { get; }
         protected Mock<GraphQLUserContext> UserContextMock { get; }
+        protected UserManager<User> UserManager { get; }
+        protected RoleManager<Role> RoleManager { get; }
+        protected DbInitializer DbInitializer { get; }
 
         public GraphqlTestBase()
         {
             _databaseName = Guid.NewGuid().ToString();
 
+            var hostingEnvironmentMock = new Mock<IHostingEnvironment>();
+            hostingEnvironmentMock.Setup(x => x.EnvironmentName).Returns("Test");
+
             var services = new ServiceCollection();
 
             services.AddScoped<ReactAdvantageContext>(x => GetInMemoryDbContext());
-            services.AddIdentityCore<User, IdentityRole, ReactAdvantageContext>();
+            services.AddIdentityCore<User, Role, ReactAdvantageContext>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
+            services.AddScoped<IHostingEnvironment>(x => hostingEnvironmentMock.Object);
             services.AddGraphqlServices();
 
             ServiceProvider = services.BuildServiceProvider();
 
             UserContextMock = new Mock<GraphQLUserContext>();
             UserContextMock.Setup(x => x.TenantId).Returns(1);
+
+            UserManager = ServiceProvider.GetService<UserManager<User>>();
+            RoleManager = ServiceProvider.GetService<RoleManager<Role>>();
+
+            DbInitializer = new DbInitializer(
+                GetInMemoryDbContext(),
+                hostingEnvironmentMock.Object,
+                UserManager,
+                RoleManager
+            );
+
+            DbInitializer.SeedHostRoles();
         }
 
         protected async Task<ExecutionResult> BuildSchemaAndExecuteQueryAsync(GraphQLQuery query)
@@ -73,23 +93,6 @@ namespace ReactAdvantage.Tests.Unit.Api.Graphql
             tenantProvider.Setup(x => x.GetTenantId()).Returns(tenantId);
 
             return new ReactAdvantageContext(options, dbLogger.Object, tenantProvider.Object);
-        }
-
-        private DbInitializer GetDbInitializer()
-        {
-            var hostingEnvironmentMock = new Mock<IHostingEnvironment>();
-            var dbInitializer = new DbInitializer(
-                GetInMemoryDbContext(),
-                hostingEnvironmentMock.Object,
-                ServiceProvider.GetService<UserManager<User>>(),
-                ServiceProvider.GetService<RoleManager<IdentityRole>>()
-            );
-            return dbInitializer;
-        }
-
-        protected void SeedRoles()
-        {
-            GetDbInitializer().SeedRoles();
         }
 
         protected void AssertValidGraphqlExecutionResult(ExecutionResult result)
