@@ -71,7 +71,7 @@ export default class UsersList extends Component {
         // }, 
         {
             header: 'Active',
-            field: 'active',
+            field: 'isActive',
             sortable: true,
             body: this.renderTag,
             className: 'users-tag-cell'
@@ -105,12 +105,14 @@ export default class UsersList extends Component {
         console.log(client);
         // Requesting data
 
-        //client.query({ query: gql`query Query {hero {name  firstName}}`, headers: { 'content-type': 'application/json' } }).then(console.log);
         client.query({
             query: gql`
                   query FeedQuery {
                     users {
-                        userName  firstName lastName  email isActive
+                        id userName firstName lastName email isActive roles
+                    }
+                    roles {
+                        name
                     }
                   }
                 `
@@ -118,7 +120,7 @@ export default class UsersList extends Component {
             console.log(response.data.users)
             var userlist=response.data.users;
 
-            this.setState({UsersList: userlist,entries:response.data.users.length})
+            this.setState({UsersList: userlist, entries:response.data.users.length})
         })
     }
 
@@ -299,8 +301,8 @@ export default class UsersList extends Component {
 
     renderTag = (rowData, field) => {
         return (
-            <ConfirmTag active={rowData[field] === 'Yes'}>
-                {rowData[field]}
+            <ConfirmTag active={rowData[field] === true}>
+                {rowData[field] === true ? "Yes" : "No"}
             </ConfirmTag>
         );
     }

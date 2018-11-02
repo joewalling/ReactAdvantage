@@ -121,8 +121,8 @@ export default class Form extends Component {
             phone: {
                 value: this.props.user.phone || '',
             },
-            name: {
-                value: this.props.user.name || '',
+            userName: {
+                value: this.props.user.userName || '',
             },
             password: {
                 value: '',
@@ -323,8 +323,8 @@ export default class Form extends Component {
                         User Name <sup>*</sup>
                     </label>
                     <Input
-                        disabled
-                        value={form.name.value}
+
+                        value={form.userName.value}
                         readOnly
                     />
                     <div className="edit-user-tip">
