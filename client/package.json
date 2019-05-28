@@ -17,14 +17,14 @@
     "oidc-client": "^1.5.3",
     "primeicons": "^1.0.0",
     "primereact": "^1.6.2",
-    "rc-tree": "^1.14.8",
+    "rc-tree": "^2.1.0",
     "react": "^16.5.2",
     "react-apollo": "^2.2.4",
     "react-dom": "^16.4.2",
     "react-headroom": "^2.2.4",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.0.5",
-    "react-transition-group": "^2.5.0",
+    "react-router-dom": "^5.0.0",
+    "react-scripts": "^3.0.0",
+    "react-transition-group": "^4.0.1",
     "react-two-way-querybuilder-ra": "^1.0.14"
   },
   "scripts": {
