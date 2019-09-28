@@ -1,306 +1,194 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import moment from 'moment';
 
-import Table, { Column } from 'components/Table';
 import ButtonMenu from 'components/ButtonMenu';
-import Dropdown from 'components/Dropdown';
 import Button from 'components/Button';
-import SearchQuery from 'components/SearchQuery';
-import PageHeader from 'components/PageHeader';
-import ConfirmTag from 'components/ConfirmTag';
-import BoxShadowContainer from 'components/BoxShadowContainer';
-
+import ListView from 'components/ListView';
 import Form from './components/Form';
+import RolesService from './rolesService';
 import './index.css';
-import roles from './roles';
 
-export default class RolesList extends Component {
-    constructor(props) {
-        super(props);
+const rolesService = new RolesService();
 
-        this.columns = [{
-            header: 'Role Name',
-            field: 'roleName',
-            sortable: true,
-            body: this.renderCellTemplate,
-        }, {
-            header: 'Creation time',
-            field: 'creationTime',
-            sortable: true,
-            body: this.renderCellTemplate,
-        }, {
-            header: '',
-            field: 'actions',
-            body: this.renderActionsTemplate,
-            className: 'roles-actions-cell',
-        }];
-    }
+let columns = [
+  {
+    header: 'Role Name',
+    field: 'roleName',
+    sortable: true,
+    body: renderCellTemplate,
+  },
+  {
+    header: 'Creation time',
+    field: 'creationTime',
+    sortable: true,
+    body: renderCellTemplate,
+  },
+  {
+    header: '',
+    field: 'actions',
+    body: renderActionsTemplate,
+    className: 'roles-actions-cell',
+  },
+];
 
-    onDropdownChange = ({ value }) => {
-        this.setState({
-            entries: value,
-        });
-    }
+let filterFields = [
+  {
+    name: 'roleName',
+    operators: 'all',
+    label: 'Role Name',
+    input: {
+      type: 'text',
+    },
+  },
+];
 
-    onFilterChange = data => {
-        this.setState({
-            query: data.query,
-        });
-    }
+let renderCellTemplate = (rowData, field) => {
+  return field === 'actions' ? (
+    rowData[field]
+  ) : (
+    <div className="roles-list-cell-value">
+      <span>{rowData[field]}</span>
+    </div>
+  );
+};
 
-    onSearch = () => {
-        console.log(`Search, query is: ${this.state.query}`);
-    }
+let renderActionsTemplate = (rowData, field) => {
+  return <div className="roles-actions-cell">{rowData[field]}</div>;
+};
 
-    onFormHide = () => {
-        this.setState({ popupVisible: false });
-    }
+const RolesList = () => {
+  const [listItems, setListItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [first, setFirst] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [entriesValue, setEntriesValue] = useState(10);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
 
-    onEdit = selectedRoleId => {
-        this.setState({
-            popupVisible: true,
-            selectedRole: roles.find(({ id }) => id === selectedRoleId),
-        });
-    }
+  let tableRef = createRef();
 
-    onCreateRole = () => {
-        this.onEdit(null);
-    }
+  useEffect(() => {
+    getRoles();
+  }, []);
 
-    onEditSubmit = data => {
-        console.log('Success! Form data bellow:');
-        console.log(data);
-        this.setState({
-            popupVisible: false,
-            selectedRole: null,
-        });
-    }
+  const getRoles = async () => {
+    const res = await rolesService.getRoles();
+    setTotal(res.length);
+    setListItems(res.slice(0, entriesValue));
+    setLoading(false);
+  };
 
-    setTableRef = ref => {
-        this.tableRef = ref && ref.tableRef;
-    }
+  const loadData = async (first, count) => {
+    setLoading(true);
 
-    state = {
-        entries: 10,
-        filter: [],
-        query: '',
-        popupVisible: false,
-        selectedRole: null,
-    }
+    let res = await rolesService.getRoles();
 
-    entries = [{
-        label: 'Show 10 entries',
-        value: 10,
-    }, {
-        label: 'Show 25 entries',
-        value: 25,
-    }, {
-        label: 'Show 50 entries',
-        value: 50,
-    }, {
-        label: 'Show 100 entries',
-        value: 100,
-    }];
+    setFirst(first);
+    setListItems(res.slice(first, first + count));
+    setLoading(false);
+  };
 
-    fields = [{
-        name: 'roleName',
-        operators: 'all',
-        label: 'Role Name',
-        input: {
-            type: 'text'
-        }
-    }];
+  const onPage = event => {
+    loadData(event.first, event.rows);
+  };
 
-    normalizeRoles(roles) {
-        const normalizedRoles = roles.map(role => ({
-            ...role,
-            creationTime: moment.unix(role.creationTime).format('MM/DD/YYYY'),
-            actions: this.renderButtonMenu(role.id),
-        }));
+  const onEdit = async selectedId => {
+    let role = listItems.find(d => d.id === selectedId);
+    setSelectedRole(role);
+    setShowModal(true);
+  };
 
-        return normalizedRoles;
-    }
+  const onEditSubmit = data => {
+    console.log('Success! Form data bellow:');
+    console.log(data);
+    setShowModal(false);
+    setSelectedRole(null);
+  };
 
-    normalizeHiddenTableValue(value) {
-        return value.map(({ actions, ...restValue }) => ({
-            ...restValue
-        }));
-    }
+  const onEntriesValueChange = ({ value }) => {
+    setEntriesValue(value);
+    loadData(first, value);
+  };
 
-    renderButtonMenu(id) {
-        const actionItems = [{
-            label: 'Permissions',
-            icon: '',
-            command: e => console.log(`Permissions has been clicked, id is: ${id}`),
-        }, {
-            label: 'Delete',
-            icon: '',
-            command: e => console.log(`Delete has been clicked, id is: ${id}`),
-        }];
+  const onCreateNew = () => {
+    setSelectedRole(null);
+    setShowModal(true);
+  };
 
-        return (
-            <ButtonMenu
-                label="Edit"
-                items={actionItems}
-                onClick={() => this.onEdit(id)}
-            />
-        );
-    }
+  const normalizeRecords = records => {
+    return records.map(item => ({
+      ...item,
+      creationTime: moment.unix(item.creationTime).format('MM/DD/YYYY'),
+      actions: renderButtonMenu(item.id),
+    }));
+  };
 
-    renderCellTemplate = (rowData, field) => {
-        const content = field === 'actions'
-            ? rowData[field]
-            : (
-                <div className="roles-list-cell-value">
-                    <span>{rowData[field]}</span>
-                </div>
-            );
+  let renderButtonMenu = id => {
+    const actionItems = [
+      {
+        label: 'Permissions',
+        icon: '',
+        command: () =>
+          console.log(`Permissions has been clicked, id is: ${id}`),
+      },
+      {
+        label: 'Delete',
+        icon: '',
+        command: () => console.log(`Delete has been clicked, id is: ${id}`),
+      },
+    ];
 
-        return content;
-    }
+    return (
+      <ButtonMenu label="Edit" items={actionItems} onClick={() => onEdit(id)} />
+    );
+  };
 
-    renderActionsTemplate = (rowData, field) => {
-        return (
-            <div className="roles-actions-cell">
-                {rowData[field]}
-            </div>
-        );
-    }
+  const form = showModal ? (
+    <Form
+      onHide={() => setShowModal(false)}
+      onSubmit={onEditSubmit}
+      visible={showModal}
+      role={selectedRole || {}}
+    />
+  ) : null;
 
-    renderTag = (rowData, field) => {
-        return (
-            <ConfirmTag active={rowData[field] === 'Yes'}>
-                {rowData[field]}
-            </ConfirmTag>
-        );
-    }
+  const pageActions = [
+    <Button
+      label="Export"
+      key="export"
+      onClick={() => tableRef.current.exportCSV()}
+    />,
+    <Button label="Create new role" key="create-role" onClick={onCreateNew} />,
+  ];
 
-    renderDropdown() {
-        return (
-            <Dropdown
-                options={this.entries}
-                value={this.state.entries}
-                onChange={this.onDropdownChange}
-            />
-        );
-    }
+  const normalizedRecords = normalizeRecords(listItems);
 
-    renderColumn = ({
-        header,
-        field,
-        sortable,
-        body,
-        className,
-    }, index
-    ) => {
-        return (
-            <Column
-                key={index}
-                sortable={sortable}
-                header={header}
-                field={field}
-                body={rowData => body(rowData, field)}
-                className={className}
-            />
-        );
-    }
+  return (
+    <>
+      <ListView
+        pageHeader={{
+          title: 'Roles',
+          subtitle: 'Use roles to group permissions',
+          actions: pageActions,
+        }}
+        totalRecords={total}
+        value={normalizedRecords}
+        responsive={true}
+        lazy={true}
+        first={first}
+        loading={loading}
+        onPage={onPage}
+        filterFields={filterFields}
+        onFilterChange={() => console.log('onFilterChange')}
+        entriesValue={entriesValue}
+        onSearch={() => console.log('onSearch')}
+        onEntriesValueChange={onEntriesValueChange}
+        columns={columns}
+        tableRef={tableRef}
+      />
+      {form}
+    </>
+  );
+};
 
-    // renderTableHeader() {
-    //     return (
-    //         <SearchQuery
-    //             fields={this.fields}
-    //             onChange={this.onFilterChange}
-    //             onSearch={this.onSearch}
-    //         />
-    //     );
-    // }
-
-    renderHeaderActions() {
-        return [
-            <Button
-                label="Export"
-                key="export"
-                onClick={() => this.tableRef.exportCSV()}
-            ></Button>,
-            <Button
-                label="Create new role"
-                key="create-role"
-                onClick={this.onCreateRole}
-            ></Button>
-        ];
-    }
-
-    renderHeader() {
-        return (
-            <PageHeader
-                title="Roles"
-                subtitle="Use roles to group permissions"
-                actions={this.renderHeaderActions()}
-            />
-        );
-    }
-
-    renderTable(value, columns) {
-        return (
-            <Table
-                value={value}
-                rows={this.state.entries}
-                ref={this.setTableRef}
-                responsive
-                paginator
-            >
-                {columns}
-            </Table>
-        );
-    }
-
-    renderHiddenTable(value, columns) {
-        /**
-         * Since there is no way to hide "actions" cell
-         * in exported csv we have to render hidden table
-         * without this cell and use "export" method on it.
-         * see docs https://www.primefaces.org/primereact/#/datatable/export
-         */
-        return (
-            <Table
-                value={this.normalizeHiddenTableValue(value)}
-                rows={this.state.entries}
-                ref={this.setTableRef}
-                responsive
-                paginator
-                className="hidden"
-            >
-                {columns.slice(0, -1)}
-            </Table>
-        );
-    }
-
-    renderEditForm() {
-        return (
-            <Form
-                onHide={this.onFormHide}
-                onSubmit={this.onEditSubmit}
-                visible={this.state.popupVisible}
-                role={this.state.selectedRole || {}}
-            />
-        );
-    }
-
-    render() {
-        const tableValue = this.normalizeRoles(roles);
-        const columns = this.columns.map(this.renderColumn);
-
-        return (
-            <BoxShadowContainer>
-                {this.renderHeader()}
-                <div className="roles-table">
-                    {/* {this.renderTableHeader()} */}
-                    {this.renderDropdown()}
-                    {this.renderTable(tableValue, columns)}
-                    {this.renderHiddenTable(tableValue, columns)}
-                </div>
-                {this.state.popupVisible && this.renderEditForm()}
-            </BoxShadowContainer>
-        );
-    }
-}
+export default RolesList;
