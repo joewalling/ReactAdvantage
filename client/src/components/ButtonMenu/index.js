@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
-import { SplitButton } from 'primereact/components/splitbutton/SplitButton';
+import { Menu } from 'primereact/menu';
+import { Button } from 'primereact/button';
 
 export default class ButtonMenu extends Component {
-    render() {
-        const {
-            label,
-            items,
-            ...props
-        } = this.props;
-        return (
-            <SplitButton
-                model={this.props.items}
-                label={this.props.label}
-                {...props}
-            />
-        );
-    }
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const { items } = this.props;
+
+    return (
+      <div>
+        <Menu
+          model={items}
+          popup={true}
+          ref={el => (this.menu = el)}
+          appendTo={document.body}
+        />
+        <Button label="&hellip;" onClick={event => this.menu.toggle(event)} />
+      </div>
+    );
+  }
 }

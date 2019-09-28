@@ -16,6 +16,31 @@
     &.controls-visible {
         box-shadow: none;
     }
+
+    &__menu {
+        border-top: 1px solid #c8c8c8;
+        border-bottom: 1px solid #c8c8c8;
+
+
+        .p-menubar {
+            border: none;
+            max-width: 1600px;
+            margin: 0 auto;
+
+            .p-menubar-root-list {
+                padding-left: 10px;
+
+                > .p-menuitem {
+                    padding-left: 10px;
+                    padding-right: 10px;
+
+                    a {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .header-bar-button {
@@ -46,7 +71,7 @@
     align-items: center;
     position: relative;
     z-index: 4;
-    max-width: 1340px;
+    max-width: 1600px;
     height: 90px;
     margin: 0 auto;
     background: $white;
@@ -114,7 +139,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-right: 55px;
 
     @media (max-width: 1025px) {
         margin-right: 0;

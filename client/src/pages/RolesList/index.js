@@ -126,6 +126,11 @@ const RolesList = () => {
   let renderButtonMenu = id => {
     const actionItems = [
       {
+        label: 'View/Edit',
+        icon: '',
+        command: () => onEdit(id),
+      },
+      {
         label: 'Permissions',
         icon: '',
         command: () =>
@@ -138,9 +143,7 @@ const RolesList = () => {
       },
     ];
 
-    return (
-      <ButtonMenu label="Edit" items={actionItems} onClick={() => onEdit(id)} />
-    );
+    return <ButtonMenu items={actionItems} />;
   };
 
   const form = showModal ? (
