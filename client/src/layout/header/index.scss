@@ -71,7 +71,7 @@
     align-items: center;
     position: relative;
     z-index: 4;
-    max-width: 1340px;
+    max-width: 1600px;
     height: 90px;
     margin: 0 auto;
     background: $white;
@@ -139,7 +139,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-right: 55px;
 
     @media (max-width: 1025px) {
         margin-right: 0;
