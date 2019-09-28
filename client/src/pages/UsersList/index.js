@@ -174,6 +174,11 @@ const UsersList = () => {
   const renderButtonMenu = id => {
     const actionItems = [
       {
+        label: 'View/Edit',
+        icon: '',
+        command: () => onEdit(id),
+      },
+      {
         label: 'Permissions',
         icon: '',
         command: () =>
@@ -190,9 +195,7 @@ const UsersList = () => {
         command: () => console.log(`Delete has been clicked, id is: ${id}`),
       },
     ];
-    return (
-      <ButtonMenu items={actionItems} label="Edit" onClick={() => onEdit(id)} />
-    );
+    return <ButtonMenu items={actionItems} />;
   };
 
   const onEdit = async selectedId => {
