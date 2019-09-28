@@ -16,6 +16,31 @@
     &.controls-visible {
         box-shadow: none;
     }
+
+    &__menu {
+        border-top: 1px solid #c8c8c8;
+        border-bottom: 1px solid #c8c8c8;
+
+
+        .p-menubar {
+            border: none;
+            max-width: 1600px;
+            margin: 0 auto;
+
+            .p-menubar-root-list {
+                padding-left: 10px;
+
+                > .p-menuitem {
+                    padding-left: 10px;
+                    padding-right: 10px;
+
+                    a {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .header-bar-button {

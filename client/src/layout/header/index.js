@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { NavLink, Link } from "react-router-dom";
 import ReactDOM from 'react-dom';
-import Headroom from 'react-headroom';
 import Notifications from 'components/Notifications';
 import ProfileMenu from 'components/ProfileMenu';
 import ArticlesMenu from 'components/ArticlesMenu';
 import Sidebar from 'components/Sidebar';
+import MenuBar from 'components/MenuBar';
 import logo from 'assets/logo.png';
 
 import './index.css';
@@ -118,16 +118,6 @@ export default class Header extends Component {
         );
     }
 
-    renderHeaderBottom() {
-        return (
-            <Headroom disableInlineStyles>
-                <div className="header-bottom">
-                    {this.renderMenuLinks()}
-                </div>
-            </Headroom>
-        )
-    }
-
     renderNavButton() {
         return (
             <button
@@ -146,7 +136,6 @@ export default class Header extends Component {
                 className="controls-button"
                 onClick={() => this.setState({ controlsVisible: !this.state.controlsVisible })}
             >
-
                 <i className="fa far fa-ellipsis-h" />
             </button>
         );
@@ -161,7 +150,7 @@ export default class Header extends Component {
         );
     }
 
-    render() {
+  render() {
         const {
             controlsVisible,
         } = this.state;
@@ -192,8 +181,10 @@ export default class Header extends Component {
                             </div>
                         </div>
                     </div>
+                    <div className="header__menu">
+                        <MenuBar />
+                    </div>
                 </div>
-                {this.renderHeaderBottom()}
                 {this.renderSidebar()}
             </header>
         );
