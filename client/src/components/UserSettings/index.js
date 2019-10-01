@@ -135,49 +135,53 @@ export default class UserSettings extends Component {
         return (
             <div className="profile-form">
                 <form onSubmit={this.onSubmit}>
-                    <div className="profile-form-upload">
-                        <label>
-                            <FileUpload
-                                className="custom-file-upload"
-                                auto
-                                mode="basic"
-                                onSelect={this.onBeforeUpload}
-                            />
-                            <img src={this.state.profileSrc} alt="User" />
-                            <div className="profile-form-upload-hint">
-                                Click here to change image
+                    <div className="profile-form-personal">
+                        <div className="profile-form-upload">
+                            <label>
+                                <img src={this.state.profileSrc} alt="User" />
+                                <FileUpload
+                                    className="custom-file-upload"
+                                    auto
+                                    mode="basic"
+                                    onSelect={this.onBeforeUpload}
+                                />
+                                <div className="profile-form-upload-hint">
+                                    Click here to change image
+                                </div>
+                            </label>
+                        </div>
+                        <div className="profile-form-name">
+                            <div className="profile-form-input-wrapper">
+                                <label
+                                    className="profile-form-label"
+                                    htmlFor="first-name"
+                                >
+                                    First Name <sup>*</sup>
+                                </label>
+                                <Input
+                                    id="first-name"
+                                    value={form.firstName.value}
+                                    error={form.firstName.error}
+                                    name="firstName"
+                                    onChange={this.onChange}
+                                />
                             </div>
-                        </label>
-                    </div>
-                    <div className="profile-form-input-wrapper profile-form-input-wrapper-right">
-                        <label
-                            className="profile-form-label"
-                            htmlFor="first-name"
-                        >
-                            First Name <sup>*</sup>
-                         </label>
-                        <Input
-                            id="first-name"
-                            value={form.firstName.value}
-                            error={form.firstName.error}
-                            name="firstName"
-                            onChange={this.onChange}
-                        />
-                    </div>
-                    <div className="profile-form-input-wrapper profile-form-input-wrapper-right">
-                        <label
-                            className="profile-form-label"
-                            htmlFor="last-name"
-                        >
-                            Last Name <sup>*</sup>
-                        </label>
-                        <Input
-                            id="last-name"
-                            value={form.lastName.value}
-                            error={form.lastName.error}
-                            name="lastName"
-                            onChange={this.onChange}
-                        />
+                            <div className="profile-form-input-wrapper">
+                                <label
+                                    className="profile-form-label"
+                                    htmlFor="last-name"
+                                >
+                                    Last Name <sup>*</sup>
+                                </label>
+                                <Input
+                                    id="last-name"
+                                    value={form.lastName.value}
+                                    error={form.lastName.error}
+                                    name="lastName"
+                                    onChange={this.onChange}
+                                />
+                            </div>
+                        </div>
                     </div>
                     <div className="profile-form-input-wrapper profile-form-input-wrapper-clear">
                         <label
