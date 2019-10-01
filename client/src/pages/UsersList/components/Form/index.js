@@ -244,47 +244,51 @@ export default class Form extends Component {
 
         return (
             <form className="edit-user" onSubmit={this.onSubmit}>
-                <div className="edit-user-upload">
-                    <label>
-                        <FileUpload
-                            className="custom-file-upload"
-                            auto
-                            mode="basic"
-                            onSelect={this.onBeforeUpload}
-                        />
-                        <img src={this.state.profileSrc} alt="User" />
-                    </label>
-                </div>
-                <div className="edit-user-input-wrapper edit-user-input-wrapper-right">
-                    <label
-                        className="edit-user-label"
-                        htmlFor="edit-user-first-name"
-                    >
-                        First Name <sup>*</sup>
-                     </label>
-                    <Input
-                        id="edit-user-first-name"
-                        value={form.firstName.value}
-                        error={form.firstName.error}
-                        name="firstName"
-                        onChange={this.onTextChange}
-                        autoFocus
-                    />
-                </div>
-                <div className="edit-user-input-wrapper edit-user-input-wrapper-right">
-                    <label
-                        className="edit-user-label"
-                        htmlFor="edit-user-last-name"
-                    >
-                        Last Name <sup>*</sup>
-                    </label>
-                    <Input
-                        id="edit-user-last-name"
-                        value={form.lastName.value}
-                        error={form.lastName.error}
-                        name="lastName"
-                        onChange={this.onTextChange}
-                    />
+                <div className="edit-user-personal">
+                    <div className="edit-user-upload">
+                        <label>
+                            <img src={this.state.profileSrc} alt="User" />
+                            <FileUpload
+                                className="custom-file-upload"
+                                auto
+                                mode="basic"
+                                onSelect={this.onBeforeUpload}
+                            />
+                        </label>
+                    </div>
+                    <div className="edit-user-name">
+                        <div className="edit-user-input-wrapper">
+                            <label
+                                className="edit-user-label"
+                                htmlFor="edit-user-first-name"
+                            >
+                                First Name <sup>*</sup>
+                            </label>
+                            <Input
+                                id="edit-user-first-name"
+                                value={form.firstName.value}
+                                error={form.firstName.error}
+                                name="firstName"
+                                onChange={this.onTextChange}
+                                autoFocus
+                            />
+                        </div>
+                        <div className="edit-user-input-wrapper">
+                            <label
+                                className="edit-user-label"
+                                htmlFor="edit-user-last-name"
+                            >
+                                Last Name <sup>*</sup>
+                            </label>
+                            <Input
+                                id="edit-user-last-name"
+                                value={form.lastName.value}
+                                error={form.lastName.error}
+                                name="lastName"
+                                onChange={this.onTextChange}
+                            />
+                        </div>
+                    </div>
                 </div>
                 <div className="edit-user-input-wrapper edit-user-input-wrapper-clear">
                     <label
@@ -445,6 +449,7 @@ export default class Form extends Component {
                 onHide={this.props.onHide}
                 footer={this.renderActions()}
                 inPortal={false}
+                header="Add User"
                 modal
             >
                 <TabView
