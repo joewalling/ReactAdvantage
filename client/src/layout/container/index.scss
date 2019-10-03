@@ -3,7 +3,7 @@
 .root-content-wrapper {
     width: 100%;
     max-width: 1600px;
-    padding: 160px 1rem 0;
+    padding: 160px 50px 0;
     box-sizing: border-box;
     margin: 0 auto;
 
@@ -44,9 +44,9 @@
 }
 
 .p-dialog {
-    height: 90%;
+    max-height: 90%;
     overflow: auto;
-    width: 90%;
+    max-width: 90%;
 }
 
 .form-group-wrapper {
