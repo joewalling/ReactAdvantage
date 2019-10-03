@@ -113,18 +113,14 @@ export default class UserSettings extends Component {
         return (
             <div>
                 <Button
-                    className="profile-form-cancel"
-                    secondary
+                    danger
                     onClick={this.onHide}
-                >
-                    Cancel
-                </Button>
+                    label="Cancel"
+                />
                 <Button
                     onClick={this.onSubmit}
-                    className="profile-form-save"
-                >
-                    Save
-                </Button>
+                    label="Save"
+                />
             </div>
         );
     }
