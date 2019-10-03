@@ -174,9 +174,8 @@ export default class Form extends Component {
                     selectable={false}
                     defaultCheckedKeys={this.defaultCheckedKeys}
                     onCheck={this.onCheck}
-                >
-                    {this.renderTreeNodeContent(this.treeData)}
-                </Tree>
+                    treeData={this.treeData}
+                />
             </form>
         );
     }
