@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { TransitionGroup } from 'react-transition-group';
 import Button from 'components/Button';
 import FadeInContainer from 'components/FadeInContainer';
@@ -8,7 +8,7 @@ import UserSettings from 'components/UserSettings';
 import image from './assets/user.jpg';
 import './index.css';
 
-export default class ProfileMenu extends Component {
+class ProfileMenu extends Component {
     onProfileClick = () => {
         this.toggleMenu();
     }
@@ -137,6 +137,7 @@ export default class ProfileMenu extends Component {
                             <Button
                                 className="profile-content-logout"
                                 label="Logout"
+                                onClick={() => this.props.history.push('/logout')}
                             />
                         </div>
                     </div>
@@ -174,3 +175,5 @@ export default class ProfileMenu extends Component {
         );
     }
 }
+
+export default withRouter(ProfileMenu);
