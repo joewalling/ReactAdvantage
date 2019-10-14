@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityModel;
@@ -13,10 +14,12 @@ using IdentityServer4.Models;
 using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using ReactAdvantage.Domain.Emailing;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
 using ReactAdvantage.Domain.Models;
@@ -36,6 +39,7 @@ namespace ReactAdvantage.IdentityServer.Controllers
         private readonly IClientStore _clientStore;
         private readonly IAuthenticationSchemeProvider _schemeProvider;
         private readonly IEventService _events;
+        private readonly IEmailSender _emailSender;
 
         public AccountController(
             ReactAdvantageContext db,
@@ -44,7 +48,8 @@ namespace ReactAdvantage.IdentityServer.Controllers
             IIdentityServerInteractionService interaction,
             IClientStore clientStore,
             IAuthenticationSchemeProvider schemeProvider,
-            IEventService events)
+            IEventService events,
+            IEmailSender emailSender)
         {
             _db = db;
             _userManager = userManager;
@@ -53,6 +58,7 @@ namespace ReactAdvantage.IdentityServer.Controllers
             _clientStore = clientStore;
             _schemeProvider = schemeProvider;
             _events = events;
+            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -225,7 +231,268 @@ namespace ReactAdvantage.IdentityServer.Controllers
             return View("LoggedOut", vm);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+        }
 
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            int? tenantId = null;
+            if (!model.TenantName.IsNullOrEmpty())
+            {
+                var tenant = _db.Tenants.FirstOrDefault(x => x.Name == model.TenantName);
+                if (tenant == null)
+                {
+                    ModelState.AddModelError("", "Invalid tenant name");
+                    return View(model);
+                }
+                tenantId = tenant.Id;
+            }
+            _db.SetTenantFilterValue(tenantId);
+
+            var identityResult = await _userManager.CreateAsync(new User
+            {
+                UserName = model.Username,
+                Email = model.Email,
+                IsActive = true,
+                EmailConfirmed = false,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                TenantId = tenantId
+            }, model.Password);
+
+            if (!identityResult.Succeeded)
+            {
+                var error = identityResult.Errors.FirstOrDefault();
+                var errorMessage = error != null ? error.Code + ": " + error.Description : "Identity error";
+                ModelState.AddModelError("", errorMessage);
+                return View(model);
+            }
+
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user == null)
+            {
+                ModelState.AddModelError(nameof(model.Username), "User wasn't found. Please try again.");
+                return View(model);
+            }
+
+            await SendEmailConfirmationLinkAsync(user);
+            
+            return RedirectToAction("RegisterSuccess");
+        }
+
+        [HttpGet]
+        public IActionResult RegisterSuccess()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(SendPasswordResetLinkInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (!FindTenantIdAndSetTenantFilter(model.TenantName, out var tenantId))
+            {
+                ModelState.AddModelError("", "Invalid tenant name");
+                return View(model);
+            }
+
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
+            {
+                ModelState.AddModelError(nameof(model.Username), "User wasn't found or doesn't have a confirmed email");
+                return View(model);
+            }
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var link = Url.Action("ResetPassword", "Account", new { UserId = user.Id, Code = code }, protocol: Request.Scheme);
+            _emailSender.Send(user.Email, "Reset Password", "Please reset your password by clicking <a href=\"" + link + "\">here</a>");
+
+            return RedirectToAction("PasswordResetLinkSent");
+        }
+
+        public IActionResult PasswordResetLinkSent()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(ResetPasswordViewModel model)
+        {
+            return View(model.ToInputModel());
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            User user;
+            using (_db.DisableTenantFilter())
+            {
+                user = await _userManager.FindByIdAsync(model.UserId);
+                if (user == null)
+                {
+                    ModelState.AddModelError(nameof(model.UserId), "User wasn't found");
+                    return View(model);
+                }
+            }
+            _db.SetTenantFilterValue(user.TenantId);
+
+            var identityResult = await _userManager.ResetPasswordAsync(user, model.Code, model.NewPassword);
+            if (!identityResult.Succeeded)
+            {
+                var error = identityResult.Errors.FirstOrDefault();
+                var errorMessage = error != null ? error.Code + ": " + error.Description : "Identity error";
+                ModelState.AddModelError("", errorMessage);
+                return View(model);
+            }
+
+            return RedirectToAction("PasswordResetSuccess");
+        }
+
+        public IActionResult PasswordResetSuccess()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult SendEmailConfirmationLink()
+        {
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> SendEmailConfirmationLink(SendEmailConfirmationLinkInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (!FindTenantIdAndSetTenantFilter(model.TenantName, out var tenantId))
+            {
+                ModelState.AddModelError("", "Invalid tenant name");
+                return View(model);
+            }
+
+            var user = await _userManager.FindByNameAsync(model.Username);
+            if (user == null)
+            {
+                ModelState.AddModelError(nameof(model.Username), "User wasn't found");
+                return View(model);
+            }
+
+            await SendEmailConfirmationLinkAsync(user);
+
+            return RedirectToAction("ConfirmEmailSent");
+        }
+
+        private async System.Threading.Tasks.Task SendEmailConfirmationLinkAsync(User user)
+        {
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var link = Url.Action("ConfirmEmail", "Account", new { UserId = user.Id, Code = code }, protocol: Request.Scheme);
+            _emailSender.Send(user.Email, "Confirm Email", "Please confirm your email by clicking <a href=\"" + link + "\">here</a>");
+        }
+
+        public IActionResult ConfirmEmailSent()
+        {
+            return View();
+        }
+
+        public IActionResult ConfirmEmailSuccess()
+        {
+            return View();
+        }
+
+        //[ValidateAntiForgeryToken]
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Error", model);
+            }
+
+            var user = await FindUserAndSetTenantFilterAsync(model.UserId);
+            if (user == null)
+            {
+                ModelState.AddModelError(nameof(model.UserId), "User wasn't found");
+                return View(model);
+            }
+
+            var identityResult = await _userManager.ConfirmEmailAsync(user, model.Code);
+            if (!identityResult.Succeeded)
+            {
+                var error = identityResult.Errors.FirstOrDefault();
+                var errorMessage = error != null ? error.Code + ": " + error.Description : "Identity error";
+                ModelState.AddModelError("", errorMessage);
+                return View("Error", model);
+            }
+
+            return RedirectToAction("ConfirmEmailSuccess");
+        }
+
+        private bool FindTenantIdAndSetTenantFilter(string tenantName, out int? tenantId)
+        {
+            tenantId = null;
+            if (!tenantName.IsNullOrEmpty())
+            {
+                var tenant = _db.Tenants
+                    .Where(x => x.Name == tenantName)
+                    .Select(x => new
+                    {
+                        x.Id
+                    })
+                    .FirstOrDefault();
+                if (tenant == null)
+                {
+                    return false;
+                }
+                tenantId = tenant.Id;
+            }
+            _db.SetTenantFilterValue(tenantId);
+            return true;
+        }
+
+        private async Task<User> FindUserAndSetTenantFilterAsync(string userId)
+        {
+            User user = null;
+            using (_db.DisableTenantFilter())
+            {
+                user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                {
+                    return null;
+                }
+            }
+            _db.SetTenantFilterValue(user.TenantId);
+            return user;
+        }
 
         /*****************************************/
         /* helper APIs for the AccountController */

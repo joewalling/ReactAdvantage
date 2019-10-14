@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using ReactAdvantage.Data;
 using ReactAdvantage.Domain.Configuration;
+using ReactAdvantage.Domain.Emailing;
 using ReactAdvantage.Domain.Models;
 using ReactAdvantage.Domain.Services;
 using ReactAdvantage.IdentityServer.Services;
@@ -53,6 +54,7 @@ namespace ReactAdvantage.IdentityServer.Startup
 
             //services.AddSingleton<BaseUrls>();
             services.TryAddScoped<ITenantProvider, TenantProvider>();
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             services.AddMvc();
 

@@ -2,21 +2,34 @@
 @model LogoutViewModel
 
 <div class="logout-page">
-    <div class="page-header">
-        <h1>Logout</h1>
-    </div>
 
     <div class="row">
-        <div class="col-sm-6">
-            <p>Would you like to logout of IdentityServer?</p>
-            <form asp-action="Logout">
-                <input type="hidden" name="logoutId" value="@Model.LogoutId"  />
-                <fieldset>
-                    <div class="form-group">
-                        <button class="btn btn-primary">Yes</button>
-                    </div>
-                </fieldset>
-            </form>
+        <div class="col-sm-offset-3 col-sm-6">
+            <div class="logo">
+                <img src="~/logo.png" />
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Logout
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <p class="message-success">
+                        Would you like to logout of Insite2 Identity Server?
+                    </p>
+
+                    <form asp-action="Logout">
+                        <input type="hidden" name="logoutId" value="@Model.LogoutId" />
+                        <fieldset>
+                            <div class="form-group">
+                                <button class="btn btn-primary">Yes</button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>

@@ -1,5 +1,5 @@
 ﻿body {
-  margin-top: 65px;
+  margin-top: 5px;
 }
 .navbar-header {
   position: relative;
@@ -79,4 +79,23 @@
 }
 .grants .grant li:last-child:after {
   content: '';
+}
+.profile-actions {
+  text-align: center;
+}
+.profile-actions a {
+  display: inline-block;
+  margin: 10px;
+}
+.logo {
+  width: 50%;
+  margin: 40px auto 20px;
+}
+.logo img {
+  width: 100%;
+}
+.message-success {
+  font-size: 16px;
+  line-height: 1.2em;
+  margin: 20px 0 30px;
 }
