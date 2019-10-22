@@ -21,11 +21,11 @@
         border-top: 1px solid #c8c8c8;
         border-bottom: 1px solid #c8c8c8;
 
-
         .p-menubar {
             border: none;
             max-width: 1600px;
             margin: 0 auto;
+            padding: 0 50px;
 
             .p-menubar-root-list {
                 padding-left: 10px;
@@ -75,6 +75,7 @@
     height: 90px;
     margin: 0 auto;
     background: $white;
+    padding: 0 50px;
 
     @media (max-width: 1025px) {
         flex-wrap: wrap;
@@ -84,7 +85,6 @@
 
 .header-left {
     width: 100%;
-    max-width: 1340px;
     margin: 0 auto;
     padding: 0 30px;
 
@@ -112,6 +112,7 @@
         flex-shrink: 0;
         position: absolute;
         top: 0;
+        left: 0;
         width: 100%;
         padding: 0 40px 5px;
         box-sizing: border-box;
@@ -121,6 +122,8 @@
         &.show-controls {
             top: 100%;
             box-shadow: 0 1px 15px 1px rgba(81,77,92,.1);
+            display: flex;
+            justify-content: center;
         }
     }
 
