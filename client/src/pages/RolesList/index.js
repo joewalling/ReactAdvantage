@@ -168,7 +168,7 @@ const RolesList = () => {
   ];
   
   
-//////////////////////////////////////////////////////////////////////////////////////////
+
   const normalizeHiddenTableValue = (value) => {
     return value.map(({ actions, ...restValue }) => ({
         ...restValue
