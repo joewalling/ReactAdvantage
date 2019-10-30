@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react';
 import moment from 'moment';
 
+import Table, { Column } from 'components/Table'
 import ButtonMenu from 'components/ButtonMenu';
 import Button from 'components/Button';
 import ListView from 'components/ListView';
@@ -51,6 +52,8 @@ let renderCellTemplate = (rowData, field) => {
     </div>
   );
 };
+
+
 
 let renderActionsTemplate = (rowData, field) => {
   return <div className="roles-actions-cell">{rowData[field]}</div>;
@@ -163,8 +166,48 @@ const RolesList = () => {
     />,
     <Button label="Create new role" key="create-role" onClick={onCreateNew} />,
   ];
+  
+  
+//////////////////////////////////////////////////////////////////////////////////////////
+  const normalizeHiddenTableValue = (value) => {
+    return value.map(({ actions, ...restValue }) => ({
+        ...restValue
+    }));
+  }
+  
+  const renderColumn = ({
+    header,
+    field,
+    sortable,
+    className,
+  }, index) => {
+      return (
+        <Column
+            key={index}
+            sortable={sortable}
+            header={header}
+            field={field}
+            className={className}
+        />
+      );
+    }   
 
+const renderHiddenTable = (value, columns) => {
+  return (
+      <Table
+          value={normalizeHiddenTableValue(value)}
+          rows={entriesValue}
+          tableRef={tableRef}
+          responsive
+          paginator
+          className="hidden"
+          >
+          {columns.slice(0, -1)}
+      </Table>
+  );
+}
   const normalizedRecords = normalizeRecords(listItems);
+  const cols = columns.map(renderColumn);
 
   return (
     <>
@@ -189,6 +232,7 @@ const RolesList = () => {
         columns={columns}
         tableRef={tableRef}
       />
+       {renderHiddenTable(normalizedRecords, cols)} 
       {form}
     </>
   );
