@@ -1,6 +1,7 @@
 import React, { useState, useEffect, createRef } from 'react';
 
 import ButtonMenu from 'components/ButtonMenu';
+import Table, {Column} from 'components/Table'
 import Button from 'components/Button';
 import ConfirmTag from 'components/ConfirmTag';
 import Form from './components/Form';
@@ -165,6 +166,8 @@ const UsersList = () => {
   const normalizeRecords = records => {
     return records.map(item => ({
       ...item,
+      firstName: item.firstName ? item.firstName : '',
+      lastName: item.lastName ? item.lastName : '',
       active: item.active ? 'Yes' : 'No',
       emailConfirm: item.emailConfirm ? 'Yes' : 'No',
       actions: renderButtonMenu(item.id),
@@ -243,8 +246,47 @@ const UsersList = () => {
       onClick={onCreateNew}
     />,
   ];
+  
+  const normalizeHiddenTableValue = (value) => {
+    return value.map(({actions, ...restValue}) => ({
+      ...restValue
+    }))
+  }
+  
+  const renderColumn = ({
+    header,
+    field,
+    sortable,
+    className,
+  }, index) => {
+    return (
+      <Column
+        key={index}
+        sortable={sortable}
+        header={header}
+        field={field}
+        className={className}
+      />
+    );
+  }
+  
+  const renderHiddenTable = (value, columns) => {
+    return (
+      <Table
+        value={normalizeHiddenTableValue(value)}
+        rows={entriesValue}
+        tableRef={tableRef}
+        responsive
+        paginator
+        className="hidden"
+      >
+        {columns.slice(0,-1)}
+      </Table>
+    )
+  }
 
   const normalizedRecords = normalizeRecords(listItems);
+  const cols = columns.map(renderColumn);
 
   return (
     <>
@@ -269,6 +311,7 @@ const UsersList = () => {
         columns={columns}
         tableRef={tableRef}
       />
+      {renderHiddenTable(normalizedRecords, cols)}
       {form}
     </>
   );
