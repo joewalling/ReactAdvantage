@@ -26,7 +26,7 @@
     "react-scripts": "^3.0.0",
     "react-transition-group": "^4.0.1",
     "react-two-way-querybuilder-ra": "^1.0.14",
-    "snyk": "^1.230.5"
+    "@snyk/protect": "latest"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
@@ -37,8 +37,8 @@
     "build": "npm-run-all build-css build-js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "snyk-protect": "snyk-protect",
+    "prepublish": "yarn run snyk-protect"
   },
   "devDependencies": {
     "enzyme": "^3.7.0",
